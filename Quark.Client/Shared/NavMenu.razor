@@ -1,0 +1,69 @@
+﻿<MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
+    <MudCardHeader>
+        <CardHeaderAvatar>            
+            <MudAvatar Image="favicon.ico" />
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body2">@(Name ?? "Name")</MudText>
+            <MudText Typo="Typo.caption">@(Designation ?? "Designation")</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+</MudCard>
+<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/swagger/index.html">Swagger</MudNavLink>
+</MudNavMenu>
+<MudDivider />
+<MudText Class="ml-4 my-2" Typo="Typo.overline">MASTERS</MudText>
+<MudNavMenu>
+    @if (canViewBooks)
+    {
+        <MudNavLink Href="/books">Books</MudNavLink>
+    }
+    @if (canViewDesignations)
+    {
+        <MudNavLink Href="/designations">Designations</MudNavLink>
+    }
+    @if (canViewPatrons)
+    {
+        <MudNavLink Href="/patrons">Patrons</MudNavLink>
+    }
+</MudNavMenu>
+<MudDivider />
+<MudText Class="ml-4 my-2" Typo="Typo.overline">TRANSACTIONS</MudText>
+<MudNavMenu>
+    @if (canViewCheckouts)
+    {
+        <MudNavLink Href="/checkouts">Checkouts</MudNavLink>
+    }
+    @if (canViewAuditTrails)
+    {
+        <MudNavLink Href="/audit-trails">Audit Trails</MudNavLink>
+    }
+</MudNavMenu>
+@code
+{
+    private System.Security.Claims.ClaimsPrincipal User;
+    private bool canViewAuditTrails;
+    private bool canViewBooks;
+    private bool canViewCheckouts;
+    private bool canViewDesignations;
+    private bool canViewPatrons;
+    private string Name;
+    private string Designation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
+        if (User.Identity.IsAuthenticated)
+        {
+            Name = User.Claims.FirstOrDefault(x => x.Type == "FullName")?.Value;
+            Designation = User.Claims.FirstOrDefault(x => x.Type == "Designation")?.Value;
+        }
+        canViewDesignations = (await authorizationService.AuthorizeAsync(User, Permissions.Designations.View)).Succeeded;
+        canViewAuditTrails = (await authorizationService.AuthorizeAsync(User, Permissions.AuditTrails.View)).Succeeded;
+        canViewBooks = (await authorizationService.AuthorizeAsync(User, Permissions.Books.View)).Succeeded;
+        canViewPatrons = (await authorizationService.AuthorizeAsync(User, Permissions.Patrons.View)).Succeeded;
+        canViewCheckouts = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
+    }
+}

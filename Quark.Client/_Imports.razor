@@ -1,0 +1,53 @@
+﻿@using AutoMapper
+@using Blazored.FluentValidation
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.JSInterop
+@using MudBlazor
+@using Quark.Client
+@using Quark.Client.Authentication
+@using Quark.Client.Managers.Identity.Authentication
+@using Quark.Client.Managers.Identity.Roles
+@using Quark.Client.Managers.Interceptors
+@using Quark.Client.Managers.Masters.Books
+@using Quark.Client.Managers.Masters.Checkouts
+@using Quark.Client.Managers.Masters.Designations
+@using Quark.Client.Managers.Masters.Patrons
+@using Quark.Client.Pages.Authentication
+@using Quark.Client.Pages.Modals;
+@using Quark.Core.Domain.Entities
+@using Quark.Core.Domain.Enums
+@using Quark.Core.Features.Books.Commands
+@using Quark.Core.Features.Books.Queries
+@using Quark.Core.Features.Checkouts.Commands
+@using Quark.Core.Features.Checkouts.Queries
+@using Quark.Core.Features.Designations.Commands
+@using Quark.Core.Features.Designations.Queries
+@using Quark.Core.Features.Patrons.Commands
+@using Quark.Core.Features.Patrons.Queries
+@using Quark.Core.Responses
+@using Quark.Client.Shared
+@using Quark.Shared.Constants
+@using Quark.Shared.Constants.Permission
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Security.Claims
+
+@attribute [Authorize]
+@inject IAuthenticationManager authenticationManager
+@inject IAuthorizationService authorizationService
+@inject HttpClient httpClient
+@inject IDialogService dialogService
+@inject IHttpInterceptorManager httpInterceptorManager
+@inject IJSRuntime jsRuntime
+@inject ILocalStorageService localStorageService
+@inject NavigationManager navigationManager
+@inject ISnackbar snackbar
+@inject UserAuthenticationStateProvider authStateProvider 

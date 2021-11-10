@@ -1,0 +1,71 @@
+﻿@inherits LayoutComponentBase
+@inject Navigation Navigation
+<audio src="/media/notification.mp3" id="notification" />
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<AuthorizeView>
+    <NotAuthorized>
+        <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
+            <MudPaper Elevation="25" Class="pa-8" Style="width: 500px;">
+                @Body
+            </MudPaper>
+        </MudContainer>
+    </NotAuthorized>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar>
+                @*<MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" ViewBox="0 0 500 500" />*@
+                @if(Navigation.CanNavigateBack)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" OnClick="Navigation.NavigateBack" Color="Color.Inherit" />
+                }
+                <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large"  />
+                <MudText Typo="Typo.h5" Class="ml-4">@ApplicationConstants.CFSName</MudText>
+                <MudToolBar DisableGutters="true">
+                    <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="(() => _drawerOpen =  !_drawerOpen)" Class="ml-3" />
+                </MudToolBar>
+                <MudSpacer />
+                <MudMenu Direction="Direction.Right" OffsetY="true" Dense="true" ActivationEvent="MouseEvent.MouseOver">
+                    <ActivatorContent>
+                        @*@if (string.IsNullOrEmpty(ImageDataUrl))
+                        {*@
+                            <MudAvatar Color="Color.Secondary">@context.User.Identity.Name[0]</MudAvatar>
+                        @*}
+                        else
+                        {
+                            <MudAvatar Image="@ImageDataUrl" Style="height:50px; width:50px;"> </MudAvatar>
+                        }*@
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
+                            <MudCardHeader>
+                                <CardHeaderAvatar>
+                                    <MudAvatar Style="height:75px; width:75px;" Image="favicon.ico" />
+                                </CardHeaderAvatar>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">@(Name ?? "Name")</MudText>
+                                    <MudText Typo="Typo.body1">@(Designation ?? "Designation")</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                        </MudCard>
+                        <MudDivider />
+                        <MudListItem Text="Account" Href="/account" Icon="@Icons.Material.Outlined.Person" />
+                        <MudListItem Text="Logout" Icon="@Icons.Material.Filled.Logout" OnClick="Logout" />
+                    </ChildContent>
+                </MudMenu>
+            </MudAppBar>
+            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked">
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent>
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+                    @Body
+                </MudContainer>
+            </MudMainContent>
+            <MudScrollToTop>
+                <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.ArrowCircleUp" />
+            </MudScrollToTop>
+        </MudLayout>
+    </Authorized>
+</AuthorizeView>

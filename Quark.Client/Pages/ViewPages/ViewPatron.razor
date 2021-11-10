@@ -1,0 +1,172 @@
+﻿@page "/patrons/{Id:int}"
+@attribute [Authorize(Policy = Permissions.Patrons.View)]
+@inject IPatronManager _patronManager
+
+@if (!_loaded)
+{
+    <MudProgressLinear Class="d-flex justify-center" Indeterminate Color="Color.Secondary" />
+}
+else
+{
+    if (Patron is not null)
+    {
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@Patron.Name</MudText>
+                    <MudText Typo="Typo.body1">@Patron.RegisterId</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    @if (_canEdit)
+                    {
+                        <MudTooltip Text="Edit">
+                            <MudIconButton Color="Color.Default" Icon="@Icons.Material.Filled.Edit" OnClick="InvokeModal" />
+                        </MudTooltip>
+                    }
+                    @if (_canDelete)
+                    {
+                        <MudTooltip Text="Delete">
+                            <MudIconButton Color="Color.Default" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                        </MudTooltip>
+                    }
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Register Id</MudText>
+                            <MudText Typo="Typo.body2">@Patron.RegisterId</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Email</MudText>
+                            <MudText Typo="Typo.body2">@Patron.Email</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Mobile</MudText>
+                            <MudText Typo="Typo.body2">@Patron.Mobile</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Date of birth</MudText>
+                            <MudText Typo="Typo.body2">@Patron.DateOfBirth.ToString("dd/MM/yyyy")</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Address</MudText>
+                            <MudText Typo="Typo.body2">@Patron.Address</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Issued</MudText>
+                            <MudText Typo="Typo.body2">@Patron.Issued.ToString("dd/MM/yyyy")</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Multiple Checkout Limit</MudText>
+                            <MudText Typo="Typo.body2">@Patron.MultipleCheckoutLimit</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Current Fees</MudText>
+                            <MudText Typo="Typo.body2" Color="@(Patron.CurrentFees > 0 ? Color.Error : Color.Default)">@Patron.CurrentFees</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Checkouts Count</MudText>
+                            <MudText Typo="Typo.body1">@Patron.CheckoutsCount</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Checkouts Pending</MudText>
+                            <MudText Typo="Typo.body1">@Patron.CheckoutsPending</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+    }
+}
+
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+    private PatronResponse Patron;
+
+    private ClaimsPrincipal _currentUser;
+    private bool _loaded = false;
+    private bool _canEdit;
+    private bool _canDelete;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _currentUser = await authenticationManager.CurrentUser();
+        _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Edit)).Succeeded;
+        _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Delete)).Succeeded;
+        var response = await _patronManager.GetByIdAsync(Id);
+        if (response.Succeeded)
+        {
+            Patron = response.Data;
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+        _loaded = true;
+    }
+
+    private async Task InvokeModal()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(AddEditPatronModal.Model), new AddEditPatronCommand
+        {
+            Id = Patron.Id,
+            RegisterId = Patron.RegisterId,
+            FirstName = Patron.FirstName,
+            LastName = Patron.LastName,
+            Address = Patron.Address,
+            DateOfBirth = Patron.DateOfBirth,
+            Email = Patron.Email,
+            Mobile = Patron.Mobile,
+            Issued = Patron.Issued,
+            MultipleCheckoutLimit = Patron.MultipleCheckoutLimit
+        });
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
+        await dialogService.Show<AddEditPatronModal>("Update", parameters, options).Result;
+    }
+
+    private async Task Delete()
+    {
+        if ((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this patron?", yesText: "Delete", cancelText: "Cancel")) == true)
+        {
+            var response = await _patronManager.DeleteAsync(Id);
+            foreach (var message in response.Messages)
+            {
+                if (response.Succeeded)
+                {
+                    snackbar.Add(message, Severity.Success);
+                }
+                else
+                {
+                    snackbar.Add(message, Severity.Error);
+                }
+            }
+        }
+    }
+}

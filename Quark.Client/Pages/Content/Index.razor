@@ -1,0 +1,162 @@
+﻿@page "/"
+@page "/dashboard"
+@inject HttpClient _httpClient
+@inject ICheckoutManager _checkoutManager
+
+@using Quark.Client.Extensions
+
+<MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2">Dashboard</MudText>
+<MudText Color="Color.Surface" Class="mb-4">Manage your library from here</MudText>
+<MudDivider Class="mb-4" />
+@if (canViewDashboard)
+{
+    @if (DashboardData is not null)
+    {
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.CardMembership" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Patrons</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.PatronsCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.LibraryBooks" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Books</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.BooksCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.ChecklistRtl" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Checkouts</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.CheckoutsCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.Person" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Users</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.UsersCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    }
+    <MudDivider Class="my-4" />
+}
+@if (canCreateCheckout)
+{
+    <EditForm Model="Checkout" OnValidSubmit="AddCheckoutAsync">
+        <MudCard Outlined Elevation="0">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Image="fas fa-bolt" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Instant Checkout</MudText>
+                    <MudText Typo="Typo.body2">Enter Patron RegisterID and Book Barcode</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudFab Color="Color.Default" Icon="@Icons.Material.Filled.Delete" DisableElevation OnClick="ResetModel" Label="Clear" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudTextField @bind-Value="Checkout.BookBarcode" Label="Book Barcode" HelperText="Enter book barcode here" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudTextField @bind-Value="Checkout.PatronRegisterId" Label="Patron ID" HelperText="Enter patron register ID here" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker1" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
+                            <PickerActions>
+                                <MudButton OnClick="@(() => picker1.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => picker1.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker2" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
+                            <PickerActions>
+                                <MudButton OnClick="@(() => picker2.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => picker2.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+            <MudCardActions>
+                <MudFab ButtonType="ButtonType.Submit" Class="ma-2" Color="Color.Success" Size="Size.Large" Icon="fas fa-bolt" Label="Add Checkout" DisableElevation />
+            </MudCardActions>
+        </MudCard>
+        <MudDivider Class="my-4" />
+    </EditForm>
+}
+
+@code
+{
+    private DashboardResponse DashboardData;
+    private AddCheckoutCommand Checkout = new();
+    private MudDatePicker picker1;
+    private MudDatePicker picker2;
+
+    private ClaimsPrincipal User;
+    private bool canViewCheckout;
+    private bool canCreateCheckout;
+    private bool canViewDashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
+        canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
+        canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;
+        canCreateCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.Create)).Succeeded;
+        var response = await (await _httpClient.GetAsync(Routes.DashboardRoute)).ToResult<DashboardResponse>();
+        if (response.Succeeded)
+        {
+            DashboardData = response.Data;
+        }
+    }
+
+    private void ResetModel()
+    {
+        Checkout.BookBarcode = "";
+        Checkout.PatronRegisterId = "";
+        Checkout.CheckedOutSince = DateTime.Now;
+        Checkout.ExpectedCheckInDate = DateTime.Now.AddDays(15);
+    }
+
+    private async Task AddCheckoutAsync()
+    {
+        var response = await _checkoutManager.AddCheckoutAsync(Checkout);
+        foreach(var message in response.Messages)
+        {
+            if(response.Succeeded)
+            {
+                snackbar.Add(message, Severity.Success);
+            }
+            else
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+    }
+}

@@ -1,0 +1,166 @@
+﻿@page "/Designations"
+@attribute [Authorize(Policy = Permissions.Designations.View)]
+@inject IDesignationManager _designationManager
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Designations</MudText>
+<MudText Color="Color.Surface" Class="mb-4">Manage all designations here</MudText>
+@if (!_loaded)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Elevation="25" Items="_designations" Dense="true" Filter="new Func<DesignationResponse, bool>(Search)" @bind-designation="_designation">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreate)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Create</MudButton>
+                }
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="GetDesignationsAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Designations" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </ToolBarContent>
+        <ColGroup>
+            <col style="width: 80%;"/>
+            <col style="width: 10%;" />
+            <col style="width: 10%;" />
+        </ColGroup>
+        <HeaderContent>           
+            <MudTh><MudTableSortLabel SortBy="new Func<DesignationResponse, object>(x => x.Name)">Name</MudTableSortLabel></MudTh>
+            @if (_canEdit)
+                {
+                <MudTh Style="text-align:right">Edit</MudTh>
+                }
+            @if (_canDelete)
+                {
+                <MudTh Style="text-align:right">Delete</MudTh>
+                }
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">
+                <MudHighlighter Text="@context.Name" HighlightedText="@_searchString" />
+            </MudTd>
+            @if (_canEdit)
+                {
+                <MudTd DataLabel="Edit" Style="text-align:right">
+                    <MudFab Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="(() => InvokeModal(context.Id))" />
+                </MudTd>
+                }
+            @if (_canDelete)
+                {
+                <MudTd DataLabel="Delete" Style="text-align:right">
+                    <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
+                </MudTd>
+                }
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+@code
+{
+    private List<DesignationResponse> _designations { get; set; }
+    private DesignationResponse _designation { get; set; }
+    private string _searchString { get; set; }
+
+    private ClaimsPrincipal _currentUser;
+    private bool _loaded;
+    private bool _canCreate;
+    private bool _canEdit;
+    private bool _canDelete;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUser = await authenticationManager.CurrentUser();
+        _canCreate = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Create)).Succeeded;
+        _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Edit)).Succeeded;
+        _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Delete)).Succeeded;
+        await GetDesignationsAsync();
+        _loaded = true;
+    }
+
+    private async Task GetDesignationsAsync()
+    {
+        var response = await _designationManager.GetAllAsync();
+        if (response.Succeeded)
+        {
+            _designations = response.Data;
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+    }
+
+    private async Task Delete(int Id)
+    {
+        if((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this designation?", yesText: "Delete", cancelText: "Cancel")) == true)
+        {
+            var response = await _designationManager.DeleteAsync(Id);
+            await Reset();
+            if (response.Succeeded)
+            {
+                snackbar.Add(response.Messages[0], Severity.Success);
+            }
+            else
+            {
+                foreach (var message in response.Messages)
+                {
+                    snackbar.Add(message, Severity.Error);
+                }
+            }
+        }
+    }
+    private async Task InvokeModal(int id = 0)
+    {
+        var parameters = new DialogParameters();
+        if (id != 0)
+        {
+            _designation = _designations.FirstOrDefault(c => c.Id == id);
+            if (_designation != null)
+            {
+                parameters.Add(nameof(AddEditDesignationModal.Model), new AddEditDesignationCommand
+                {
+                    Id = _designation.Id,
+                    Name = _designation.Name
+                });
+            }
+        }
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
+        var dialog = dialogService.Show<AddEditDesignationModal>(id == 0 ? "Create" : "Edit", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Reset();
+        }
+    }
+
+    private async Task Reset()
+    {
+        _designation = new DesignationResponse();
+        await GetDesignationsAsync();
+    }
+
+    private bool Search(DesignationResponse designation)
+    {
+        if (string.IsNullOrWhiteSpace(_searchString)) return true;
+        if (designation.Name?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+        {
+            return true;
+        }
+        return false;
+    }
+}

@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quark.Core", "Quark.Core\Quark.Core.csproj", "{9C2A4170-BC19-4358-86C2-C926350022E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quark.Shared", "Quark.Shared\Quark.Shared.csproj", "{61F05464-5D8C-470D-8865-5707E7CF5ED3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quark.Infrastructure", "Quark.Infrastructure\Quark.Infrastructure.csproj", "{36E3E5B6-2B6D-4291-BF14-9016AC82F79C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quark.Client", "Quark.Client\Quark.Client.csproj", "{3E6E2C45-6A70-400F-B62C-6FA7D77C56F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quark.Server", "Quark.Server\Quark.Server.csproj", "{36E28EB0-C844-4AB5-840A-AA8B0D192864}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C2A4170-BC19-4358-86C2-C926350022E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2A4170-BC19-4358-86C2-C926350022E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2A4170-BC19-4358-86C2-C926350022E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2A4170-BC19-4358-86C2-C926350022E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61F05464-5D8C-470D-8865-5707E7CF5ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61F05464-5D8C-470D-8865-5707E7CF5ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61F05464-5D8C-470D-8865-5707E7CF5ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61F05464-5D8C-470D-8865-5707E7CF5ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E3E5B6-2B6D-4291-BF14-9016AC82F79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E3E5B6-2B6D-4291-BF14-9016AC82F79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E3E5B6-2B6D-4291-BF14-9016AC82F79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E3E5B6-2B6D-4291-BF14-9016AC82F79C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6E2C45-6A70-400F-B62C-6FA7D77C56F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6E2C45-6A70-400F-B62C-6FA7D77C56F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6E2C45-6A70-400F-B62C-6FA7D77C56F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6E2C45-6A70-400F-B62C-6FA7D77C56F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E28EB0-C844-4AB5-840A-AA8B0D192864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E28EB0-C844-4AB5-840A-AA8B0D192864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E28EB0-C844-4AB5-840A-AA8B0D192864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E28EB0-C844-4AB5-840A-AA8B0D192864}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0F9472C-12D2-4B80-9E7C-FC774554A221}
+	EndGlobalSection
+EndGlobal
