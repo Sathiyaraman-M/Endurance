@@ -33,7 +33,7 @@ public class BookController : BaseApiController
     }
 
     [Authorize(Policy = Permissions.Books.Edit)]
-    [HttpPost("{id}")]
+    [HttpPost("{barcode}")]
     public async Task<IActionResult> UpdateCondition(ChangeBookConditionCommand command)
     {
         return Ok(await _mediator.Send(command));

@@ -36,10 +36,6 @@ internal class AddCheckoutCommandHandler : IRequestHandler<AddCheckoutCommand, R
         {
             return await Result<int>.FailAsync("Invalid Book barcode");
         }
-        if(await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.BookId == request.BookId && x.CheckedOutUntil == null) == book.Copies)
-        {
-            return await Result<int>.FailAsync("Book copies not available for checkout");
-        }
         request.BookId = book.Id;
         var patron = await _unitOfWork.Repository<Patron>().Entities.FirstOrDefaultAsync(x => x.RegisterId == request.PatronRegisterId);
         if(patron is null)

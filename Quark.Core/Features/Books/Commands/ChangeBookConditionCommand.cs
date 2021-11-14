@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Quark.Core.Domain.Entities;
 using Quark.Core.Interfaces.Repositories;
 using Quark.Shared.Wrapper;
@@ -7,12 +8,12 @@ namespace Quark.Core.Features.Books.Commands;
 
 public class ChangeBookConditionCommand : IRequest<Result<string>>
 {
-    public ChangeBookConditionCommand(int id, string condition)
+    public ChangeBookConditionCommand(string barcode, string condition)
     {
-        Id = id;
+        Barcode = barcode;
         Condition = condition;
     }
-    public int Id { get; set; }
+    public string Barcode { get; set; }
     public string Condition { get; set; }
 }
 
@@ -24,7 +25,7 @@ internal class ChangeBookConditionCommandHandler : IRequestHandler<ChangeBookCon
 
     public async Task<Result<string>> Handle(ChangeBookConditionCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWork.Repository<Book>().GetByIdAsync(request.Id);
+        var book = await _unitOfWork.Repository<Book>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.Barcode);
         if (book is not null)
         {
             book.Condition = request.Condition;
