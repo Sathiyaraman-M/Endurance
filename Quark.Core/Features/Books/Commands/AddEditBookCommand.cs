@@ -20,10 +20,9 @@ public class AddEditBookCommand : IRequest<Result<int>>
     public int PublicationYear { get; set; }
     public string Description { get; set; }
     public string Barcode { get; set; }
-    public int Copies { get; set; }
     public decimal Cost { get; set; }
     public string ImageUrl { get; set; }
-    public bool Availability { get; set; }
+    public bool IsAvailable { get; set; }
     public string Condition { get; set; }
 }
 
@@ -48,7 +47,7 @@ internal class AddEditBookCommandHandler : IRequestHandler<AddEditBookCommand, R
         if (string.IsNullOrWhiteSpace(request.Condition))
         {
             book.Condition = AssetStatusConstants.GoodCondition;
-            book.Availability = true;
+            book.IsAvailable = true;
         }
         if (request.Id == 0)
         {

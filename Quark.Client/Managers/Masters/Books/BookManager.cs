@@ -37,7 +37,7 @@ public class BookManager : IBookManager
 
     public async Task<IResult<string>> UpdateConditionAsync(ChangeBookConditionCommand request)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{Routes.BookEndpoints.BaseRoute}/{request.Id}", request);
+        var response = await _httpClient.PostAsJsonAsync($"{Routes.BookEndpoints.BaseRoute}/{request.Barcode}", request);
         return await response.ToResult<string>();
     }
 

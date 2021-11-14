@@ -15,7 +15,6 @@ namespace Quark.Core.Validators.Features.Books
             RuleFor(x => x.Barcode).NotEmpty().WithMessage(x => "Barcode cannot be empty");
             RuleFor(x => x.Publisher).NotEmpty().WithMessage("Publisher Name is required");
             RuleFor(x => x.Edition).NotEmpty().WithMessage("Edition is required");
-            RuleFor(x => x.Copies).GreaterThan(0).WithMessage("Copies cannot be zero or lesser");
             RuleFor(x => x.Cost).GreaterThanOrEqualTo(0).WithMessage("Cost cannot be negative");
         }
     }
