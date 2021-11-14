@@ -1,0 +1,91 @@
+﻿@inject IPatronManager _patronManager
+
+<EditForm Model="Model" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @if (Model.Id == 0)
+            {
+                <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />Add Patron</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />Update Patron</MudText>
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.RegisterId" For="(() => Model.RegisterId)" Label="Register ID" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.FirstName" For="(() => Model.FirstName)" Label="First Name" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.LastName" For="(() => Model.LastName)" Label="Last Name" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.Email" For="(() => Model.Email)" Label="Email" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.Mobile" For="(() => Model.Mobile)" Label="Mobile" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker @bind-Date="Model.DateOfBirth" For="(() => Model.DateOfBirth)" Label="Date of birth" DateFormat="dd/MM/yyyy" @ref="dobPicker" PickerVariant="PickerVariant.Dialog">
+                        <PickerActions>
+                            <MudButton OnClick="(() => dobPicker.Close(false))">Cancel</MudButton>
+                            <MudButton Color="Color.Primary" OnClick="(() => dobPicker.Close())">Ok</MudButton>
+                        </PickerActions>
+                    </MudDatePicker>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Model.Address" For="(() => Model.Address)" Label="Address" Lines="2" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker @bind-Date="Model.Issued" For="(() => Model.Issued)" Label="Date of Library Card Issue" DateFormat="dd/MM/yyyy" @ref="doiPicker" PickerVariant="PickerVariant.Dialog">
+                        <PickerActions>
+                            <MudButton OnClick="(() => doiPicker.Close(false))">Cancel</MudButton>
+                            <MudButton Color="Color.Primary" OnClick="(() => doiPicker.Close())">Ok</MudButton>
+                        </PickerActions>
+                    </MudDatePicker>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudNumericField T="int" @bind-Value="Model.MultipleCheckoutLimit" For="(() => Model.MultipleCheckoutLimit)" Label="Multiple Checkout Limit" />
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="(() => MudDialog.Close())">Cancel</MudButton>
+            <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Secondary">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code
+{
+    [Parameter] public AddEditPatronCommand Model { get; set; } = new();
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+
+    private MudDatePicker dobPicker;
+    private MudDatePicker doiPicker;
+
+    private FluentValidationValidator _fluentValidationValidator;
+    private bool Validated => _fluentValidationValidator.Validate(options => { options.IncludeAllRuleSets(); });
+
+    private async Task SaveAsync()
+    {
+        var response = await _patronManager.SaveAsync(Model);
+        foreach(var message in response.Messages)
+        {
+            if(response.Succeeded)
+            {
+                snackbar.Add(message, Severity.Success);
+            }
+            else
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+        MudDialog.Close();
+    }
+}
