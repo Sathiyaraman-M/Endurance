@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using Quark.Client.Authentication;
 using Quark.Client.Managers.Audit;
 using Quark.Client.Managers.Generic;
+using Quark.Client.Managers.Identity.Account;
 using Quark.Client.Managers.Identity.Authentication;
 using Quark.Client.Managers.Identity.Roles;
 using Quark.Client.Managers.Interceptors;
@@ -50,6 +51,7 @@ internal static class WebAssemblyHostBuilderExtensions
     internal static IServiceCollection AddManagers(this IServiceCollection services)
     {
         services.AddTransient<IAuditManager, AuditManager>();
+        services.AddTransient<IAccountManager, AccountManager>();
         services.AddTransient<IAuthenticationManager, AuthenticationManager>();
         services.AddTransient<IBookManager, BookManager>();
         services.AddTransient<ICheckoutManager, CheckoutManager>();
