@@ -29,13 +29,13 @@ public class AccountManager : IAccountManager
 
     public async Task<IResult<string>> GetProfilePictureAsync(string userId)
     {
-        var response = await _httpClient.GetAsync($"{Routes.AccountEndpoints.ProfilePictureShort}/{userId}");
+        var response = await _httpClient.GetAsync($"{Routes.AccountEndpoints.ProfilePicture}/{userId}");
         return await response.ToResult<string>();
     }
 
     public async Task<IResult<string>> UpdateProfilePictureAsync(UpdateProfilePictureRequest request, string userId)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{Routes.AccountEndpoints.ProfilePictureShort}/{userId}", request);
+        var response = await _httpClient.PostAsJsonAsync($"{Routes.AccountEndpoints.ProfilePicture}/{userId}", request);
         return await response.ToResult<string>();
     }
 }
