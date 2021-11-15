@@ -89,5 +89,6 @@ public static class Routes
         public const string UpdateProfile = "api/identity/account/update-profile";
         public const string ChangePassword = "api/identity/account/change-password";
         public const string ProfilePicture = "api/identity/account/profile-picture/{userId}";
+        public const string ProfilePictureShort = "api/identity/account/profile-picture";
     }
 }
