@@ -13,6 +13,7 @@
 @using MudBlazor
 @using Quark.Client
 @using Quark.Client.Authentication
+@using Quark.Client.Managers.Identity.Account
 @using Quark.Client.Managers.Identity.Authentication
 @using Quark.Client.Managers.Identity.Roles
 @using Quark.Client.Managers.Interceptors
@@ -41,6 +42,7 @@
 @using System.Security.Claims
 
 @attribute [Authorize]
+@inject IAccountManager accountManager
 @inject IAuthenticationManager authenticationManager
 @inject IAuthorizationService authorizationService
 @inject HttpClient httpClient
