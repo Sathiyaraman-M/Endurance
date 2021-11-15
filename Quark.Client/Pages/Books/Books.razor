@@ -40,12 +40,12 @@
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
+        <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Barcode">Barcode</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="DeweyIndex">Dewey Index</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="ISBN">ISBN</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Author">Author</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Publisher">Publisher</MudTableSortLabel></MudTh>
-        <MudTh>Copies</MudTh>
         @if (_canView)
         {
             <MudTh Style="text-align:right">View</MudTh>
@@ -60,6 +60,9 @@
         }
     </HeaderContent>
     <RowTemplate>
+        <MudTd DataLabel="Barcode">
+            <MudHighlighter Text="@context.Barcode" HighlightedText="@_searchString" />
+        </MudTd>
         <MudTd DataLabel="Dewey Index">
             <MudHighlighter Text="@context.DeweyIndex" HighlightedText="@_searchString" />
         </MudTd>
@@ -75,7 +78,6 @@
         <MudTd DataLabel="Publisher">
             <MudHighlighter Text="@context.Publisher" HighlightedText="@_searchString" />
         </MudTd>
-        <MudTd DataLabel=Copies>@context.Assets.Count</MudTd>
         @if (_canView)
         {
             <MudTd DataLabel="View" Style="text-align:right">
@@ -204,13 +206,13 @@
                     Edition = _book.Edition,
                     PublicationYear = _book.PublicationYear,
                     Description = _book.Description,
+                    Barcode = _book.Barcode,
                     Cost = _book.Cost,
                     ImageUrl = _book.ImageUrl,
-                    Assets = _book.Assets
                 });
             }
         }
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
         var dialog = dialogService.Show<AddEditBookModal>(id == 0 ? "Add" : "Update", parameters, options);
         var result = await dialog.Result;
         if (!result.Cancelled)
