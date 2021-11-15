@@ -36,3 +36,10 @@ public class RoleProfile : Profile
         CreateMap<RoleResponse, ApplicationRole>().ReverseMap();
     }
 }
+public class UserProfile : Profile
+{
+    public UserProfile()
+    {
+        CreateMap<UserResponse, ApplicationUser>().ReverseMap();
+    }
+}
