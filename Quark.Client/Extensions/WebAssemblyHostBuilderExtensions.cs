@@ -9,6 +9,7 @@ using Quark.Client.Managers.Generic;
 using Quark.Client.Managers.Identity.Account;
 using Quark.Client.Managers.Identity.Authentication;
 using Quark.Client.Managers.Identity.Roles;
+using Quark.Client.Managers.Identity.Users;
 using Quark.Client.Managers.Interceptors;
 using Quark.Client.Managers.Masters.Books;
 using Quark.Client.Managers.Masters.Checkouts;
@@ -59,6 +60,7 @@ internal static class WebAssemblyHostBuilderExtensions
         services.AddTransient<IHttpInterceptorManager, HttpInterceptorManager>();
         services.AddTransient<IPatronManager, PatronManager>();
         services.AddTransient<IRoleManager, RoleManager>();
+        services.AddTransient<IUserManager, UserManager>();
         services.AddTransient(typeof(IHttpClientManager<,>), typeof(HttpClientManager<,>));
         return services;
     }
