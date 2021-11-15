@@ -9,9 +9,10 @@ The project uses complete .NET Stack from Blazor to ASP.NET Core 6.0 to Microsof
 
 - Download and install .NET 6.0 from [here](https://dotnet.microsoft.com/download/dotnet/6.0). 
 - Make sure atleast you have Microsoft SQL Server LocalDB feature, in order to run this project.
-- Next configure the database connection string in the `Quark.Server/app.development.json`.
+- Next configure the database connection string in the `Quark.Server/appsettings.development.json`.
 - If you are using Visual Studio 2022, you can directly open the solution file `Endurance.sln` and build and run the solution.
-  -  Open Package Manager Console and run the following command to generate a database in SQL Server
+  -  Open Package Manager Console and run the following command to generate a database in SQL Server.
+     __Also make sure you set the default project as `Quark.Infrastructure`__
      ```
      Update-Database
      ```
