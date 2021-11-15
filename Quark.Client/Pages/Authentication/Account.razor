@@ -7,7 +7,7 @@
 
 <MudTabs Elevation=0 Color=Color.Tertiary Outlined Rounded>
     <MudTabPanel Text="Profile">
-
+        <Profile />
     </MudTabPanel>
     <MudTabPanel Text="Security">
         <EditForm Model="@passwordModel" OnValidSubmit="ChangePasswordAsync">
@@ -20,14 +20,14 @@
                 </MudCardHeader>
                 <MudCardContent>
                     <MudGrid>
-                        <MudItem xs="12" md="6">
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudTextField T=string @bind-Value="passwordModel.Password" For="@(() => passwordModel.Password)" Label="Current Password" Variant=Variant.Outlined InputType="currentPasswordInput" Adornment="Adornment.End" AdornmentIcon="@currentPasswordInputIcon" OnAdornmentClick="@(() => TogglePasswordVisibility(false))" />
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="3">
                             <MudTextField T=string @bind-Value="passwordModel.NewPassword" For="@(() => passwordModel.NewPassword)" Label=Password Variant=Variant.Outlined InputType="newPasswordInput" Adornment="Adornment.End" AdornmentIcon="@newPasswordInputIcon" OnAdornmentClick="@(() => TogglePasswordVisibility(true))" />
                         </MudItem>
-                        <MudItem xs="12" md="6">
+                        <MudItem xs="12" sm="6" md="3">
                             <MudTextField T=string @bind-Value="passwordModel.ConfirmNewPassword" For="@(() => passwordModel.ConfirmNewPassword)" Label="Password Confirmation" Variant="Variant.Outlined" InputType="newPasswordInput" Adornment="Adornment.End" AdornmentIcon="@newPasswordInputIcon" OnAdornmentClick="@(() => TogglePasswordVisibility(true))" />
-                        </MudItem>
-                        <MudItem xs="12">
-                            <MudTextField T=string @bind-Value="passwordModel.Password" For="@(() => passwordModel.Password)" Label="Current Password" Variant=Variant.Outlined InputType="currentPasswordInput" Adornment="Adornment.End" AdornmentIcon="@currentPasswordInputIcon" OnAdornmentClick="@(() => TogglePasswordVisibility(false))" />
                         </MudItem>
                     </MudGrid>
                 </MudCardContent>
