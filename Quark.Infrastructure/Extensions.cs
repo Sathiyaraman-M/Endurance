@@ -1,9 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Quark.Core.Interfaces.Repositories;
+using Quark.Core.Interfaces.Serialization.Serializers;
+using Quark.Core.Interfaces.Services.Storage;
+using Quark.Core.Interfaces.Services.Storage.Provider;
 using Quark.Core.Responses.Identity;
+using Quark.Core.Serialization.JsonConverters;
+using Quark.Core.Serialization.Options;
+using Quark.Core.Serialization.Serializers;
 using Quark.Infrastructure.Models.Identity;
 using Quark.Infrastructure.Repositories;
+using Quark.Infrastructure.Services.Storage;
+using Quark.Infrastructure.Services.Storage.Provider;
 using Quark.Shared.Constants.Permission;
 using System.Reflection;
 using System.Security.Claims;
@@ -25,6 +33,24 @@ public static class ServiceCollectionExtensions
         //TODO: Add Transient Services of other repositories
         services.AddTransient(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         return services;
+    }
+
+    public static IServiceCollection AddServerStorage(this IServiceCollection services)
+        => AddServerStorage(services, null);
+
+    public static IServiceCollection AddServerStorage(this IServiceCollection services, Action<SystemTextJsonOptions> configure)
+    {
+        return services
+            .AddScoped<IJsonSerializer, SystemTextJsonSerializer>()
+            .AddScoped<IStorageProvider, ServerStorageProvider>()
+            .AddScoped<IServerStorageService, ServerStorageService>()
+            .AddScoped<ISyncServerStorageService, ServerStorageService>()
+            .Configure<SystemTextJsonOptions>(configureOptions =>
+            {
+                configure?.Invoke(configureOptions);
+                if (!configureOptions.JsonSerializerOptions.Converters.Any(c => c.GetType() == typeof(TimespanJsonConverter)))
+                    configureOptions.JsonSerializerOptions.Converters.Add(new TimespanJsonConverter());
+            });
     }
 }
 
