@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using MudBlazor;
+using Quark.Client.Extensions;
+using System.Security.Claims;
 
 namespace Quark.Client.Shared;
 
@@ -7,16 +9,41 @@ public partial class MainLayout
     private bool _drawerOpen = true;
 
     private ClaimsPrincipal User;
-    private string Name;
-    private string Designation;
+    private string CurrentUserId { get; set; }
+    private string ImageDataUrl { get; set; }
+    private string UserName { get; set; }
+    private string FullName { get; set; }
+    private string Designation { get; set; }
+    private string Email { get; set; }
+    private char FirstLetterOfName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
+        if (User == null) return;
         if (User.Identity.IsAuthenticated)
         {
-            Name = User.Claims.FirstOrDefault(x => x.Type == "FullName")?.Value;
-            Designation = User.Claims.FirstOrDefault(x => x.Type == "Designation")?.Value;
+            UserName = User.GetUserName();
+            FullName = User.GetFullName();
+            Designation = User.GetDesignation();
+            CurrentUserId = User.GetUserId();
+            if (UserName.Length > 0)
+            {
+                FirstLetterOfName = UserName[0];
+            }
+            Email = User.GetEmail();
+            var imageResponse = await accountManager.GetProfilePictureAsync(CurrentUserId);
+            if (imageResponse.Succeeded)
+            {
+                ImageDataUrl = imageResponse.Data;
+            }
+
+            var currentUserResult = await userManager.GetAsync(CurrentUserId);
+            if (!currentUserResult.Succeeded || currentUserResult.Data == null)
+            {
+                snackbar.Add("You are logged out because the user with your Token has been deleted.", Severity.Error);
+                await authenticationManager.Logout();
+            }
         }
     }
 

@@ -28,14 +28,14 @@
                 <MudSpacer />
                 <MudMenu Direction="Direction.Right" OffsetY="true" Dense="true" ActivationEvent="MouseEvent.MouseOver">
                     <ActivatorContent>
-                        @*@if (string.IsNullOrEmpty(ImageDataUrl))
-                        {*@
-                            <MudAvatar Color="Color.Secondary">@context.User.Identity.Name[0]</MudAvatar>
-                        @*}
+                        @if (string.IsNullOrEmpty(ImageDataUrl))
+                        {
+                            <MudAvatar Color="Color.Secondary">@FirstLetterOfName</MudAvatar>
+                        }
                         else
                         {
                             <MudAvatar Image="@ImageDataUrl" Style="height:50px; width:50px;"> </MudAvatar>
-                        }*@
+                        }
                     </ActivatorContent>
                     <ChildContent>
                         <MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
@@ -44,8 +44,8 @@
                                     <MudAvatar Style="height:75px; width:75px;" Image="favicon.ico" />
                                 </CardHeaderAvatar>
                                 <CardHeaderContent>
-                                    <MudText Typo="Typo.h6">@(Name ?? "Name")</MudText>
-                                    <MudText Typo="Typo.body1">@(Designation ?? "Designation")</MudText>
+                                    <MudText Typo="Typo.h6">@UserName</MudText>
+                                    <MudText Typo="Typo.body1">@Designation</MudText>
                                 </CardHeaderContent>
                             </MudCardHeader>
                         </MudCard>
@@ -59,7 +59,7 @@
                 <NavMenu />
             </MudDrawer>
             <MudMainContent>
-                <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+                <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
                     @Body
                 </MudContainer>
             </MudMainContent>
