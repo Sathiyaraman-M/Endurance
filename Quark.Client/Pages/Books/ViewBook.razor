@@ -34,7 +34,7 @@ else
                 </CardHeaderActions>
             </MudCardHeader>
             <MudCardContent>
-                @*@switch (Book.Condition)
+                @switch (Book.Condition)
                 {
                     case AssetStatusConstants.GoodCondition:
                         <MudAlert Severity="Severity.Success">@AssetStatusConstants.GoodCondition</MudAlert>
@@ -61,8 +61,14 @@ else
                             <MudMenuItem OnClick="(() => SaveConditionOnChange(AssetStatusConstants.Destroyed))">Destroyed</MudMenuItem>
                         </MudMenu>
                     </MudItem>
-                </MudGrid>*@
+                </MudGrid>
                 <MudGrid>
+                    <MudItem xs="12" sm="6" md="3" lg="2">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Barcode</MudText>
+                            <MudText Typo="Typo.body2">@Book.Barcode</MudText>
+                        </MudPaper>
+                    </MudItem>
                     <MudItem xs="12" sm="6" md="3" lg="2">
                         <MudPaper Class="pa-4" Outlined>
                             <MudText Typo="Typo.button">ISBN</MudText>
@@ -99,12 +105,6 @@ else
                             <MudText Typo="Typo.body2">@Book.Cost</MudText>
                         </MudPaper>
                     </MudItem>
-                    <MudItem xs="12" sm="6" md="3" lg="2">
-                        <MudPaper Class="pa-4" Outlined>
-                            <MudText Typo="Typo.button">Copies</MudText>
-                            <MudText Typo="Typo.body2">@Book.Assets.Count()</MudText>
-                        </MudPaper>
-                    </MudItem>
                 </MudGrid>
                 <MudPaper Class="d-flex flex-column pa-4 mt-6" Outlined>
                     <MudText Typo="Typo.button">Description</MudText>
@@ -129,7 +129,7 @@ else
 
     private async Task SaveConditionOnChange(string condition)
     {
-        var response = await _bookManager.UpdateConditionAsync(new("", condition));
+        var response = await _bookManager.UpdateConditionAsync(new(Book.Barcode, condition));
         if(response.Succeeded)
         {
             Condition = response.Data;
@@ -179,11 +179,11 @@ else
             Edition = Book.Edition,
             PublicationYear = Book.PublicationYear,
             Description = Book.Description,
+            Barcode = Book.Barcode,
             Cost = Book.Cost,
             ImageUrl = Book.ImageUrl,
-            Assets = Book.Assets
         });
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
         var dialog = dialogService.Show<AddEditBookModal>("Edit", parameters, options);
         var result = await dialog.Result;
     }
