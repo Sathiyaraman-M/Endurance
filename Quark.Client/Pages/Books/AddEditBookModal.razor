@@ -17,7 +17,7 @@
         <DialogContent>
             <MudGrid>
                 <MudItem xs="12" md="6">
-                    <MudTextField T="string" For="(() => Model.DeweyIndex)" @bind-Value="Model.DeweyIndex" Label="Dewey Index" />
+                    <MudTextField T="string" For="(() => Model.Barcode)" @bind-Value="Model.Barcode" Label="Barcode Value" />
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudTextField T="string" For="(() => Model.Name)" @bind-Value="Model.Name" Label="Name" />
@@ -26,7 +26,10 @@
                     <MudTextField T="string" For="(() => Model.ISBN)" @bind-Value="Model.ISBN" Label="ISBN" />
                 </MudItem>
                 <MudItem xs="12" md="6">
-                    <MudTextField T=string For=@(() => Model.Author) @bind-Value=Model.Author Label=Author />
+                    <MudTextField T="string" For="(() => Model.Author)" @bind-Value="Model.Author" Label="Author" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField T="string" For="(() => Model.DeweyIndex)" @bind-Value="Model.DeweyIndex" Label="Dewey Index" />
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudTextField T="string" For="(() => Model.Publisher)" @bind-Value="Model.Publisher" Label="Publisher" />
@@ -37,44 +40,13 @@
                 <MudItem xs="12" md="6">
                     <MudTextField T="int" For="(() => Model.PublicationYear)" @bind-Value="Model.PublicationYear" Label="Publication Year" />
                 </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTextField T="decimal" For="(() => Model.Cost)" @bind-Value="Model.Cost" Label="Cost" />
-                </MudItem>
                 <MudItem xs="12">
                     <MudTextField T="string" For="(() => Model.Description)" @bind-Value="Model.Description" Label="Description" />
                 </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField T="decimal" For="(() => Model.Cost)" @bind-Value="Model.Cost" Label="Cost" />
+                </MudItem>
             </MudGrid>
-            <MudTable Items=Model.Assets Context="asset" @bind-SelectedItem=selectedAsset CanCancelEdit=true RowEditPreview=BackupItem>
-                <ToolBarContent>
-                    <MudIconButton Icon=@Icons.Material.Filled.Add OnClick="(() => { Model.Assets.Add(new LibraryAssetResponse { Condition = AssetStatusConstants.GoodCondition, IsAvailable=true }); })" />
-                </ToolBarContent>
-                <HeaderContent>
-                    <MudTh>Barcode</MudTh>
-                    <MudTh>Condition</MudTh>
-                    <MudTh>IsAvailable</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd DataLabel=Barcode>@asset.Barcode</MudTd>
-                    <MudTd DataLabel=Condition>@asset.Condition</MudTd>
-                    <MudTd DataLabel=IsAvailable>@asset.IsAvailable</MudTd>
-                </RowTemplate>
-                <RowEditingTemplate>
-                    <MudTd DataLabel=Barcode>
-                        <MudTextField @bind-Value=asset.Barcode Variant=Variant.Outlined Margin=Margin.Dense />
-                    </MudTd>
-                    <MudTd DataLabel=Condition>
-                        <MudMenu Label=@asset.Condition Color=Color.Default Variant=Variant.Filled EndIcon=@Icons.Filled.KeyboardArrowDown IconColor=Color.Secondary Dense OffsetY Size=Size.Small>
-                            <MudMenuItem OnClick="(() => asset.Condition = AssetStatusConstants.GoodCondition)">Good Condition</MudMenuItem>
-                            <MudMenuItem OnClick="(() => asset.Condition = AssetStatusConstants.Unknown)">Unknown</MudMenuItem>
-                            <MudMenuItem OnClick="(() => asset.Condition = AssetStatusConstants.Lost)">Lost</MudMenuItem>
-                            <MudMenuItem OnClick="(() => asset.Condition = AssetStatusConstants.Destroyed)">Destroyed</MudMenuItem>
-                        </MudMenu>
-                    </MudTd>
-                    <MudTd DataLabel=IsAvailable>
-                        <MudCheckBox @bind-Checked=asset.IsAvailable></MudCheckBox>
-                    </MudTd>
-                </RowEditingTemplate>
-            </MudTable>
         </DialogContent>
         <DialogActions>
             <MudButton DisableElevation Variant="Variant.Filled" OnClick="(() => MudDialog.Close())">Cancel</MudButton>
@@ -88,16 +60,8 @@
     [Parameter] public AddEditBookCommand Model { get; set; } = new();
     [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
 
-    private LibraryAssetResponse selectedAsset {  get;  set; }
-    private LibraryAssetResponse beforeEditAsset {  get;  set; }
-
     private FluentValidationValidator _fluentValidationValidator;
     private bool Validated => _fluentValidationValidator.Validate(options => { options.IncludeAllRuleSets(); });
-
-    private void BackupItem(object asset)
-    {
-        
-    }
 
     private async Task SaveAsync()
     {
