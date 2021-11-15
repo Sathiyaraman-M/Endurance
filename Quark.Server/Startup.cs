@@ -22,6 +22,7 @@ public class Startup
         services.AddCurrentUserService();
         services.AddSerialization();
         services.AddDatabase(Configuration);
+        services.AddServerStorage();
         services.AddIdentity();
         services.AddJwtAuthentication(services.GetApplicationSettings(Configuration));
         services.AddApplicationLayer();
