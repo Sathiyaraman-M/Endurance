@@ -55,7 +55,9 @@ public static class Routes
     public static class UserEndpoints
     {
         public const string BaseRoute = "api/identity/user";
+        public static string Get(string Id) => $"{BaseRoute}/{Id}";
         public const string GetById = "api/identity/user/{id}";
+        public static string GetUserRoles(string userId) => $"{BaseRoute}/roles/{userId}";
         public const string Roles = "api/identity/user/roles/{id}";
         public const string ConfirmEmail = "api/identity/user/confirm-email";
         public const string ToggleActivation = "api/identity/user/toggle-activate";
