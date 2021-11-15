@@ -18,4 +18,7 @@ internal static class ClaimsPrincipalExtensions
 
     internal static string GetUserId(this ClaimsPrincipal claimsPrincipal)
        => claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    internal static string GetDesignation(this ClaimsPrincipal claimsPrincipal)
+        => claimsPrincipal.FindFirstValue("designation");
 }
