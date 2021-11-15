@@ -16,6 +16,7 @@
 @using Quark.Client.Managers.Identity.Account
 @using Quark.Client.Managers.Identity.Authentication
 @using Quark.Client.Managers.Identity.Roles
+@using Quark.Client.Managers.Identity.Users
 @using Quark.Client.Managers.Interceptors
 @using Quark.Client.Managers.Masters.Books
 @using Quark.Client.Managers.Masters.Checkouts
@@ -52,4 +53,5 @@
 @inject ILocalStorageService localStorageService
 @inject NavigationManager navigationManager
 @inject ISnackbar snackbar
+@inject IUserManager userManager
 @inject UserAuthenticationStateProvider authStateProvider 
