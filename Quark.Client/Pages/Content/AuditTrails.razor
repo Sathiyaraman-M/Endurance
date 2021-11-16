@@ -55,7 +55,7 @@ else
             <MudTd DataLabel="Date">@context.LocalTime.ToString("G")</MudTd>
             <MudTd DataLabel="Tax">@context.Type</MudTd>
             <MudTd Style="text-align:right">
-                <MudFab DisableElevation Icon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" OnClick="@(() => OnClickingShow(context.Id))" Label="@((context.ShowDetails == true)? "Hide Trail Details" : "Show Trail Details")" />
+                <MudFab DisableElevation Icon="@Icons.Filled.KeyboardArrowDown" Disabled=@(context.TableName == "ApplicationUser") IconColor="Color.Secondary" OnClick="@(() => OnClickingShow(context.Id))" Label="@((context.ShowDetails == true)? "Hide Trail Details" : "Show Trail Details")" />
             </MudTd>
         </RowTemplate>
         <ChildRowContent>
@@ -101,8 +101,10 @@ else
                                                 <td>
                                                     <MudItem>
                                                         @foreach (var value in context.OldValues.Trim('{').Trim('}').Split(','))
+                                                        {
+                                                            @if (!value.Contains("PasswordHash"))
                                                             {
-                                                            @if (_searchInOldValues)
+                                                                @if (_searchInOldValues)
                                                                 {
                                                                 <MudChip Label="true" Color="Color.Warning">
                                                                     <MudHighlighter Text="@value.Replace('"', ' ').Trim()" HighlightedText="@_searchString" />
@@ -113,6 +115,7 @@ else
                                                                 <MudChip Label="true" Color="Color.Warning">@value.Replace('"', ' ').Trim()</MudChip>
                                                                 }
                                                             }
+                                                        }
                                                     </MudItem>
                                                 </td>
                                             </tr>
@@ -124,8 +127,10 @@ else
                                                 <td>
                                                     <MudItem>
                                                         @foreach (var value in context.NewValues.Trim('{').Trim('}').Split(','))
+                                                        {
+                                                            @if (!value.Contains("PasswordHash"))
                                                             {
-                                                            @if (_searchInNewValues)
+                                                                @if (_searchInNewValues)
                                                                 {
                                                                 <MudChip Label="true" Color="Color.Success">
                                                                     <MudHighlighter Text="@value.Replace('"', ' ').Trim()" HighlightedText="@_searchString" />
@@ -136,6 +141,7 @@ else
                                                                 <MudChip Label="true" Color="Color.Success">@value.Replace('"', ' ').Trim()</MudChip>
                                                                 }
                                                             }
+                                                        }
                                                     </MudItem>
                                                 </td>
                                             </tr>
