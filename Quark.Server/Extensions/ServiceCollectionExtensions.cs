@@ -214,6 +214,7 @@ internal static class ServiceCollectionExtensions
     {
         services.AddTransient<IAuditService, AuditService>();
         services.AddTransient<IAccountService, AccountService>();
+        services.AddTransient<IExcelService, ExcelService>();
         services.AddTransient<IMailService, MailService>();
         services.AddTransient<IRoleService, RoleService>();
         services.AddTransient<IRoleClaimService, RoleClaimService>();
