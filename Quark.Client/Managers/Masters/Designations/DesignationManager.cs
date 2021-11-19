@@ -36,8 +36,9 @@ public class DesignationManager : IDesignationManager
 
     public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")
     {
-        var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString) ?
-            Routes.DesignationEndpoints.Export : Routes.DesignationEndpoints.ExportFiltered(searchString));
+        var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString) 
+            ? Routes.DesignationEndpoints.Export 
+            : Routes.DesignationEndpoints.ExportFiltered(searchString));
         return await response.ToResult<string>();
     }
 }
