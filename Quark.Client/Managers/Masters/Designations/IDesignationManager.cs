@@ -10,5 +10,7 @@ public interface IDesignationManager
 
     Task<IResult<int>> SaveAsync(AddEditDesignationCommand request);
 
+    Task<IResult<string>> ExportToExcelAsync(string searchString = "");
+
     Task<IResult<int>> DeleteAsync(int id);
 }
