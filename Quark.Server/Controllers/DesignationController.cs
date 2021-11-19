@@ -20,6 +20,13 @@ public class DesignationController : BaseApiController
         return Ok(await _mediator.Send(command));
     }
 
+    [Authorize(Policy = Permissions.Designations.Export)]
+    [HttpGet("export")]
+    public async Task<IActionResult> ExportToExcelAsync(string searchString = "")
+    {
+        return Ok(await _mediator.Send(new ExportDesignationsQuery(searchString)));
+    }
+
     [Authorize(Policy = Permissions.Designations.Delete)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(int id)
