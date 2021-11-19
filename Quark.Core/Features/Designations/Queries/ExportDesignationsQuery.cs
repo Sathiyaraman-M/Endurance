@@ -28,7 +28,7 @@ internal class ExportDesignationsQueryHandler : IRequestHandler<ExportDesignatio
         {
             { "Id", x => x.Id },
             { "Name", x=> x.Name }
-        }, "Designations");
+        }, "Designations", cancellationToken);
         return await Result<string>.SuccessAsync(data);
     }
 }
