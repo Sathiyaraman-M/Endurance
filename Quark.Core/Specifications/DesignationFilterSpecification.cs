@@ -1,20 +1,16 @@
-﻿using Quark.Core.Domain.Entities;
-using Quark.Core.Specifications.Base;
+﻿namespace Quark.Core.Specifications;
 
-namespace Quark.Core.Specifications
+public class DesignationFilterSpecification : BaseSpecification<Designation>
 {
-    public class DesignationFilterSpecification : BaseSpecification<Designation>
+    public DesignationFilterSpecification(string searchString)
     {
-        public DesignationFilterSpecification(string searchString)
+        if (!string.IsNullOrWhiteSpace(searchString))
         {
-            if(!string.IsNullOrWhiteSpace(searchString))
-            {
-                Criteria = p => p.Name.Contains(searchString);
-            }
-            else
-            {
-                Criteria = p => true;
-            }
+            Criteria = p => p.Name.Contains(searchString);
+        }
+        else
+        {
+            Criteria = p => true;
         }
     }
 }
