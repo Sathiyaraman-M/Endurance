@@ -46,6 +46,7 @@ public static class Permissions
         public const string Create = "Permissions.Designations.Create";
         public const string Edit = "Permissions.Designations.Edit";
         public const string Delete = "Permissions.Designations.Delete";
+        public const string Export = "Permissions.Designations.Export";
     }
 
     public static class Patrons
@@ -54,6 +55,7 @@ public static class Permissions
         public const string Create = "Permissions.Patrons.Create";
         public const string Edit = "Permissions.Patrons.Edit";
         public const string Delete = "Permissions.Patrons.Delete";
+        public const string Export = "Permissions.Patrons.Export";
     }
 
     public static class Books
@@ -62,6 +64,7 @@ public static class Permissions
         public const string Create = "Permissions.Books.Create";
         public const string Edit = "Permissions.Books.Edit";
         public const string Delete = "Permissions.Books.Delete";
+        public const string Export = "Permissions.Books.Export";
     }
 
     public static class Checkouts
@@ -70,6 +73,7 @@ public static class Permissions
         public const string Create = "Permissions.Checkouts.Create";
         public const string Edit = "Permissions.Checkouts.Edit";
         public const string Delete = "Permissions.Checkouts.Delete";
+        public const string Export = "Permissions.Checkouts.Export";
     }
 
     public static class Hangfire
