@@ -5,6 +5,7 @@ global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Quark.Core.Domain.Common;
 global using Quark.Core.Domain.Entities;
+global using Quark.Core.Extensions;
 global using Quark.Core.Interfaces.Repositories;
 global using Quark.Core.Requests.Identity;
 global using Quark.Core.Responses;
