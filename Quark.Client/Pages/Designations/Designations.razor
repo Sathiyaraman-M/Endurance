@@ -16,7 +16,7 @@
 }
 else
 {
-    <MudTable Hover="true" Elevation="25" Items="_designations" Dense="true" Filter="new Func<DesignationResponse, bool>(Search)" @bind-designation="_designation">
+    <MudTable Elevation=0 Outlined Items="_designations" Dense="true" Filter="new Func<DesignationResponse, bool>(Search)" @bind-designation="_designation">
         <ToolBarContent>
             <div class="justify-center mud-text-align-center">
                 @if (_canCreate)
