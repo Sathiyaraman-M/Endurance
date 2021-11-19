@@ -1,7 +1,4 @@
-﻿using Quark.Core.Domain.Common;
-using System.Linq.Expressions;
-
-namespace Quark.Core.Interfaces.Repositories;
+﻿namespace Quark.Core.Interfaces.Repositories;
 
 public interface IRepositoryAsync<T, in TId> where T : class, IEntity<TId>
 {

@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Checkouts.Commands;
+﻿namespace Quark.Core.Features.Checkouts.Commands;
 
 public class ExtendCheckoutCommand : IRequest<Result<int>>
 {

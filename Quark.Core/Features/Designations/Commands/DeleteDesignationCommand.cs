@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Designations.Commands;
+﻿namespace Quark.Core.Features.Designations.Commands;
 
 public class DeleteDesignationCommand : IRequest<Result<int>>
 {

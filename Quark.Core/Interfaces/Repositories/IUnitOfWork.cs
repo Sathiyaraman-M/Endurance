@@ -1,6 +1,4 @@
-﻿using Quark.Core.Domain.Common;
-
-namespace Quark.Core.Interfaces.Repositories;
+﻿namespace Quark.Core.Interfaces.Repositories;
 
 public interface IUnitOfWork<TId> : IDisposable
 {

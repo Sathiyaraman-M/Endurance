@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Quark.Core.Domain.Common;
-using Quark.Core.Specifications.Base;
-using Quark.Shared;
-using Quark.Shared.Wrapper;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Reflection;
 

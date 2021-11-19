@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Checkouts.Queries;
+﻿namespace Quark.Core.Features.Checkouts.Queries;
 
 public class GetCheckoutByIdQuery : IRequest<Result<CheckoutResponse>>
 {

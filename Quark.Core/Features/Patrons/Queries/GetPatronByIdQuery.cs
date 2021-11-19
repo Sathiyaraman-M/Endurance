@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Patrons.Queries;
+﻿namespace Quark.Core.Features.Patrons.Queries;
 
 public class GetPatronByIdQuery : IRequest<Result<PatronResponse>>
 {

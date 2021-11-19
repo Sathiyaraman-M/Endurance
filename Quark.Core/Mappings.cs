@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Features.Books.Commands;
+﻿using Quark.Core.Features.Books.Commands;
 using Quark.Core.Features.Checkouts.Commands;
 using Quark.Core.Features.Designations.Commands;
 using Quark.Core.Features.Patrons.Commands;
-using Quark.Core.Responses;
 
 namespace Quark.Core.Mappings;
 

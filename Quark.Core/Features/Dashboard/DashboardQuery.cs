@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Dashboard;
+﻿namespace Quark.Core.Features.Dashboard;
 
 public class DashboardQuery : IRequest<Result<DashboardResponse>>
 {

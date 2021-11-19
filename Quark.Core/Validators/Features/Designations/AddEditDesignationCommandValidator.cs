@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Quark.Core.Features.Designations.Commands;
+﻿using Quark.Core.Features.Designations.Commands;
 
 namespace Quark.Core.Validators.Features.Designations
 {

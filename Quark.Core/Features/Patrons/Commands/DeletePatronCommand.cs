@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Patrons.Commands;
+﻿namespace Quark.Core.Features.Patrons.Commands;
 
 public class DeletePatronCommand : IRequest<Result<int>>
 {

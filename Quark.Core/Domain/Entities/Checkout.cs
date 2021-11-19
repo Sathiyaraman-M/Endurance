@@ -1,6 +1,4 @@
-﻿using Quark.Core.Domain.Common;
-
-namespace Quark.Core.Domain.Entities;
+﻿namespace Quark.Core.Domain.Entities;
 
 public class Checkout : AuditableEntity<int>
 {

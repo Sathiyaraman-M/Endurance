@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Designations.Commands;
+﻿namespace Quark.Core.Features.Designations.Commands;
 
 public class AddEditDesignationCommand : IRequest<Result<int>>
 {

@@ -1,13 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Extensions;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Core.Specifications;
-using Quark.Shared.Wrapper;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
+﻿using System.Linq.Dynamic.Core;
 
 namespace Quark.Core.Features.Patrons.Queries;
 

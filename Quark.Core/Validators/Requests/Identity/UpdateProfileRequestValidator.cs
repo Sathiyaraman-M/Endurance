@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using Quark.Core.Requests.Identity;
-
-namespace Quark.Core.Validators.Requests.Identity;
+﻿namespace Quark.Core.Validators.Requests.Identity;
 
 public class UpdateProfileRequestValidator : AbstractValidator<UpdateProfileRequest>
 {

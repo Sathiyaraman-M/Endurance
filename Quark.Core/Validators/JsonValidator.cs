@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Validators;
+﻿using FluentValidation.Validators;
 using Quark.Core.Interfaces.Serialization.Serializers;
 
 namespace Quark.Core.Validators;

@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Checkouts.Commands;
+﻿namespace Quark.Core.Features.Checkouts.Commands;
 
 public class AddCheckoutCommand : IRequest<Result<int>>
 {

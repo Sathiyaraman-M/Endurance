@@ -1,17 +1,4 @@
-﻿using AutoMapper;
-using LazyCache;
-using MediatR;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Quark.Core.Features.Designations.Queries;
+﻿namespace Quark.Core.Features.Designations.Queries;
 
 public class GetAllDesignationsQuery : IRequest<Result<List<DesignationResponse>>>
 {

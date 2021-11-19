@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Quark.Core.Features.Patrons.Commands;
+﻿using Quark.Core.Features.Patrons.Commands;
 
 namespace Quark.Core.Validators.Features.Patrons
 {

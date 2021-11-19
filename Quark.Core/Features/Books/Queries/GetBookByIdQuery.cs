@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Responses;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Core.Features.Books.Queries;
+﻿namespace Quark.Core.Features.Books.Queries;
 
 public class GetBookByIdQuery : IRequest<Result<BookResponse>>
 {
