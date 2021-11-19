@@ -23,6 +23,11 @@ public static class Routes
     public static class DesignationEndpoints
     {
         public const string BaseRoute = "api/designations";
+        public const string Export = "api/designations/export";
+        public static string ExportFiltered(string searchString)
+        {
+            return $"{BaseRoute}?searchString={searchString}";
+        }
 
         public static string GetAllPaged(int pageNumber, int pageSize, string searchString, string[] orderBy)
             => Routes.GetAllPaged(BaseRoute, pageNumber, pageSize, searchString, orderBy);
