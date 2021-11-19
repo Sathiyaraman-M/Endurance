@@ -7,6 +7,7 @@ global using Quark.Core.Domain.Common;
 global using Quark.Core.Domain.Entities;
 global using Quark.Core.Extensions;
 global using Quark.Core.Interfaces.Repositories;
+global using Quark.Core.Interfaces.Services;
 global using Quark.Core.Requests.Identity;
 global using Quark.Core.Responses;
 global using Quark.Core.Responses.Identity;
