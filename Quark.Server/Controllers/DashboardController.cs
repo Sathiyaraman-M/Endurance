@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Quark.Core.Features.Dashboard;
-using Quark.Server.Controllers.Utility;
-using Quark.Shared.Constants;
-using Quark.Shared.Constants.Permission;
+﻿using Quark.Core.Features.Dashboard;
 
 namespace Quark.Server.Controllers;
 

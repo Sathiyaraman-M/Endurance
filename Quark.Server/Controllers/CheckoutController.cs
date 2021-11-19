@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Quark.Core.Features.Checkouts.Commands;
+﻿using Quark.Core.Features.Checkouts.Commands;
 using Quark.Core.Features.Checkouts.Queries;
-using Quark.Server.Controllers.Utility;
-using Quark.Shared.Constants;
-using Quark.Shared.Constants.Permission;
 
 namespace Quark.Server.Controllers;
 

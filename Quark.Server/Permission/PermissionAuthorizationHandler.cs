@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Quark.Shared.Constants.Permission;
-
-namespace Quark.Server.Permission;
+﻿namespace Quark.Server.Permission;
 
 internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using Quark.Shared.Constants.Permission;
+﻿using Microsoft.Extensions.Options;
 
 namespace Quark.Server.Permission;
 

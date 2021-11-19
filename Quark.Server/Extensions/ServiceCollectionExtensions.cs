@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +21,6 @@ using Quark.Infrastructure.Services;
 using Quark.Infrastructure.Services.Identity;
 using Quark.Server.Permission;
 using Quark.Server.Services;
-using Quark.Shared.Constants.Permission;
 using Quark.Shared.Wrapper;
 using System.Net;
 using System.Reflection;

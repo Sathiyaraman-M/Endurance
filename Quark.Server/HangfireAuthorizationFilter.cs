@@ -1,5 +1,4 @@
 ﻿using Hangfire.Dashboard;
-using Quark.Shared.Constants.Permission;
 
 public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
 {

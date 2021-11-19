@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Quark.Core.Features.Books.Commands;
+﻿using Quark.Core.Features.Books.Commands;
 using Quark.Core.Features.Books.Queries;
-using Quark.Server.Controllers.Utility;
-using Quark.Shared.Constants;
-using Quark.Shared.Constants.Permission;
 
 namespace Quark.Server.Controllers;
 

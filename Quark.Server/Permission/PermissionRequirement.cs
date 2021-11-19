@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace Quark.Server.Permission;
+﻿namespace Quark.Server.Permission;
 
 internal class PermissionRequirement : IAuthorizationRequirement
 {
