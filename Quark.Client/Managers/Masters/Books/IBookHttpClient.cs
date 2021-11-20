@@ -5,7 +5,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Masters.Books;
 
-public interface IBookManager
+public interface IBookHttpClient
 {
     Task<IResult<BookResponse>> GetByIdAsync(int id);
 

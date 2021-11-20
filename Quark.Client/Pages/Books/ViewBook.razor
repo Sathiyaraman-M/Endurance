@@ -1,6 +1,6 @@
 ﻿@page "/books/{Id:int}"
 @attribute [Authorize(Policy = Permissions.Books.View)]
-@inject IBookManager _bookManager
+@inject IBookHttpClient _bookHttpClient
 @if (!_loaded)
 {
     <MudProgressLinear Class="d-flex justify-center" Indeterminate Color="Color.Secondary" />
@@ -129,7 +129,7 @@ else
 
     private async Task SaveConditionOnChange(string condition)
     {
-        var response = await _bookManager.UpdateConditionAsync(new(Book.Barcode, condition));
+        var response = await _bookHttpClient.UpdateConditionAsync(new(Book.Barcode, condition));
         if(response.Succeeded)
         {
             Condition = response.Data;
@@ -150,7 +150,7 @@ else
         _currentUser = await authenticationManager.CurrentUser();
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.Delete)).Succeeded;
-        var response = await _bookManager.GetByIdAsync(Id);
+        var response = await _bookHttpClient.GetByIdAsync(Id);
         if(response.Succeeded)
         {
             Book= response.Data;
@@ -193,7 +193,7 @@ else
     {
         if ((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this book?", yesText: "Delete", cancelText: "Cancel")) == true)
         {
-            var response = await _bookManager.DeleteAsync(Id);
+            var response = await _bookHttpClient.DeleteAsync(Id);
             if (response.Succeeded)
             {
                 foreach (var message in response.Messages)

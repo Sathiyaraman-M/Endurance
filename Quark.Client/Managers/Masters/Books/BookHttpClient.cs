@@ -8,11 +8,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Masters.Books;
 
-public class BookManager : IBookManager
+public class BookHttpClient : IBookHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public BookManager(HttpClient httpClient)
+    public BookHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

@@ -1,5 +1,5 @@
 ﻿@namespace Quark.Client.Pages.Modals
-@inject IBookManager _bookManager
+@inject IBookHttpClient _bookHttpClient
 
 <EditForm Model="Model" OnValidSubmit="SaveAsync">
     <FluentValidationValidator @ref="_fluentValidationValidator" />
@@ -65,7 +65,7 @@
 
     private async Task SaveAsync()
     {
-        var response = await _bookManager.SaveAsync(Model);
+        var response = await _bookHttpClient.SaveAsync(Model);
         if (response.Succeeded)
         {
             foreach (var message in response.Messages)
