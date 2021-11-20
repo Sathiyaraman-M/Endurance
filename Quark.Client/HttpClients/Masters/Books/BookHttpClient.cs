@@ -41,6 +41,13 @@ public class BookHttpClient : IBookHttpClient
         return await response.ToResult<string>();
     }
 
+    public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")
+    {
+        var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString)
+            ? Routes.BookEndpoints.Export : Routes.BookEndpoints.ExportFiltered(searchString));
+        return await response.ToResult<string>();
+    }
+
     public async Task<IResult<int>> DeleteAsync(int id)
     {
         var response = await _httpClient.DeleteAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");

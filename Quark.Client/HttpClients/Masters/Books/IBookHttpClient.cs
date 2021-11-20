@@ -15,5 +15,7 @@ public interface IBookHttpClient
 
     Task<IResult<string>> UpdateConditionAsync(ChangeBookConditionCommand request);
 
+    Task<IResult<string>> ExportToExcelAsync(string searchString = "");
+
     Task<IResult<int>> DeleteAsync(int id);
 }
