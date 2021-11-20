@@ -7,11 +7,11 @@ using Quark.Shared.Constants;
 
 namespace Quark.Client.Managers.Identity.Roles;
 
-public class RoleManager : IRoleManager
+public class RoleHttpClient : IRoleHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public RoleManager(HttpClient httpClient)
+    public RoleHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

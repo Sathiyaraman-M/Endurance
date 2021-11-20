@@ -4,7 +4,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Identity.Roles;
 
-public interface IRoleManager
+public interface IRoleHttpClient
 {
     Task<IResult<List<RoleResponse>>> GetRolesAsync();
 
