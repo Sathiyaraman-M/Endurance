@@ -35,6 +35,10 @@
                 <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
             }
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+            @if (_canExport)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Surface" OnClick="ExportToExcelAsync" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Class="me-2">Export To Excel</MudButton>
+            }        
         </div>
         <MudSpacer />
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
@@ -116,6 +120,7 @@
     private bool _canView;
     private bool _canEdit;
     private bool _canDelete;
+    private bool _canExport;
 
     protected override async Task OnInitializedAsync()
     {
@@ -124,6 +129,7 @@
         _canView = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.View)).Succeeded;
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.Delete)).Succeeded;
+        _canExport = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Books.Export)).Succeeded;
     }
 
     private async Task<TableData<BookResponse>> OnServerReloadAsync(TableState tableState)
@@ -218,6 +224,28 @@
         if (!result.Cancelled)
         {
             OnSearch("");
+        }
+    }
+
+    private async Task ExportToExcelAsync()
+    {
+        var response = await _bookHttpClient.ExportToExcelAsync(_searchString);
+        if(response.Succeeded)
+        {
+            await jsRuntime.InvokeVoidAsync("Download", new
+            {
+                ByteArray = response.Data,
+                FileName = $"{nameof(Books).ToLower()}_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx",
+                MimeType = ApplicationConstants.MimeTypes.OpenXml
+            });
+            snackbar.Add(string.IsNullOrWhiteSpace(_searchString) ? "Books exported" : "Filtered Books exported", Severity.Success);
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
         }
     }
 
