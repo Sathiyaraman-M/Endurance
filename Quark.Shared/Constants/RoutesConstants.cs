@@ -7,6 +7,11 @@ public static class Routes
     public static class BookEndpoints
     {
         public const string BaseRoute = "api/books";
+        public const string Export = "api/books/export";
+        public static string ExportFiltered(string searchString)
+        {
+            return $"{BaseRoute}?searchString={searchString}";
+        }
 
         public static string GetAllPaged(int pageNumber, int pageSize, string searchString, string[] orderBy)
             => Routes.GetAllPaged(BaseRoute, pageNumber, pageSize, searchString, orderBy);
@@ -15,6 +20,11 @@ public static class Routes
     public static class PatronEndpoints
     {
         public const string BaseRoute = "api/patrons";
+        public const string Export = "api/patrons/export";
+        public static string ExportFiltered(string searchString)
+        {
+            return $"{BaseRoute}?searchString={searchString}";
+        }
 
         public static string GetAllPaged(int pageNumber, int pageSize, string searchString, string[] orderBy)
             => Routes.GetAllPaged(BaseRoute, pageNumber, pageSize, searchString, orderBy);
@@ -38,6 +48,11 @@ public static class Routes
         public const string BaseRoute = "api/checkouts";
         public const string ExtendCheckoutRoute = "api/checkouts/extend";
         public const string CheckInRoute = "api/checkouts/close";
+        public const string Export = "api/checkouts/export";
+        public static string ExportFiltered(string searchString)
+        {
+            return $"{BaseRoute}?searchString={searchString}";
+        }
 
         public static string GetAllPaged(int pageNumber, int pageSize, string searchString, string[] orderBy)
             => Routes.GetAllPaged(BaseRoute, pageNumber, pageSize, searchString, orderBy);
