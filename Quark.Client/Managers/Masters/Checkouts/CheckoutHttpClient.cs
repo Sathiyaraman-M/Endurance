@@ -8,11 +8,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Masters.Checkouts;
 
-public class CheckoutManager : ICheckoutManager
+public class CheckoutHttpClient : ICheckoutHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public CheckoutManager(HttpClient httpClient)
+    public CheckoutHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

@@ -5,7 +5,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Masters.Checkouts;
 
-public interface ICheckoutManager
+public interface ICheckoutHttpClient
 {
     Task<PaginatedResult<CheckoutResponse>> GetAllPaginatedAsync(PagedRequest request);
 

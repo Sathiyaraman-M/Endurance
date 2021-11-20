@@ -1,6 +1,6 @@
 ﻿@page "/checkouts"
 @attribute [Authorize(Policy = Permissions.Checkouts.View)]
-@inject ICheckoutManager _checkoutManager
+@inject ICheckoutHttpClient _checkoutHttpClient
 
 <style>
     .mud-table-container {
@@ -141,7 +141,7 @@
         {
             orderings = tableState.SortDirection != SortDirection.None ? new[] { $"{tableState.SortLabel} {tableState.SortDirection}" } : new[] { $"{tableState.SortLabel}" };
         }
-        var response = await _checkoutManager.GetAllPaginatedAsync(new Core.Requests.PagedRequest
+        var response = await _checkoutHttpClient.GetAllPaginatedAsync(new Core.Requests.PagedRequest
         {
             PageNumber = page + 1,
             PageSize = pageSize,
@@ -167,7 +167,7 @@
     {
         if ((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this checkout?", yesText: "Delete", cancelText: "Cancel")) == true)
         {
-            var response = await _checkoutManager.DeleteCheckoutAsync(Id);
+            var response = await _checkoutHttpClient.DeleteCheckoutAsync(Id);
             if (response.Succeeded)
             {
                 foreach (var message in response.Messages)
