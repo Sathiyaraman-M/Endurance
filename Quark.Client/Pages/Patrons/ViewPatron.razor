@@ -113,7 +113,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        _currentUser = await authenticationManager.CurrentUser();
+        _currentUser = await authenticationHttpClient.CurrentUser();
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Delete)).Succeeded;
         var response = await _patronHttpClient.GetByIdAsync(Id);

@@ -86,7 +86,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _currentUser = await authenticationManager.CurrentUser();
+        _currentUser = await authenticationHttpClient.CurrentUser();
         _canCreate = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Create)).Succeeded;
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Delete)).Succeeded;

@@ -12,13 +12,13 @@ using System.Security.Claims;
 
 namespace Quark.Client.Managers.Identity.Authentication;
 
-public class AuthenticationManager : IAuthenticationManager
+public class AuthenticationHttpClient : IAuthenticationHttpClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-    public AuthenticationManager(HttpClient httpClient, ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider)
+    public AuthenticationHttpClient(HttpClient httpClient, ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider)
     {
         _httpClient = httpClient;
         _localStorageService = localStorageService;

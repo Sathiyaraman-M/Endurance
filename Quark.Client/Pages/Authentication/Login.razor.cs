@@ -20,7 +20,7 @@ public partial class Login
 
     private async Task SubmitAsync()
     {
-        var result = await authenticationManager.Login(requestModel);
+        var result = await authenticationHttpClient.Login(requestModel);
         if (result.Succeeded)
         {
             snackbar.Add(string.Format("Welcome {0}", requestModel.UserName), Severity.Success);

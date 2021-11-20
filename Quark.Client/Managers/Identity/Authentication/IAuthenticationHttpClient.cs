@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace Quark.Client.Managers.Identity.Authentication;
 
-public interface IAuthenticationManager
+public interface IAuthenticationHttpClient
 {
     Task<IResult> Login(TokenRequest model);
 

@@ -32,17 +32,17 @@ public partial class MainLayout
                 FirstLetterOfName = UserName[0];
             }
             Email = User.GetEmail();
-            var imageResponse = await accountManager.GetProfilePictureAsync(CurrentUserId);
+            var imageResponse = await accountHttpClient.GetProfilePictureAsync(CurrentUserId);
             if (imageResponse.Succeeded)
             {
                 ImageDataUrl = imageResponse.Data;
             }
 
-            var currentUserResult = await userManager.GetAsync(CurrentUserId);
+            var currentUserResult = await userHttpClient.GetAsync(CurrentUserId);
             if (!currentUserResult.Succeeded || currentUserResult.Data == null)
             {
                 snackbar.Add("You are logged out because the user with your Token has been deleted.", Severity.Error);
-                await authenticationManager.Logout();
+                await authenticationHttpClient.Logout();
             }
         }
     }
@@ -51,7 +51,7 @@ public partial class MainLayout
     {
         if (await dialogService.ShowMessageBox("Confirm Logout", "Are you sure want to logout?", yesText: "Log out", cancelText: "Cancel") == true)
         {
-            await authenticationManager.Logout();
+            await authenticationHttpClient.Logout();
             navigationManager.NavigateTo("/");
         }
     }

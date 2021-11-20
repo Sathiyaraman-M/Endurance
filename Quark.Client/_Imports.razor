@@ -44,11 +44,11 @@
 
 @attribute [Authorize]
 @inject IAccountHttpClient accountHttpClient
-@inject IAuthenticationManager authenticationManager
+@inject IAuthenticationHttpClient authenticationHttpClient
 @inject IAuthorizationService authorizationService
 @inject HttpClient httpClient
 @inject IDialogService dialogService
-@inject IHttpInterceptorManager httpInterceptorManager
+@inject IHttpClientInterceptor httpInterceptorManager
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorageService
 @inject NavigationManager navigationManager
