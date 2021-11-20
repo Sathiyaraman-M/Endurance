@@ -34,6 +34,12 @@ public class PatronHttpClient : IPatronHttpClient
         var response = await _httpClient.PostAsJsonAsync(Routes.PatronEndpoints.BaseRoute, command);
         return await response.ToResult<int>();
     }
+    public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")
+    {
+        var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString)
+            ? Routes.PatronEndpoints.Export : Routes.PatronEndpoints.ExportFiltered(searchString));
+        return await response.ToResult<string>();
+    }
 
     public async Task<IResult<int>> DeleteAsync(int id)
     {
