@@ -1,0 +1,16 @@
+﻿global using AutoMapper;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using Quark.Core.Domain.Common;
+global using Quark.Core.Domain.Entities;
+global using Quark.Core.Interfaces.Repositories;
+global using Quark.Core.Interfaces.Services;
+global using Quark.Core.Interfaces.Services.Identity;
+global using Quark.Core.Requests.Identity;
+global using Quark.Core.Responses.Identity;
+global using Quark.Infrastructure.DbContexts;
+global using Quark.Infrastructure.Models.Identity;
+global using Quark.Infrastructure.Repositories;
+global using Quark.Shared.Constants;
+global using Quark.Shared.Constants.Permission;
+global using Quark.Shared.Wrapper;
