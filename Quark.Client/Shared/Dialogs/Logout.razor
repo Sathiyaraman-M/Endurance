@@ -23,7 +23,7 @@
 
     async Task Submit()
     {
-        await authenticationManager.Logout();
+        await authenticationHttpClient.Logout();
         navigationManager.NavigateTo("/");
         MudDialog.Close(DialogResult.Ok(true));
     }
