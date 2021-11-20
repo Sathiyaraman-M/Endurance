@@ -2,7 +2,7 @@
 
 namespace Quark.Client.Managers.Interceptors;
 
-public interface IHttpInterceptorManager
+public interface IHttpClientInterceptor
 {
     void RegisterEvent();
 

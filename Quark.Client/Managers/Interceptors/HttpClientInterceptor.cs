@@ -6,17 +6,17 @@ using Toolbelt.Blazor;
 
 namespace Quark.Client.Managers.Interceptors;
 
-public class HttpInterceptorManager : IHttpInterceptorManager
+public class HttpClientInterceptor : IHttpClientInterceptor
 {
-    private readonly HttpClientInterceptor _interceptor;
-    private readonly IAuthenticationManager _authenticationManager;
+    private readonly Toolbelt.Blazor.HttpClientInterceptor _interceptor;
+    private readonly IAuthenticationHttpClient _authenticationHttpClient;
     private readonly NavigationManager _navigationManager;
     private readonly ISnackbar _snackBar;
 
-    public HttpInterceptorManager(HttpClientInterceptor interceptor, IAuthenticationManager authenticationManager, NavigationManager navigationManager, ISnackbar snackBar)
+    public HttpClientInterceptor(Toolbelt.Blazor.HttpClientInterceptor interceptor, IAuthenticationHttpClient authenticationManager, NavigationManager navigationManager, ISnackbar snackBar)
     {
         _interceptor = interceptor;
-        _authenticationManager = authenticationManager;
+        _authenticationHttpClient = authenticationManager;
         _navigationManager = navigationManager;
         _snackBar = snackBar;
     }
@@ -30,7 +30,7 @@ public class HttpInterceptorManager : IHttpInterceptorManager
         {
             try
             {
-                var token = await _authenticationManager.TryRefreshToken();
+                var token = await _authenticationHttpClient.TryRefreshToken();
                 if (!string.IsNullOrEmpty(token))
                 {
                     _snackBar.Add("Refreshed Token.", Severity.Success);
@@ -41,7 +41,7 @@ public class HttpInterceptorManager : IHttpInterceptorManager
             {
                 Console.WriteLine(ex.Message);
                 _snackBar.Add("You are Logged Out.", Severity.Error);
-                await _authenticationManager.Logout();
+                await _authenticationHttpClient.Logout();
                 _navigationManager.NavigateTo("/");
             }
         }
