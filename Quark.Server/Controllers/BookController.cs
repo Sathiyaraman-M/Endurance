@@ -40,4 +40,11 @@ public class BookController : BaseApiController
     {
         return Ok(await _mediator.Send(new DeleteBookCommand { Id = id }));
     }
+
+    [Authorize(Policy = Permissions.Books.Export)]
+    [HttpGet("export")]
+    public async Task<IActionResult> ExportToExcelAsync(string searchString = "")
+    {
+        return Ok(await _mediator.Send(new ExportBooksQuery(searchString)));
+    }
 }
