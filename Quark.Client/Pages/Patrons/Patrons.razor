@@ -10,12 +10,6 @@
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Patrons</MudText>
 <MudText Color="Color.Surface" Class="mb-4">Manage all patrons here</MudText>
-@if (!_loaded)
-{
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
-}
-else
-{
 <MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<PatronResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
         <MudAlert Severity="Severity.Normal">No patrons enrolled in the library. Try to fill 'em up!</MudAlert>
@@ -40,6 +34,10 @@ else
                 <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
                 }
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+            @if (_canExport)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Surface" OnClick="ExportToExcelAsync" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Class="me-2">Export To Excel</MudButton>
+            } 
         </div>
         <MudSpacer />
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
@@ -102,7 +100,6 @@ else
         <MudTablePager />
     </PagerContent>
 </MudTable>
-}
 @code
 {
     private List<PatronResponse> _patrons { get; set; }
@@ -113,11 +110,11 @@ else
     private int _currentPage;
 
     private ClaimsPrincipal _currentUser;
-    private bool _loaded;
     private bool _canView;
     private bool _canCreate;
     private bool _canEdit;
     private bool _canDelete;
+    private bool _canExport;
 
     protected override async Task OnInitializedAsync()
     {
@@ -126,7 +123,7 @@ else
         _canCreate = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Create)).Succeeded;
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Delete)).Succeeded;
-        _loaded = true;
+        _canExport = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Patrons.Delete)).Succeeded;
     }
 
     private async Task<TableData<PatronResponse>> OnServerReloadAsync(TableState tableState)
@@ -216,6 +213,28 @@ else
                 {
                     snackbar.Add(message, Severity.Error);
                 }
+            }
+        }
+    }
+
+    private async Task ExportToExcelAsync()
+    {
+        var response = await _patronHttpClient.ExportToExcelAsync(_searchString);
+        if(response.Succeeded)
+        {
+            await jsRuntime.InvokeVoidAsync("Download", new
+            {
+                ByteArray = response.Data,
+                FileName = $"{nameof(Patrons).ToLower()}_{DateTime.Now:ddMMyyyy_HHmmss}.xlsx",
+                MimeType = ApplicationConstants.MimeTypes.OpenXml
+            });
+            snackbar.Add(string.IsNullOrWhiteSpace(_searchString) ? "Patrons exported" : "Filtered Patrons exported", Severity.Success);
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
             }
         }
     }
