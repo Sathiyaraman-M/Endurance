@@ -5,7 +5,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Masters.Patrons;
 
-public interface IPatronManager
+public interface IPatronHttpClient
 {
     Task<IResult<int>> DeleteAsync(int id);
     Task<PaginatedResult<PatronResponse>> GetAllPaginatedAsync(PagedRequest request);

@@ -8,11 +8,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Masters.Patrons;
 
-public class PatronManager : IPatronManager
+public class PatronHttpClient : IPatronHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public PatronManager(HttpClient httpClient)
+    public PatronHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

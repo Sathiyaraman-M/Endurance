@@ -1,4 +1,4 @@
-﻿@inject IPatronManager _patronManager
+﻿@inject IPatronHttpClient _patronHttpClient
 
 <EditForm Model="Model" OnValidSubmit="SaveAsync">
     <FluentValidationValidator @ref="_fluentValidationValidator" />
@@ -74,7 +74,7 @@
 
     private async Task SaveAsync()
     {
-        var response = await _patronManager.SaveAsync(Model);
+        var response = await _patronHttpClient.SaveAsync(Model);
         foreach(var message in response.Messages)
         {
             if(response.Succeeded)

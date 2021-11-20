@@ -1,6 +1,6 @@
 ﻿@page "/patrons"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
-@inject IPatronManager _patronManager
+@inject IPatronHttpClient _patronHttpClient
 
 <style>
     .mud-table-container {
@@ -146,7 +146,7 @@ else
         {
             orderings = tableState.SortDirection != SortDirection.None ? new[] { $"{tableState.SortLabel} {tableState.SortDirection}" } : new[] { $"{tableState.SortLabel}" };
         }
-        var response = await _patronManager.GetAllPaginatedAsync(new Core.Requests.PagedRequest
+        var response = await _patronHttpClient.GetAllPaginatedAsync(new Core.Requests.PagedRequest
         {
             PageNumber = page + 1,
             PageSize = pageSize,
@@ -204,7 +204,7 @@ else
     {
         if ((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this patron?", yesText: "Delete", cancelText: "Cancel")) == true)
         {
-            var response = await _patronManager.DeleteAsync(Id);
+            var response = await _patronHttpClient.DeleteAsync(Id);
             OnSearch("");
             foreach (var message in response.Messages)
             {
