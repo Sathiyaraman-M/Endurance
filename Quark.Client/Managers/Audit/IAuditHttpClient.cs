@@ -3,7 +3,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Audit;
 
-public interface IAuditManager
+public interface IAuditHttpClient
 {
     Task<IResult<IEnumerable<AuditResponse>>> GetAllUserTrailsAsync();
     Task<IResult<IEnumerable<AuditResponse>>> GetCurrentUserTrailsAsync();

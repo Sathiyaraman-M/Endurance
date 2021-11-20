@@ -8,7 +8,7 @@ namespace Quark.Client.Pages.Content;
 public partial class AuditTrails
 {
     [Inject]
-    private IAuditManager auditManager { get; set; }
+    private IAuditHttpClient auditHttpClient { get; set; }
 
     public List<RelatedAuditTrail> Trails = new();
 
@@ -59,7 +59,7 @@ public partial class AuditTrails
 
     private async Task GetDataAsync()
     {
-        var response = await auditManager.GetCurrentUserTrailsAsync();
+        var response = await auditHttpClient.GetCurrentUserTrailsAsync();
         if (response.Succeeded)
         {
             Trails = response.Data

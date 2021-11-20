@@ -5,11 +5,11 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Audit;
 
-public class AuditManager : IAuditManager
+public class AuditHttpClient : IAuditHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public AuditManager(HttpClient httpClient)
+    public AuditHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
