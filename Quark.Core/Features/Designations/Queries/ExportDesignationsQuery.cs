@@ -7,7 +7,7 @@ public class ExportDesignationsQuery : IRequest<Result<string>>
         SearchString = searchString;
     }
 
-    public string SearchString { get; }
+    public string SearchString { get; set; }
 }
 
 internal class ExportDesignationsQueryHandler : IRequestHandler<ExportDesignationsQuery, Result<string>>
@@ -24,11 +24,11 @@ internal class ExportDesignationsQueryHandler : IRequestHandler<ExportDesignatio
     {
         var desigSpec = new DesignationFilterSpecification(request.SearchString);
         var designations = await _unitOfWork.Repository<Designation>().Entities.Specify(desigSpec).ToListAsync(cancellationToken);
-        var data = await _excelService.ExportAsync(designations, new Dictionary<string, Func<Designation, object>>
+        var data = await _excelService.ExportAsync(designations, mappings: new Dictionary<string, Func<Designation, object>>
         {
             { "Id", x => x.Id },
             { "Name", x=> x.Name }
-        }, "Designations", cancellationToken);
-        return await Result<string>.SuccessAsync(data);
+        }, sheetName: "Designations", cancellationToken);
+        return await Result<string>.SuccessAsync(data: data);
     }
 }
