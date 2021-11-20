@@ -4,7 +4,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Identity.Users;
 
-public interface IUserManager
+public interface IUserHttpClient
 {
     Task<IResult<List<UserResponse>>> GetAllAsync();
 

@@ -7,11 +7,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Identity.Users;
 
-public class UserManager : IUserManager
+public class UserHttpClient : IUserHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public UserManager(HttpClient httpClient)
+    public UserHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
