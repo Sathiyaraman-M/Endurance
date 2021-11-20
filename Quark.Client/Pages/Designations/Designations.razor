@@ -1,6 +1,6 @@
 ﻿@page "/Designations"
 @attribute [Authorize(Policy = Permissions.Designations.View)]
-@inject IDesignationManager _designationManager
+@inject IDesignationHttpClient _designationHttpClient
 
 <style>
     .mud-table-container {
@@ -97,7 +97,7 @@ else
 
     private async Task GetDesignationsAsync()
     {
-        var response = await _designationManager.GetAllAsync();
+        var response = await _designationHttpClient.GetAllAsync();
         if (response.Succeeded)
         {
             _designations = response.Data;
@@ -115,7 +115,7 @@ else
     {
         if((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this designation?", yesText: "Delete", cancelText: "Cancel")) == true)
         {
-            var response = await _designationManager.DeleteAsync(Id);
+            var response = await _designationHttpClient.DeleteAsync(Id);
             await Reset();
             if (response.Succeeded)
             {
@@ -156,7 +156,7 @@ else
 
     private async Task ExportToExcelAsync()
     {
-        var response = await _designationManager.ExportToExcelAsync(_searchString);
+        var response = await _designationHttpClient.ExportToExcelAsync(_searchString);
         if(response.Succeeded)
         {
             Console.WriteLine($"Download : {response.Data}");

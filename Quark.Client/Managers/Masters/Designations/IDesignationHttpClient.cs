@@ -4,7 +4,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Masters.Designations;
 
-public interface IDesignationManager
+public interface IDesignationHttpClient
 {
     Task<IResult<List<DesignationResponse>>> GetAllAsync();
 

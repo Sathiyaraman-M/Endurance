@@ -7,11 +7,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Masters.Designations;
 
-public class DesignationManager : IDesignationManager
+public class DesignationHttpClient : IDesignationHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public DesignationManager(HttpClient httpClient)
+    public DesignationHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

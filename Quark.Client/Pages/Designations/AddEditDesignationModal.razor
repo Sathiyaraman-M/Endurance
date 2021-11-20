@@ -1,5 +1,5 @@
 ﻿@namespace Quark.Client.Pages.Modals
-@inject IDesignationManager _designationManager
+@inject IDesignationHttpClient _designationHttpClient
 
 <EditForm Model="Model" OnValidSubmit="SaveAsync">
     <FluentValidationValidator @ref="_fluentValidationValidator" />
@@ -39,7 +39,7 @@
 
     private async Task SaveAsync()
     {
-        var response = await _designationManager.SaveAsync(Model);
+        var response = await _designationHttpClient.SaveAsync(Model);
         if (response.Succeeded)
         {
             snackbar.Add(response.Messages[0], Severity.Success);
