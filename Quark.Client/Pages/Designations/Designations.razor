@@ -24,7 +24,11 @@ else
                     <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Create</MudButton>
                 }
                 <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="GetDesignationsAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
-            </div>
+                @if (_canExport)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Surface" OnClick="ExportToExcelAsync" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Class="me-2">Export To Excel</MudButton>
+                }
+             </div>
             <MudSpacer />
             <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Designations" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
         </ToolBarContent>
@@ -78,6 +82,7 @@ else
     private bool _canCreate;
     private bool _canEdit;
     private bool _canDelete;
+    private bool _canExport;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,6 +90,7 @@ else
         _canCreate = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Create)).Succeeded;
         _canEdit = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Edit)).Succeeded;
         _canDelete = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Delete)).Succeeded;
+        _canExport = (await authorizationService.AuthorizeAsync(_currentUser, Permissions.Designations.Export)).Succeeded;
         await GetDesignationsAsync();
         _loaded = true;
     }
@@ -145,6 +151,29 @@ else
         if (!result.Cancelled)
         {
             await Reset();
+        }
+    }
+
+    private async Task ExportToExcelAsync()
+    {
+        var response = await _designationManager.ExportToExcelAsync(_searchString);
+        if(response.Succeeded)
+        {
+            Console.WriteLine($"Download : {response.Data}");
+            await jsRuntime.InvokeVoidAsync("Download", new
+            {
+                ByteArray = response.Data,
+                FileName = $"{nameof(Designations).ToLower()}_{DateTime.Now:ddMMyyyyHHmmss}.xlsx",
+                MimeType = ApplicationConstants.MimeTypes.OpenXml
+            });
+            snackbar.Add(string.IsNullOrWhiteSpace(_searchString) ? "Designations exported" : "Filtered Designations exported", Severity.Success);
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
         }
     }
 
