@@ -43,7 +43,7 @@
 @using System.Security.Claims
 
 @attribute [Authorize]
-@inject IAccountManager accountManager
+@inject IAccountHttpClient accountHttpClient
 @inject IAuthenticationManager authenticationManager
 @inject IAuthorizationService authorizationService
 @inject HttpClient httpClient

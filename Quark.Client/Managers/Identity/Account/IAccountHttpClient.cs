@@ -3,7 +3,7 @@ using Quark.Shared.Wrapper;
 
 namespace Quark.Client.Managers.Identity.Account;
 
-public interface IAccountManager
+public interface IAccountHttpClient
 {
     Task<IResult> ChangePasswordAsync(ChangePasswordRequest model);
     Task<IResult<string>> GetProfilePictureAsync(string userId);

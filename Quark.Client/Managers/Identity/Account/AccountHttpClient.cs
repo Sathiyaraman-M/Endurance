@@ -6,11 +6,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Identity.Account;
 
-public class AccountManager : IAccountManager
+public class AccountHttpClient : IAccountHttpClient
 {
     private readonly HttpClient _httpClient;
 
-    public AccountManager(HttpClient httpClient)
+    public AccountHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

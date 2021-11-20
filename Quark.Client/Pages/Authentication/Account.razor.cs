@@ -12,7 +12,7 @@ public partial class Account
 
     private async Task ChangePasswordAsync()
     {
-        var response = await accountManager.ChangePasswordAsync(passwordModel);
+        var response = await accountHttpClient.ChangePasswordAsync(passwordModel);
         if (response.Succeeded)
         {
             snackbar.Add("Password Changed!", Severity.Success);
