@@ -159,7 +159,6 @@ else
         var response = await _designationHttpClient.ExportToExcelAsync(_searchString);
         if(response.Succeeded)
         {
-            Console.WriteLine($"Download : {response.Data}");
             await jsRuntime.InvokeVoidAsync("Download", new
             {
                 ByteArray = response.Data,
