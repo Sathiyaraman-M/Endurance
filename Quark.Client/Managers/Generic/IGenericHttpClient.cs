@@ -2,7 +2,7 @@
 
 namespace Quark.Client.Managers.Generic;
 
-public interface IHttpClientManager<T, TId>
+public interface IGenericHttpClient<T, TId>
 {
     Task<IResult<List<T>>> GetAllAsync(string route);
 

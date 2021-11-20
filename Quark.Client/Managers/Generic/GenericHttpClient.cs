@@ -4,11 +4,11 @@ using System.Net.Http.Json;
 
 namespace Quark.Client.Managers.Generic;
 
-public class HttpClientManager<T, TId> : IHttpClientManager<T, TId>
+public class GenericHttpClient<T, TId> : IGenericHttpClient<T, TId>
 {
     private readonly HttpClient _httpClient;
 
-    public HttpClientManager(HttpClient httpClient)
+    public GenericHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
