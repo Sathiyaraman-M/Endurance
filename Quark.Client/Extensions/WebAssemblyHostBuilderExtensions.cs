@@ -45,23 +45,23 @@ internal static class WebAssemblyHostBuilderExtensions
         builder.Services.AddScoped<UserAuthenticationStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider, UserAuthenticationStateProvider>();
         builder.Services.AddSingleton<Navigation>();
-        builder.Services.AddManagers();
+        builder.Services.AddHttpClients();
         return builder;
     }
 
-    internal static IServiceCollection AddManagers(this IServiceCollection services)
+    internal static IServiceCollection AddHttpClients(this IServiceCollection services)
     {
-        services.AddTransient<IAuditManager, AuditManager>();
-        services.AddTransient<IAccountManager, AccountManager>();
-        services.AddTransient<IAuthenticationManager, AuthenticationManager>();
-        services.AddTransient<IBookManager, BookManager>();
-        services.AddTransient<ICheckoutManager, CheckoutManager>();
-        services.AddTransient<IDesignationManager, DesignationManager>();
-        services.AddTransient<IHttpInterceptorManager, HttpInterceptorManager>();
-        services.AddTransient<IPatronManager, PatronManager>();
-        services.AddTransient<IRoleManager, RoleManager>();
-        services.AddTransient<IUserManager, UserManager>();
-        services.AddTransient(typeof(IHttpClientManager<,>), typeof(HttpClientManager<,>));
+        services.AddTransient<IAuditHttpClient, AuditHttpClient>();
+        services.AddTransient<IAccountHttpClient, AccountHttpClient>();
+        services.AddTransient<IAuthenticationHttpClient, AuthenticationHttpClient>();
+        services.AddTransient<IBookHttpClient, BookHttpClient>();
+        services.AddTransient<ICheckoutHttpClient, CheckoutHttpClient>();
+        services.AddTransient<IDesignationHttpClient, DesignationHttpClient>();
+        services.AddTransient<IHttpClientInterceptor, HttpClientInterceptor>();
+        services.AddTransient<IPatronHttpClient, PatronHttpClient>();
+        services.AddTransient<IRoleHttpClient, RoleHttpClient>();
+        services.AddTransient<IUserHttpClient, UserHttpClient>();
+        services.AddTransient(typeof(IGenericHttpClient<,>), typeof(GenericHttpClient<,>));
         return services;
     }
 
