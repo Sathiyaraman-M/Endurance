@@ -27,6 +27,13 @@ public class PatronController : BaseApiController
         return Ok(await _mediator.Send(command));
     }
 
+    [Authorize(Policy = Permissions.Patrons.Export)]
+    [HttpGet("export")]
+    public async Task<IActionResult> ExportToExcelAsync(string searchString = "")
+    {
+        return Ok(await _mediator.Send(new ExportPatronsQuery(searchString)));
+    }
+
     [Authorize(Policy = Permissions.Patrons.Delete)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(int id)
