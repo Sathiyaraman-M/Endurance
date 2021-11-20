@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Services;
-using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Requests.Identity;
-using Quark.Core.Responses.Identity;
-using Quark.Infrastructure.Extensions;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Shared.Constants;
-using Quark.Shared.Constants.Permission;
-using Quark.Shared.Wrapper;
+﻿using Quark.Infrastructure.Extensions;
 
 namespace Quark.Infrastructure.Services.Identity;
 

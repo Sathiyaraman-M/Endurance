@@ -1,17 +1,7 @@
-﻿using AutoMapper;
-using Hangfire;
-using Microsoft.AspNetCore.Identity;
+﻿using Hangfire;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Services;
-using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Requests.Identity;
 using Quark.Core.Requests.Mail;
-using Quark.Core.Responses.Identity;
-using Quark.Infrastructure.Models.Identity;
 using Quark.Shared;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
 using System.Text;
 using System.Text.Encodings.Web;
 

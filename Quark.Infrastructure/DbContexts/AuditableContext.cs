@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Quark.Core.Domain.Enums;
 using Quark.Infrastructure.Models.Audit;
-using Quark.Infrastructure.Models.Identity;
 
 namespace Quark.Infrastructure.DbContexts;
 

@@ -1,14 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Services;
-using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Requests.Identity;
-using Quark.Core.Responses.Identity;
-using Quark.Infrastructure.DbContexts;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Infrastructure.Services.Identity;
+﻿namespace Quark.Infrastructure.Services.Identity;
 
 public class RoleClaimService : IRoleClaimService
 {

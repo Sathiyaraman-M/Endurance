@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Common;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Infrastructure.DbContexts;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Quark.Infrastructure.Repositories;
 

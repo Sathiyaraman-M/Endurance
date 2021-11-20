@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Quark.Core.Domain.Common;
-
-namespace Quark.Infrastructure.Models.Identity;
+﻿namespace Quark.Infrastructure.Models.Identity;
 
 public class ApplicationRoleClaim : IdentityRoleClaim<string>, IAuditableEntity<int>
 {

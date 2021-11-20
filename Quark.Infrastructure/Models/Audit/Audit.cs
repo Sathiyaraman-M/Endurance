@@ -1,6 +1,4 @@
-﻿using Quark.Core.Domain.Common;
-
-namespace Quark.Infrastructure.Models.Audit;
+﻿namespace Quark.Infrastructure.Models.Audit;
 
 public class Audit : IEntity<int>
 {

@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Quark.Core.Interfaces.Services;
-using Quark.Infrastructure.DbContexts;
+﻿using Microsoft.Extensions.Logging;
 using Quark.Infrastructure.Extensions;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Shared.Constants;
-using Quark.Shared.Constants.Permission;
 
 namespace Quark.Infrastructure;
 

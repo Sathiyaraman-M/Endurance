@@ -1,8 +1,4 @@
 ﻿using LazyCache;
-using Quark.Core.Domain.Common;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Interfaces.Services;
-using Quark.Infrastructure.DbContexts;
 using System.Collections;
 
 namespace Quark.Infrastructure.Repositories;

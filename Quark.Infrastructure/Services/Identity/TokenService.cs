@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Quark.Core.Configurations;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Requests.Identity;
-using Quark.Core.Responses.Identity;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Shared.Wrapper;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;

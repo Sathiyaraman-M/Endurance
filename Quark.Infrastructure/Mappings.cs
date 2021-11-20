@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using Quark.Core.Requests.Identity;
-using Quark.Core.Responses.Audit;
-using Quark.Core.Responses.Identity;
+﻿using Quark.Core.Responses.Audit;
 using Quark.Infrastructure.Models.Audit;
-using Quark.Infrastructure.Models.Identity;
 
 namespace Quark.Infrastructure.Mappings;
 

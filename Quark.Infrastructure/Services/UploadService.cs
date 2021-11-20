@@ -1,5 +1,4 @@
 ﻿using Quark.Core.Extensions;
-using Quark.Core.Interfaces.Services;
 using Quark.Core.Requests;
 
 namespace Quark.Infrastructure.Services;

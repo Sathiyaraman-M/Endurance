@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Domain.Common;
-using Quark.Core.Domain.Entities;
-using Quark.Core.Interfaces.Services;
-using Quark.Infrastructure.Models.Identity;
-
-namespace Quark.Infrastructure.DbContexts;
+﻿namespace Quark.Infrastructure.DbContexts;
 
 public class LibraryDbContext : AuditableContext
 {

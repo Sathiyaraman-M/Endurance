@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Services;
-using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Requests.Identity;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Infrastructure.Services.Identity;
+﻿namespace Quark.Infrastructure.Services.Identity;
 
 public class AccountService : IAccountService
 {

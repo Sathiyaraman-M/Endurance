@@ -1,10 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Services;
-using Quark.Core.Responses.Audit;
-using Quark.Infrastructure.DbContexts;
+﻿using Quark.Core.Responses.Audit;
 using Quark.Infrastructure.Models.Audit;
-using Quark.Shared.Wrapper;
 using System.Linq.Expressions;
 
 namespace Quark.Infrastructure.Services;

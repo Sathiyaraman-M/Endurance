@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Quark.Core.Interfaces.Repositories;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Quark.Core.Interfaces.Serialization.Serializers;
 using Quark.Core.Interfaces.Services.Storage;
 using Quark.Core.Interfaces.Services.Storage.Provider;
-using Quark.Core.Responses.Identity;
 using Quark.Core.Serialization.JsonConverters;
 using Quark.Core.Serialization.Options;
 using Quark.Core.Serialization.Serializers;
-using Quark.Infrastructure.Models.Identity;
-using Quark.Infrastructure.Repositories;
 using Quark.Infrastructure.Services.Storage;
 using Quark.Infrastructure.Services.Storage.Provider;
-using Quark.Shared.Constants.Permission;
 using System.Reflection;
 using System.Security.Claims;
 

@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Quark.Core.Interfaces.Repositories;
-using Quark.Infrastructure.Models.Identity;
-
-namespace Quark.Infrastructure.Repositories;
+﻿namespace Quark.Infrastructure.Repositories;
 public class DesignationRepository : IDesignationRepository
 {
     private readonly UserManager<ApplicationUser> _userManager;

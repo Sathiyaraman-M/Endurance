@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using Quark.Core.Interfaces.Services;
 using Quark.Core.Interfaces.Services.Storage.Provider;
 
 namespace Quark.Infrastructure.Services.Storage.Provider;

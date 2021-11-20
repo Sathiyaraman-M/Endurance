@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Quark.Core.Domain.Common;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quark.Infrastructure.Models.Identity;
 

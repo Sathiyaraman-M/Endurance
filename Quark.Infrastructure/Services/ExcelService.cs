@@ -1,6 +1,5 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using Quark.Core.Interfaces.Services;
 using System.Drawing;
 
 namespace Quark.Infrastructure.Services;

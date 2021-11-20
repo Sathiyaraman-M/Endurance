@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using Quark.Core.Configurations;
-using Quark.Core.Interfaces.Services;
 using Quark.Core.Requests.Mail;
 
 namespace Quark.Infrastructure.Services;
