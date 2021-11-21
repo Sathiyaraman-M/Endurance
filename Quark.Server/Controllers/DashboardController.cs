@@ -4,7 +4,6 @@ namespace Quark.Server.Controllers;
 
 [Route(Routes.DashboardRoute)]
 [Authorize(Policy = Permissions.Dashboard.View)]
-[ApiController]
 public class DashboardController : BaseApiController
 {
     [HttpGet]
