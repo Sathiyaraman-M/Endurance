@@ -1,4 +1,8 @@
-﻿namespace Quark.Client.HttpClients.Identity.Authentication;
+﻿using Quark.Core.Requests.Identity;
+using Quark.Shared.Wrapper;
+using System.Security.Claims;
+
+namespace Quark.Client.HttpClients.Identity.Authentication;
 
 public interface IAuthenticationHttpClient
 {

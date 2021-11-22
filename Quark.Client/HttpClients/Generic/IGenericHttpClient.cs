@@ -1,4 +1,6 @@
-﻿namespace Quark.Client.HttpClients.Generic;
+﻿using Quark.Shared.Wrapper;
+
+namespace Quark.Client.HttpClients.Generic;
 
 public interface IGenericHttpClient<T, TId>
 {

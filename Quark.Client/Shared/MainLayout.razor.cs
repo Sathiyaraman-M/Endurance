@@ -1,4 +1,8 @@
-﻿namespace Quark.Client.Shared;
+﻿using MudBlazor;
+using Quark.Client.Extensions;
+using System.Security.Claims;
+
+namespace Quark.Client.Shared;
 
 public partial class MainLayout
 {

@@ -1,4 +1,9 @@
-﻿using Quark.Core.Responses.Identity;
+﻿using Quark.Client.Extensions;
+using Quark.Core.Requests.Identity;
+using Quark.Core.Responses.Identity;
+using Quark.Shared.Constants;
+using Quark.Shared.Wrapper;
+using System.Net.Http.Json;
 
 namespace Quark.Client.HttpClients.Identity.Users;
 

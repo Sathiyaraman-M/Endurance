@@ -1,4 +1,8 @@
-﻿namespace Quark.Client.Pages.Authentication;
+﻿using Blazored.FluentValidation;
+using MudBlazor;
+using Quark.Core.Requests.Identity;
+
+namespace Quark.Client.Pages.Authentication;
 
 public partial class Account
 {

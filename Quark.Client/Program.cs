@@ -1,7 +1,5 @@
-global using Blazored.FluentValidation;
 global using MudBlazor;
 global using Quark.Client.Extensions;
-global using Quark.Core.Requests.Identity;
 global using Quark.Core.Responses;
 global using Quark.Shared.Constants;
 global using Quark.Shared.Constants.Permission;
