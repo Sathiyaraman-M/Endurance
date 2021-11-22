@@ -1,9 +1,4 @@
-﻿using Quark.Client.Extensions;
-using Quark.Core.Features.Designations.Commands;
-using Quark.Core.Responses;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-using System.Net.Http.Json;
+﻿using Quark.Core.Features.Designations.Commands;
 
 namespace Quark.Client.HttpClients.Masters.Designations;
 

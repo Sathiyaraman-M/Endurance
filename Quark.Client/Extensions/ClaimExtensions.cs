@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace Quark.Client.Extensions;
+﻿namespace Quark.Client.Extensions;
 
 internal static class ClaimsPrincipalExtensions
 {

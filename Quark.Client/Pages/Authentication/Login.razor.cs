@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
-using MudBlazor;
-using Quark.Core.Requests.Identity;
-using System.Security.Claims;
 
 namespace Quark.Client.Pages.Authentication;
 

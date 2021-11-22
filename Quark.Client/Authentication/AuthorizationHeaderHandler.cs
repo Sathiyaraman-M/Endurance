@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using Quark.Shared.Constants;
 using System.Net.Http.Headers;
 
 namespace Quark.Client.Authentication;

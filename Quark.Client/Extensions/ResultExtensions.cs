@@ -1,5 +1,4 @@
-﻿using Quark.Shared.Wrapper;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Quark.Client.Extensions;

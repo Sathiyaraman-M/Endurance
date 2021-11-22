@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using Quark.Client.HttpClients.Audit;
+﻿using Quark.Client.HttpClients.Audit;
 using Quark.Core.Responses.Audit;
 
 namespace Quark.Client.Pages.Content;

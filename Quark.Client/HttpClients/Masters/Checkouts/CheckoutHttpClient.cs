@@ -1,10 +1,4 @@
-﻿using Quark.Client.Extensions;
-using Quark.Core.Features.Checkouts.Commands;
-using Quark.Core.Requests;
-using Quark.Core.Responses;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-using System.Net.Http.Json;
+﻿using Quark.Core.Features.Checkouts.Commands;
 
 namespace Quark.Client.HttpClients.Masters.Checkouts;
 

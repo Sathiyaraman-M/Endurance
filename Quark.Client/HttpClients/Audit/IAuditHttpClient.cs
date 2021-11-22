@@ -1,5 +1,4 @@
 ﻿using Quark.Core.Responses.Audit;
-using Quark.Shared.Wrapper;
 
 namespace Quark.Client.HttpClients.Audit;
 

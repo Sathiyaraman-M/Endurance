@@ -1,8 +1,4 @@
-﻿using Quark.Client.Extensions;
-using Quark.Shared.Wrapper;
-using System.Net.Http.Json;
-
-namespace Quark.Client.HttpClients.Generic;
+﻿namespace Quark.Client.HttpClients.Generic;
 
 public class GenericHttpClient<T, TId> : IGenericHttpClient<T, TId>
 {

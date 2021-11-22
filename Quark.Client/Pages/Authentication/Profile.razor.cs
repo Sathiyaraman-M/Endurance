@@ -1,11 +1,5 @@
-﻿using Blazored.FluentValidation;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using MudBlazor;
-using Quark.Client.Extensions;
+﻿using Microsoft.AspNetCore.Components.Forms;
 using Quark.Core.Domain.Enums;
-using Quark.Core.Requests.Identity;
-using Quark.Shared.Constants;
 
 namespace Quark.Client.Pages.Authentication;
 

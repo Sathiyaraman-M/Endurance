@@ -1,6 +1,4 @@
 ﻿using Quark.Core.Features.Designations.Commands;
-using Quark.Core.Responses;
-using Quark.Shared.Wrapper;
 
 namespace Quark.Client.HttpClients.Masters.Designations;
 
