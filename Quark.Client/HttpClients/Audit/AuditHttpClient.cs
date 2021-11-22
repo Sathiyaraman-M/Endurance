@@ -1,7 +1,4 @@
-﻿using Quark.Client.Extensions;
-using Quark.Core.Responses.Audit;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
+﻿using Quark.Core.Responses.Audit;
 
 namespace Quark.Client.HttpClients.Audit;
 

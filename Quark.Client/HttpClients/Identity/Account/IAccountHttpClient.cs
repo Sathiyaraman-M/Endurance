@@ -1,7 +1,4 @@
-﻿using Quark.Core.Requests.Identity;
-using Quark.Shared.Wrapper;
-
-namespace Quark.Client.HttpClients.Identity.Account;
+﻿namespace Quark.Client.HttpClients.Identity.Account;
 
 public interface IAccountHttpClient
 {

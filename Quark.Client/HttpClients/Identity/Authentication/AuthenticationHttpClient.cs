@@ -1,14 +1,8 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Quark.Client.Authentication;
-using Quark.Client.Extensions;
-using Quark.Core.Requests.Identity;
 using Quark.Core.Responses.Identity;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Security.Claims;
 
 namespace Quark.Client.HttpClients.Identity.Authentication;
 

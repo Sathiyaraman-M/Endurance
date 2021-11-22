@@ -1,10 +1,4 @@
-﻿using Quark.Client.Extensions;
-using Quark.Core.Requests.Identity;
-using Quark.Shared.Constants;
-using Quark.Shared.Wrapper;
-using System.Net.Http.Json;
-
-namespace Quark.Client.HttpClients.Identity.Account;
+﻿namespace Quark.Client.HttpClients.Identity.Account;
 
 public class AccountHttpClient : IAccountHttpClient
 {
