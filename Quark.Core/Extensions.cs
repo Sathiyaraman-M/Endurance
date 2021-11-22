@@ -1,4 +1,23 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿global using AutoMapper;
+global using FluentValidation;
+global using LazyCache;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Quark.Core.Domain.Common;
+global using Quark.Core.Domain.Entities;
+global using Quark.Core.Extensions;
+global using Quark.Core.Interfaces.Repositories;
+global using Quark.Core.Interfaces.Services;
+global using Quark.Core.Requests.Identity;
+global using Quark.Core.Responses;
+global using Quark.Core.Responses.Identity;
+global using Quark.Core.Specifications;
+global using Quark.Core.Specifications.Base;
+global using Quark.Shared;
+global using Quark.Shared.Constants;
+global using Quark.Shared.Wrapper;
+global using System.Linq.Expressions;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Reflection;
 
