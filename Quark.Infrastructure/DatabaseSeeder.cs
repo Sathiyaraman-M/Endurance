@@ -22,23 +22,8 @@ public class DatabaseSeeder : IDatabaseSeeder
     {
         SeedAdministratorUser();
         SeedBasicUser();
-        //SeedAssetAvailabilityStatuses();
         _dbContext.SaveChanges();
     }
-
-    //private void SeedAssetAvailabilityStatuses()
-    //{
-    //    Task.Run(async () =>
-    //    {
-    //        if (!(await _dbContext.AssetAvailabilityStatuses.AnyAsync()))
-    //        {
-    //            await _dbContext.Set<AssetAvailability>().AddAsync(new() { Id = 1, Name = AssetStatusConstants.GoodCondition, Description = "The item is in good condition." });
-    //            await _dbContext.Set<AssetAvailability>().AddAsync(new() { Id = 2, Name = AssetStatusConstants.Lost, Description = "The item is lost." });
-    //            await _dbContext.Set<AssetAvailability>().AddAsync(new() { Id = 3, Name = AssetStatusConstants.Destroyed, Description = "The item has been destroyed." });
-    //            await _dbContext.Set<AssetAvailability>().AddAsync(new() { Id = 4, Name = AssetStatusConstants.Unknown, Description = "The item is in unknown whereabouts and condition." });
-    //        }
-    //    });
-    //}
 
     private void SeedAdministratorUser()
     {
