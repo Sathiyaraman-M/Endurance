@@ -62,7 +62,12 @@ internal static class ServiceCollectionExtensions
 
     internal static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<LibraryDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        return services.AddDatabase(configuration.GetConnectionString("DefaultConnection"));
+    }
+
+    internal static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
+    {
+        services.AddDbContext<LibraryDbContext>(options => options.UseSqlServer(connectionString));
         services.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
         return services;
     }
