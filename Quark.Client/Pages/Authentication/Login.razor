@@ -1,4 +1,5 @@
 ﻿@page "/login"
+<PageTitle>Login | @ApplicationConstants.LibraryName</PageTitle>
 @attribute [AllowAnonymous]
 <EditForm Model="requestModel" OnValidSubmit="SubmitAsync">
     <FluentValidationValidator />
@@ -11,7 +12,7 @@
         <DataAnnotationsValidator />
         <MudItem xs="12">
             <div class="d-flex justify-center">
-                <MudText Typo="Typo.h5">Login to @ApplicationConstants.CFSName!</MudText>
+                <MudText Typo="Typo.h5">Login to @ApplicationConstants.LibraryName!</MudText>
             </div>
         </MudItem>
         <MudItem xs="12">

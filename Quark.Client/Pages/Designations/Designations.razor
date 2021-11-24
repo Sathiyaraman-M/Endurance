@@ -1,6 +1,7 @@
 ﻿@page "/Designations"
 @attribute [Authorize(Policy = Permissions.Designations.View)]
 @inject IDesignationHttpClient _designationHttpClient
+<PageTitle>Designations | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>
     .mud-table-container {

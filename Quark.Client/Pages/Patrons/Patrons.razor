@@ -1,6 +1,7 @@
 ﻿@page "/patrons"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
 @inject IPatronHttpClient _patronHttpClient
+<PageTitle>Patrons | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>
     .mud-table-container {
