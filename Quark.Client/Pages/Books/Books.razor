@@ -1,6 +1,7 @@
 ﻿@page "/books"
 @attribute [Authorize(Policy = Permissions.Books.View)]
 @inject IBookHttpClient _bookHttpClient
+<PageTitle>Books | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>
     .mud-table-container {

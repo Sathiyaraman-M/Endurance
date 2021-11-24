@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Quark.Client.Authentication;
@@ -29,6 +30,7 @@ internal static class WebAssemblyHostBuilderExtensions
     internal static WebAssemblyHostBuilder AddRootComponent(this WebAssemblyHostBuilder builder)
     {
         builder.RootComponents.Add<App>("#app");
+        builder.RootComponents.Add<HeadOutlet>("head::after");
         return builder;
     }
 

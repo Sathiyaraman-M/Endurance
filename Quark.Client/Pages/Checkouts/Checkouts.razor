@@ -1,6 +1,7 @@
 ﻿@page "/checkouts"
 @attribute [Authorize(Policy = Permissions.Checkouts.View)]
 @inject ICheckoutHttpClient _checkoutHttpClient
+<PageTitle>Checkouts | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>
     .mud-table-container {
