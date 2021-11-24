@@ -8,8 +8,8 @@
     }
 </style>
 
-<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Books</MudText>
-<MudText Color="Color.Surface" Class="mb-4">Manage all books here</MudText>
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Checkouts</MudText>
+<MudText Color="Color.Surface" Class="mb-4">Manage all book checkouts here</MudText>
 <MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<CheckoutResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
         <MudAlert Severity="Severity.Normal">No checkouts done yet!</MudAlert>
@@ -35,7 +35,7 @@
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
         </div>
         <MudSpacer />
-        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">Id</MudTableSortLabel></MudTh>
