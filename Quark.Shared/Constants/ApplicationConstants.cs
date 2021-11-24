@@ -2,7 +2,7 @@
 
 public static class ApplicationConstants
 {
-    public const string CFSName = "Lakeview Library";
+    public const string LibraryName = "Lakeview Library";
 
     public static class Cache
     {
