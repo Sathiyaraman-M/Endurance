@@ -11,3 +11,5 @@ builder.Host.ConfigureWebHost(webBuilder =>
     webBuilder.UseStaticWebAssets();
     webBuilder.UseStartup<Startup>();
 });
+
+await builder.Build().RunAsync();
