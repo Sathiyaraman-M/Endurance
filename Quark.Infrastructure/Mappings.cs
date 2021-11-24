@@ -1,7 +1,7 @@
 ﻿using Quark.Core.Responses.Audit;
 using Quark.Infrastructure.Models.Audit;
 
-namespace Quark.Infrastructure.Mappings;
+namespace Quark.Infrastructure;
 
 public class AuditProfile : Profile
 {

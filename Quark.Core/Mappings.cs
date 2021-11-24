@@ -3,7 +3,7 @@ using Quark.Core.Features.Checkouts.Commands;
 using Quark.Core.Features.Designations.Commands;
 using Quark.Core.Features.Patrons.Commands;
 
-namespace Quark.Core.Mappings;
+namespace Quark.Core;
 
 public class BookProfile : Profile
 {
