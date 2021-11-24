@@ -47,6 +47,7 @@
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutSince">Checkout Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="ExpectedCheckInDate">Expected Return Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutUntil">Check In Date</MudTableSortLabel></MudTh>
+        <MudTh>Check In Now</MudTh>
         @if (_canView)
         {
             <MudTh Style="text-align:right">View</MudTh>
@@ -84,6 +85,16 @@
             else
             {
                 <MudText Typo="Typo.body1" Color="Color.Warning">Yet to check in</MudText>
+            }
+        </MudTd>
+        <MudTd DataLabel="Check In Now">
+            @if(context.CheckedOutUntil.HasValue)
+            {
+                <MudText Typo="Typo.body2">Already checked in</MudText>
+            }
+            else
+            {
+                <MudFab DisableElevation Color="Color.Success" Icon="@Icons.Material.Filled.AssignmentReturned" Size="Size.Small"></MudFab>
             }
         </MudTd>
         @if (_canView)
