@@ -31,7 +31,7 @@ builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidator
 builder.Services.AddRazorPages();
 builder.Services.AddLazyCache();
 
-var app = builder.Build();
+using var app = builder.Build();
 
 app.UseCors();
 app.UseExceptionHandling(builder.Environment);
