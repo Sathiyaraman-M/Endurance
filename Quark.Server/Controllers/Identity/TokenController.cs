@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Quark.Core.Interfaces.Services.Identity;
+﻿using Quark.Core.Interfaces.Services.Identity;
 using Quark.Core.Requests.Identity;
 
 namespace Quark.Server.Controllers.Identity;
