@@ -11,7 +11,56 @@
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Checkouts</MudText>
 <MudText Color="Color.Surface" Class="mb-4">Manage all book checkouts here</MudText>
-<MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<CheckoutResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
+<MudDivider Class="mb-4" />
+@if (_canView)
+{
+    <EditForm Model="Checkout" OnValidSubmit="AddCheckoutAsync">
+        <MudCard Outlined Elevation="0">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Image="fas fa-bolt" />
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Instant Checkout</MudText>
+                    <MudText Typo="Typo.body2">Enter Patron RegisterID and Book Barcode</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudFab Color="Color.Default" Icon="@Icons.Material.Filled.Delete" DisableElevation OnClick="ResetModel" Label="Clear" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudTextField @bind-Value="Checkout.BookBarcode" Label="Book Barcode" HelperText="Enter book barcode here" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudTextField @bind-Value="Checkout.PatronRegisterId" Label="Patron ID" HelperText="Enter patron register ID here" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker1" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
+                        <PickerActions>
+                            <MudButton OnClick="@(() => picker1.Close(false))">Cancel</MudButton>
+                            <MudButton Color="Color.Primary" OnClick="@(() => picker1.Close())">Ok</MudButton>
+                        </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker2" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
+                            <PickerActions>
+                                <MudButton OnClick="@(() => picker2.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => picker2.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </EditForm>
+}
+<MudTable Class="mt-4" Elevation="0" Outlined Hover HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<CheckoutResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
         <MudAlert Severity="Severity.Normal">No checkouts done yet!</MudAlert>
     </NoRecordsContent>
@@ -39,7 +88,7 @@
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">ID</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookBarcode">Book Barcode</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookName">Book Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="PatronRegisterId">Patron ID</MudTableSortLabel></MudTh>
@@ -47,7 +96,7 @@
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutSince">Checkout Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="ExpectedCheckInDate">Expected Return Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutUntil">Check In Date</MudTableSortLabel></MudTh>
-        <MudTh>Check In Now</MudTh>
+        <MudTh Style="text-align:right">Check In Now</MudTh>
         @if (_canView)
         {
             <MudTh Style="text-align:right">View</MudTh>
@@ -58,7 +107,7 @@
         }
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="ID">@context.Id</MudTd>
         <MudTd DataLabel="Book Barcode">
             <MudHighlighter Text="@context.BookBarcode" HighlightedText="@_searchString" />
         </MudTd>
@@ -77,7 +126,7 @@
         <MudTd DataLabel="Expected Return Date">
             <MudHighlighter Text="@context.ExpectedCheckInDate.ToString("dd/MM/yyyy")" HighlightedText="@_searchString" />
         </MudTd>
-        <MudTd DataLabel="Check In Date">
+        <MudTd DataLabel="Check In Date" Style="text-:right">
             @if (context.CheckedOutUntil.HasValue)
             {
                 <MudHighlighter Text="@context.CheckedOutUntil.Value.ToString("dd/MM/yyyy")" HighlightedText="@_searchString" />
@@ -87,7 +136,7 @@
                 <MudText Typo="Typo.body1" Color="Color.Warning">Yet to check in</MudText>
             }
         </MudTd>
-        <MudTd DataLabel="Check In Now">
+        <MudTd DataLabel="Check In Now" Style="text-align:right">
             @if(context.CheckedOutUntil.HasValue)
             {
                 <MudText Typo="Typo.body2">Already checked in</MudText>
@@ -120,6 +169,10 @@
     private MudTable<CheckoutResponse> mudTable { get; set; }
     private int _totalItems;
     private int _currentPage;
+    
+    private AddCheckoutCommand Checkout = new();
+    private MudDatePicker picker1;
+    private MudDatePicker picker2;
 
     private ClaimsPrincipal _currentUser;
     private bool _canCreate;
@@ -173,6 +226,30 @@
                 snackbar.Add(message, Severity.Error);
             }
         }
+    }
+
+    private async Task AddCheckoutAsync()
+    {
+        var response = await _checkoutHttpClient.AddCheckoutAsync(Checkout);
+        foreach(var message in response.Messages)
+        {
+            if(response.Succeeded)
+            {
+                snackbar.Add(message, Severity.Success);
+            }
+            else
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+    }
+
+    private void ResetModel()
+    {
+        Checkout.BookBarcode = "";
+        Checkout.PatronRegisterId = "";
+        Checkout.CheckedOutSince = DateTime.Now;
+        Checkout.ExpectedCheckInDate = DateTime.Now.AddDays(15);
     }
 
     private async Task Delete(int Id)
