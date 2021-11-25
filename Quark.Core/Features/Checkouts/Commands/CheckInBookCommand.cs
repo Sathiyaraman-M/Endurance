@@ -3,7 +3,7 @@
 public class CheckInBookCommand : IRequest<Result<int>>
 {
     public string BookBarcode { get; set; }
-    public DateTime CheckInDate { get; set; } = DateTime.Now;
+    public DateTime? CheckInDate { get; set; } = DateTime.Now;
 }
 
 internal class CheckInBookCommandHandler : IRequestHandler<CheckInBookCommand, Result<int>>
