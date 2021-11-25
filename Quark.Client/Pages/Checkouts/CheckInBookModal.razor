@@ -1,0 +1,60 @@
+﻿@inject ICheckoutHttpClient checkoutHttpClient
+
+<EditForm Model=Model OnValidSubmit=CheckInAsync>
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo=Typo.h6><MudIcon Icon=@Icons.Material.Filled.Update Class="mr-3 mb-n1" />Check In Book</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs=12 sm=6 md=4>
+                    <MudTextField @bind-Value=Model.BookBarcode For=@(() => Model.BookBarcode) Label="Book Barcode" 
+                        Adornment=Adornment.End AdornmentIcon=@Icons.Material.Filled.Clear OnAdornmentClick=@(() => Model.BookBarcode = "") />
+                </MudItem>
+                <MudItem xs=12 sm=6 md=4>
+                    <MudDatePicker PickerVariant=PickerVariant.Dialog @ref=picker @bind-Date=Model.CheckInDate Label="CheckIn Date">
+                        <PickerActions>
+                            <MudButton OnClick=@(() => picker.Close(false))>Cancel</MudButton>
+                            <MudButton Color=Color.Primary OnClick=@(() => picker.Close())>Ok</MudButton>
+                        </PickerActions>
+                    </MudDatePicker>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation FullWidth Variant=Variant.Filled ButtonType=ButtonType.Submit Color=Color.Success>Check In</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+
+@code 
+{
+    [Parameter]
+    public CheckInBookCommand Model { get; set; } = new();
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private FluentValidationValidator _fluentValidationValidator;
+    private bool Validated => _fluentValidationValidator.Validate(options => options.IncludeAllRuleSets());
+
+    private MudDatePicker picker;
+
+    private async Task CheckInAsync()
+    {
+        var response = await checkoutHttpClient.CheckInAsync(Model);
+        if (response.Succeeded)
+        {
+            snackbar.Add(response.Messages[0], Severity.Success);
+            MudDialog.Close();
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
+        }
+    }
+}
