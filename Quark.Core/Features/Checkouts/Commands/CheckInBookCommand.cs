@@ -2,7 +2,7 @@
 
 public class CheckInBookCommand : IRequest<Result<int>>
 {
-    public int Id { get; set; }
+    public string BookBarcode { get; set; }
     public DateTime CheckInDate { get; set; } = DateTime.Now;
 }
 
@@ -14,7 +14,8 @@ internal class CheckInBookCommandHandler : IRequestHandler<CheckInBookCommand, R
 
     public async Task<Result<int>> Handle(CheckInBookCommand request, CancellationToken cancellationToken)
     {
-        var checkout = await _unitOfWork.Repository<Checkout>().GetByIdAsync(request.Id);
+        var book = await _unitOfWork.Repository<Book>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.BookBarcode);
+        var checkout = await _unitOfWork.Repository<Checkout>().Entities.FirstOrDefaultAsync(x => !x.CheckedOutUntil.HasValue && x.BookId == book.Id);
         if (checkout is not null)
         {
             checkout.CheckedOutUntil = request.CheckInDate;
