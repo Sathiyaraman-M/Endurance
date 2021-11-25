@@ -55,7 +55,7 @@
                 </MudGrid>
             </MudCardContent>
             <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
+                <MudButton DisableElevation ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
             </MudCardActions>
         </MudCard>
     </EditForm>
@@ -76,12 +76,13 @@
         <col />
         <col />
         <col />
-        <col style="width:10%" />
+        @*<col style="width:10%" />*@
         <col style="width:10%" />
         <col style="width:10%" />
     </ColGroup>
     <ToolBarContent>
         <div class="justify-center mud-text-align-center">
+            <MudButton DisableElevation Variant=Variant.Filled Color=Color.Primary OnClick=InvokeCheckInModal StartIcon=@Icons.Material.Filled.Update IconColor=Color.Surface Class="me-2">Check In Book Now</MudButton>
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
         </div>
         <MudSpacer />
@@ -96,7 +97,7 @@
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutSince">Checkout Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="ExpectedCheckInDate">Expected Return Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutUntil">Check In Date</MudTableSortLabel></MudTh>
-        <MudTh Style="text-align:right">Check In Now</MudTh>
+        @*<MudTh Style="text-align:right">Check In Now</MudTh>*@
         @if (_canView)
         {
             <MudTh Style="text-align:right">View</MudTh>
@@ -136,7 +137,7 @@
                 <MudText Typo="Typo.body1" Color="Color.Warning">Yet to check in</MudText>
             }
         </MudTd>
-        <MudTd DataLabel="Check In Now" Style="text-align:right">
+        @*<MudTd DataLabel="Check In Now" Style="text-align:right">
             @if(context.CheckedOutUntil.HasValue)
             {
                 <MudText Typo="Typo.body2">Already checked in</MudText>
@@ -145,7 +146,7 @@
             {
                 <MudFab DisableElevation Color="Color.Success" Icon="@Icons.Material.Filled.AssignmentReturned" Size="Size.Small"></MudFab>
             }
-        </MudTd>
+        </MudTd>*@
         @if (_canView)
         {
             <MudTd DataLabel="View" Style="text-align:right">
@@ -169,7 +170,7 @@
     private MudTable<CheckoutResponse> mudTable { get; set; }
     private int _totalItems;
     private int _currentPage;
-    
+
     private AddCheckoutCommand Checkout = new();
     private MudDatePicker picker1;
     private MudDatePicker picker2;
@@ -241,6 +242,18 @@
             {
                 snackbar.Add(message, Severity.Error);
             }
+        }
+    }
+
+    private async Task InvokeCheckInModal()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true, Position = DialogPosition.TopCenter };
+        var dialog = dialogService.Show<CheckInBookModal>("Check In Book", parameters, options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            OnSearch("");
         }
     }
 
