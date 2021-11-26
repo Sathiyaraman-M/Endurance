@@ -20,10 +20,11 @@ internal class DashboardQueryHandler : IRequestHandler<DashboardQuery, Result<Da
     {
         var model = new DashboardResponse
         {
-            UsersCount = await _repository.GetUsersCount(),
             PatronsCount = await _unitOfWork.Repository<Patron>().CountAsync(),
             CheckoutsCount = await _unitOfWork.Repository<Checkout>().CountAsync(),
-            BooksCount = await _unitOfWork.Repository<Book>().CountAsync()
+            BooksCount = await _unitOfWork.Repository<Book>().CountAsync(),
+            CheckInTodayCount = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.CheckedOutUntil.Value.Date == DateTime.Today.Date),
+            CheckInPending = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => !x.CheckedOutUntil.HasValue),
         };
         return await Result<DashboardResponse>.SuccessAsync(model);
     }
