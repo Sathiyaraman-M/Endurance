@@ -26,7 +26,7 @@
                     <MudTooltip Text="Toggle light/dark theme">
                         <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
                     </MudTooltip>
-                    <MudMenu Direction="Direction.Right" OffsetY="true" Dense="true" ActivationEvent="MouseEvent.MouseOver" Class="ms-2">
+                    <MudMenu Direction=Direction.Right OffsetY Dense Color=Color.Inherit Class="ms-2">
                         <ActivatorContent>
                             @if (string.IsNullOrEmpty(ImageDataUrl))
                             {
