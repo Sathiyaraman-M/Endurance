@@ -12,7 +12,7 @@ public class Navigation : IDisposable
     {
         _navigationManager = navigationManager;
         _history = new List<string>(MinHistorySize + AdditionalHistorySize);
-        _history.Add(_navigationManager.Uri);
+        _history.Add(_navigationManager.ToBaseRelativePath(_navigationManager.Uri));
         _navigationManager.LocationChanged += OnLocationChanged;
     }
 
@@ -33,7 +33,11 @@ public class Navigation : IDisposable
     private void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
         EnsureSize();
-        _history.Add(e.Location);
+        if (_navigationManager.ToBaseRelativePath(e.Location) == "")
+        {
+            _history.Clear();
+        }
+        _history.Add(_navigationManager.ToBaseRelativePath(e.Location));
     }
 
     private void EnsureSize()
