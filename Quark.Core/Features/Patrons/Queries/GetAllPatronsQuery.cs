@@ -42,7 +42,8 @@ public class GetAllPatronsQueryHandler : IRequestHandler<GetAllPatronsQuery, Pag
             CurrentFees = e.CurrentFees,
             Issued = e.Issued,
             CheckoutsCount = e.Checkouts.Count(),
-            CheckoutsPending = e.Checkouts.Where(x => x.CheckedOutUntil.HasValue).Count()
+            CheckoutsPending = e.Checkouts.Where(x => x.CheckedOutUntil.HasValue).Count(),
+            MultipleCheckoutLimit = e.MultipleCheckoutLimit
 
         };
         var patronSpec = new PatronFilterSpecification(request.SearchString);
