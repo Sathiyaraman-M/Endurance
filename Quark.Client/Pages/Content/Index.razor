@@ -8,12 +8,12 @@
 
 <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2">Dashboard</MudText>
 <MudText Color="Color.Surface" Class="mb-4">Manage your library from here</MudText>
-<MudDivider Class="mb-4" />
+<MudDivider />
 @if (canViewDashboard)
 {
     @if (DashboardData is not null)
     {
-        <MudGrid>
+        <MudGrid Class="my-4">
             <MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
                     <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
@@ -53,14 +53,24 @@
                         <MudIcon Icon="@Icons.Material.Filled.Person" />
                     </MudAvatar>
                     <div>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Users</MudText>
-                        <MudText Typo="Typo.h5">@DashboardData.UsersCount</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Check In Pending</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.CheckInPending</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.Person" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Checked In Today</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.CheckInTodayCount</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
         </MudGrid>
     }
-    <MudDivider Class="my-4" />
 }
 @if (canCreateCheckout)
 {
@@ -105,7 +115,7 @@
                 </MudGrid>
             </MudCardContent>
             <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
+                <MudButton DisableElevation ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
             </MudCardActions>
         </MudCard>
         <MudDivider Class="my-4" />
