@@ -38,6 +38,12 @@ internal static class ServiceCollectionExtensions
         return applicationSettingsConfiguration.Get<AppConfiguration>();
     }
 
+    internal static IServiceCollection AddMailConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<MailConfiguration>(configuration.GetSection(nameof(MailConfiguration)));
+        return services;
+    }
+
     internal static IServiceCollection AddCurrentUserService(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();

@@ -17,6 +17,7 @@ builder.Services.AddCors();
 builder.Services.AddCurrentUserService();
 builder.Services.AddSerialization();
 builder.Services.AddDatabase(builder.Configuration);
+builder.Services.AddMailConfiguration(builder.Configuration);
 builder.Services.AddServerStorage();
 builder.Services.AddIdentity();
 builder.Services.AddJwtAuthentication(builder.Services.GetApplicationSettings(builder.Configuration));
