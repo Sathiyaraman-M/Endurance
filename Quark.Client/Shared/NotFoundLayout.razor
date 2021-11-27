@@ -1,6 +1,6 @@
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider Theme=_theme />
 <MudSnackbarProvider />
 <MudContainer MaxWidth="MaxWidth.Small">
     <div class="d-flex flex-column">
@@ -28,3 +28,12 @@
         </MudItem>
     </div>
 </MudContainer>
+
+@code
+{
+    private MudTheme _theme = AppThemes.DefaultTheme;
+    protected override async Task OnParametersSetAsync()
+    {
+        _theme = await clientPreferenceManager.GetCurrentThemeAsync();
+    }
+}
