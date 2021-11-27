@@ -16,6 +16,7 @@ using Quark.Client.HttpClients.Masters.Books;
 using Quark.Client.HttpClients.Masters.Checkouts;
 using Quark.Client.HttpClients.Masters.Designations;
 using Quark.Client.HttpClients.Masters.Patrons;
+using Quark.Client.Preferences;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -48,6 +49,7 @@ internal static class WebAssemblyHostBuilderExtensions
         builder.Services.AddScoped<UserAuthenticationStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider, UserAuthenticationStateProvider>();
         builder.Services.AddSingleton<Navigation>();
+        builder.Services.AddTransient<IClientPreferenceManager, ClientPreferenceManager>();
         builder.Services.AddHttpClients();
         return builder;
     }
