@@ -1,4 +1,4 @@
-﻿namespace Quark.Client;
+﻿namespace Quark.Client.Preferences;
 
 public class ClientPreference
 {
