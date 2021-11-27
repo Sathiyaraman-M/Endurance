@@ -2,7 +2,7 @@
 
 public static class AppThemes
 {
-    public static MudTheme DefaultTheme = new()
+    public static readonly MudTheme DefaultTheme = new()
     {
         Palette = new Palette()
         {
@@ -10,7 +10,7 @@ public static class AppThemes
         }
     };
 
-    public static MudTheme DarkTheme = new()
+    public static readonly MudTheme DarkTheme = new()
     {
         Palette = new Palette()
         {
