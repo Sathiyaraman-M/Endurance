@@ -58,4 +58,18 @@ public class UserController : ControllerBase
     {
         return Ok(await _userService.ConfirmEmailAsync(userId, code));
     }
+
+    [AllowAnonymous]
+    [HttpPost(Routes.UserEndpoints.ForgotPassword)]
+    public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordRequest request)
+    {
+        return Ok(await _userService.ForgotPasswordAsync(request, Request.Headers["origin"]));
+    }
+
+    [AllowAnonymous]
+    [HttpPost(Routes.UserEndpoints.ResetPassword)]
+    public async Task<IActionResult> ResetPasswordAsync(ResetPasswordRequest request)
+    {
+        return Ok(await _userService.ResetPasswordAsync(request));
+    }
 }
