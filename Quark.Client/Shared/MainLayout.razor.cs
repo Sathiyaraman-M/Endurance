@@ -1,10 +1,12 @@
-﻿namespace Quark.Client.Shared;
+﻿using Quark.Client.Preferences;
+
+namespace Quark.Client.Shared;
 
 public partial class MainLayout
 {
     private bool _drawerOpen = true;
 
-    private ClaimsPrincipal User;
+    private ClaimsPrincipal _user;
     private string CurrentUserId { get; set; }
     private string ImageDataUrl { get; set; }
     private string UserName { get; set; }
@@ -15,20 +17,21 @@ public partial class MainLayout
 
     protected override async Task OnInitializedAsync()
     {
-        _currentTheme = _defaultTheme;
-        User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
-        if (User == null) return;
-        if (User.Identity.IsAuthenticated)
+        _currentTheme = await clientPreferenceManager.GetCurrentThemeAsync();
+        _drawerOpen = (await clientPreferenceManager.GetClientPreference()).IsDrawerOpen;
+        _user = await authStateProvider.GetAuthenticationStateProviderUserAsync();
+        if (_user == null) return;
+        if (_user.Identity.IsAuthenticated)
         {
-            UserName = User.GetUserName();
-            FullName = User.GetFullName();
-            Designation = User.GetDesignation();
-            CurrentUserId = User.GetUserId();
+            UserName = _user.GetUserName();
+            FullName = _user.GetFullName();
+            Designation = _user.GetDesignation();
+            CurrentUserId = _user.GetUserId();
             if (UserName.Length > 0)
             {
                 FirstLetterOfName = UserName[0];
             }
-            Email = User.GetEmail();
+            Email = _user.GetEmail();
             var imageResponse = await accountHttpClient.GetProfilePictureAsync(CurrentUserId);
             if (imageResponse.Succeeded)
             {
@@ -67,50 +70,21 @@ public partial class MainLayout
         }
     }
 
-    private void DarkMode() => _currentTheme = _currentTheme == _defaultTheme ? _darkTheme : _defaultTheme;
+    private async Task ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+        var preference = await clientPreferenceManager.GetClientPreference();
+        preference.IsDrawerOpen = _drawerOpen;
+        await clientPreferenceManager.SetClientPreference(preference);
+    }
+
+    private async Task DarkMode()
+    {
+        _currentTheme = _currentTheme != AppThemes.DefaultTheme ? AppThemes.DefaultTheme : AppThemes.DarkTheme;
+        await clientPreferenceManager.ToggleDarkModeAsync();
+    }
 
     private MudTheme _currentTheme = new();
-    private readonly MudTheme _defaultTheme =
-        new()
-        {
-            Palette = new Palette()
-            {
-                Black = "#272c34"
-            }
-        };
-    private readonly MudTheme _darkTheme =
-        new()
-        {
-            Palette = new Palette()
-            {
-                Primary = "#776be7",
-                Black = "#27272f",
-                Background = "#32333d",
-                BackgroundGrey = "#27272f",
-                Surface = "#373740",
-                DrawerBackground = "#27272f",
-                DrawerText = "rgba(255,255,255, 0.50)",
-                DrawerIcon = "rgba(255,255,255, 0.50)",
-                AppbarBackground = "#27272f",
-                AppbarText = "rgba(255,255,255, 0.70)",
-                TextPrimary = "rgba(255,255,255, 0.70)",
-                TextSecondary = "rgba(255,255,255, 0.50)",
-                ActionDefault = "#adadb1",
-                ActionDisabled = "rgba(255,255,255, 0.26)",
-                ActionDisabledBackground = "rgba(255,255,255, 0.12)",
-                Divider = "rgba(255,255,255, 0.12)",
-                DividerLight = "rgba(255,255,255, 0.06)",
-                TableLines = "rgba(255,255,255, 0.12)",
-                LinesDefault = "rgba(255,255,255, 0.12)",
-                LinesInputs = "rgba(255,255,255, 0.3)",
-                TextDisabled = "rgba(255,255,255, 0.2)",
-                Info = "#3299ff",
-                Success = "#0bba83",
-                Warning = "#ffa800",
-                Error = "#f64e62",
-                Dark = "#27272f"
-            }
-        };
 
     public void Dispose()
     {

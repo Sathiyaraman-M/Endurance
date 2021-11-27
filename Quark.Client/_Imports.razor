@@ -25,6 +25,7 @@
 @using Quark.Client.HttpClients.Masters.Patrons
 @using Quark.Client.Pages.Authentication
 @using Quark.Client.Pages.Modals;
+@using Quark.Client.Preferences
 @using Quark.Core.Domain.Entities
 @using Quark.Core.Domain.Enums
 @using Quark.Core.Features.Books.Commands
@@ -48,6 +49,7 @@
 @inject IAuthenticationHttpClient authenticationHttpClient
 @inject IAuthorizationService authorizationService
 @inject HttpClient httpClient
+@inject IClientPreferenceManager clientPreferenceManager
 @inject IDialogService dialogService
 @inject IHttpClientInterceptor httpInterceptorManager
 @inject IJSRuntime jsRuntime
