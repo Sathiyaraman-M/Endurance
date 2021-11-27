@@ -19,6 +19,7 @@ public partial class MainLayout
     {
         _currentTheme = await clientPreferenceManager.GetCurrentThemeAsync();
         _drawerOpen = (await clientPreferenceManager.GetClientPreference()).IsDrawerOpen;
+        httpInterceptorManager.RegisterEvent();
         _user = await authStateProvider.GetAuthenticationStateProviderUserAsync();
         if (_user == null) return;
         if (_user.Identity.IsAuthenticated)
