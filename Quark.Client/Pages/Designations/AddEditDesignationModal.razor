@@ -14,11 +14,10 @@
                 <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />Update Designation</MudText>
             }
         </TitleContent>
-
         <DialogContent>
             <MudGrid>
                 <MudItem xs="12" md="6">
-                    <MudTextField T="string" For="(() => Model.Name)" @bind-Value="Model.Name" Label="Name" />
+                    <MudTextField T="string" For="(() => Model.Name)" @bind-Value="Model.Name" Label="Designation Name" />
                 </MudItem>
             </MudGrid>
         </DialogContent>
