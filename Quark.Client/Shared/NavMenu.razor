@@ -1,14 +1,4 @@
-﻿<MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
-    <MudCardHeader>
-        <CardHeaderAvatar>            
-            <MudAvatar Image="favicon.ico" />
-        </CardHeaderAvatar>
-        <CardHeaderContent>
-            <MudText Typo="Typo.body2">@(Name ?? "Name")</MudText>
-            <MudText Typo="Typo.caption">@(Designation ?? "Designation")</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-</MudCard>
+﻿
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
     <MudNavLink Href="/swagger/index.html">Swagger</MudNavLink>
@@ -43,23 +33,16 @@
 </MudNavMenu>
 @code
 {
-    private System.Security.Claims.ClaimsPrincipal User;
+    private ClaimsPrincipal User;
     private bool canViewAuditTrails;
     private bool canViewBooks;
     private bool canViewCheckouts;
     private bool canViewDesignations;
     private bool canViewPatrons;
-    private string Name;
-    private string Designation;
 
     protected override async Task OnInitializedAsync()
     {
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
-        if (User.Identity.IsAuthenticated)
-        {
-            Name = User.Claims.FirstOrDefault(x => x.Type == "FullName")?.Value;
-            Designation = User.Claims.FirstOrDefault(x => x.Type == "Designation")?.Value;
-        }
         canViewDesignations = (await authorizationService.AuthorizeAsync(User, Permissions.Designations.View)).Succeeded;
         canViewAuditTrails = (await authorizationService.AuthorizeAsync(User, Permissions.AuditTrails.View)).Succeeded;
         canViewBooks = (await authorizationService.AuthorizeAsync(User, Permissions.Books.View)).Succeeded;
