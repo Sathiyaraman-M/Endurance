@@ -1,0 +1,35 @@
+﻿@page "/account/reset-password/"
+@attribute [AllowAnonymous]
+
+<EditForm Model="@_resetPasswordModel" OnValidSubmit="SubmitAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudGrid>
+        <MudItem xs="12">
+            <div class="d-flex justify-center">
+                <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Primary" Size="Size.Large" ViewBox="0 0 500 500" Style="width: 100px; height: 100px;" />
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div class="d-flex justify-center">
+                <MudText Typo="Typo.h4">Reset password</MudText>
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <div class="d-flex justify-center">
+                <MudText Typo="Typo.subtitle2" Class="mb-n4">Enter email for password reset</MudText>
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField T="string" Label="E-mail" @bind-Value="_resetPasswordModel.Email" For="@(() => _resetPasswordModel.Email)" Variant="Variant.Outlined" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField T="string" Label="Password" @bind-Value="_resetPasswordModel.Password" For="@(() => _resetPasswordModel.Password)" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField T="string" Label="Confirm Password" @bind-Value="_resetPasswordModel.ConfirmPassword" For="@(() => _resetPasswordModel.ConfirmPassword)" Variant="Variant.Outlined" InputType="InputType.Password" />
+        </MudItem>
+        <MudItem xs="12" Class="d-flex justify-center">
+            <MudButton Variant="Variant.Filled" Disabled="@(!Validated)" Color="Color.Primary" ButtonType="ButtonType.Submit" Size="Size.Large" FullWidth="true">Reset Password</MudButton>
+        </MudItem>
+    </MudGrid>
+</EditForm>
