@@ -15,6 +15,7 @@ public static class Permissions
         public const string Create = "Permissions.Users.Create";
         public const string Edit = "Permissions.Users.Edit";
         public const string Delete = "Permissions.Users.Delete";
+        public const string Export = "Permissions.Users.Export";
     }
 
     public static class Roles
