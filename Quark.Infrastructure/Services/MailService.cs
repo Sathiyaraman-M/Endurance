@@ -1,9 +1,10 @@
-﻿using MailKit.Security;
+﻿using FluentEmail.Core;
+using FluentEmail.Smtp;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MimeKit;
 using Quark.Core.Configurations;
 using Quark.Core.Requests.Mail;
+using System.Net.Mail;
 
 namespace Quark.Infrastructure.Services;
 
@@ -18,24 +19,16 @@ public class MailService : IMailService
         _logger = logger;
     }
 
-    public async Task SendAsync(MailRequest request)
+    public async Task SendAsync(MailRequest request, string origin)
     {
         try
         {
-            var email = new MimeMessage
+            Email.DefaultSender = new SmtpSender(() =>  new SmtpClient(origin)
             {
-                Sender = new MailboxAddress(_config.DisplayName, request.From ?? _config.From),
-                Subject = request.Subject,
-                Body = new BodyBuilder
-                {
-                    HtmlBody = request.Body
-                }.ToMessageBody()
-            };
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
-            await smtp.ConnectAsync(_config.Host, _config.Port, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(_config.UserName, _config.Password);
-            await smtp.SendAsync(email);
-            await smtp.DisconnectAsync(true);
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Port = _config.Port
+            });
+            var email = await Email.From(_config.From).To(request.To).Subject(request.Subject).Body(request.Body).SendAsync();
         }
         catch (Exception e)
         {

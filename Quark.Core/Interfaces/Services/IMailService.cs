@@ -4,5 +4,5 @@ namespace Quark.Core.Interfaces.Services;
 
 public interface IMailService
 {
-    Task SendAsync(MailRequest request);
+    Task SendAsync(MailRequest request, string origin);
 }
