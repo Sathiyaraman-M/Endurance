@@ -11,7 +11,7 @@
 
 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Patrons</MudText>
 <MudText Color="Color.Surface" Class="mb-4">Manage all patrons here</MudText>
-<MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<PatronResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
+<MudTable Elevation="0" Outlined HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<PatronResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
         <MudAlert Severity="Severity.Normal">No patrons enrolled in the library. Try to fill 'em up!</MudAlert>
     </NoRecordsContent>
@@ -48,7 +48,7 @@
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Email">Email</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Mobile">Mobile</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="CurrentFees">Current fees</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="CurrentFees">Current due</MudTableSortLabel></MudTh>
         @if (_canView)
             {
             <MudTh Style="text-align:right">View</MudTh>
@@ -75,7 +75,7 @@
         <MudTd DataLabel="Mobile">
             <MudHighlighter Text="@context.Mobile" HighlightedText="@_searchString" />
         </MudTd>
-        <MudTd DataLabel="Current Fees">
+        <MudTd DataLabel="Current Due">
             <MudHighlighter Text="@context.CurrentFees.ToString()" HighlightedText="@_searchString" />
         </MudTd>
         @if (_canView)
@@ -92,7 +92,7 @@
             }
         @if (_canDelete)
             {
-            <MudTd DataLabel="View" Style="text-align:right">
+            <MudTd DataLabel="Delete" Style="text-align:right">
                 <MudFab DisableElevation Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
             </MudTd>
             }
