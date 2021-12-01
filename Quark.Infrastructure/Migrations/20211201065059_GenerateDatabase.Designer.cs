@@ -7,26 +7,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quark.Infrastructure.DbContexts;
 
+#nullable disable
+
 namespace Quark.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20211027130852_AddCoreEntities")]
-    partial class AddCoreEntities
+    [Migration("20211201065059_GenerateDatabase")]
+    partial class GenerateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -101,128 +105,35 @@ namespace Quark.Infrastructure.Migrations
                     b.ToTable("UserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("Quark.Core.Domain.Entities.AssetAvailability", b =>
+            modelBuilder.Entity("Quark.Core.Domain.Entities.Book", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssetAvailabilityStatuses");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.Checkout", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CheckedOutSince")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("CheckedOutUntil")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LibraryCardId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("LibraryCardId");
-
-                    b.ToTable("Checkouts");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.CheckoutHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CheckedIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckedOut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LibraryCardId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("LibraryCardId");
-
-                    b.ToTable("CheckoutHistories");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.Designation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Designations");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryAssets.Book", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetId")
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BarcodeValue")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AvailableCopies")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Copies")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DamagedCopies")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -236,11 +147,20 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("ISBN")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("LostCopies")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -251,39 +171,42 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("Publisher")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("UnknownStatusCopies")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AssetId");
+                    b.HasKey("Id");
 
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryAssets.LibraryAsset", b =>
+            modelBuilder.Entity("Quark.Core.Domain.Entities.BookHeader", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AvailabilityId")
-                        .HasColumnType("int");
+                    b.Property<string>("Barcode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Copies")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Condition")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastModifiedBy")
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
@@ -291,33 +214,102 @@ namespace Quark.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvailabilityId");
+                    b.HasIndex("BookId");
 
-                    b.ToTable("LibraryAssets");
+                    b.ToTable("BookHeader");
                 });
 
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryCard", b =>
+            modelBuilder.Entity("Quark.Core.Domain.Entities.Checkout", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("CurrentFees")
-                        .HasColumnType("decimal(18,2)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("Issued")
+                    b.Property<Guid>("BookHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CheckedOutSince")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CheckedOutUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpectedCheckInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PatronId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("LibraryCards");
+                    b.HasIndex("BookHeaderId");
+
+                    b.HasIndex("PatronId");
+
+                    b.ToTable("Checkouts");
+                });
+
+            modelBuilder.Entity("Quark.Core.Domain.Entities.Designation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Designations");
                 });
 
             modelBuilder.Entity("Quark.Core.Domain.Entities.Patron", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -325,10 +317,16 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<decimal>("CurrentFees")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -337,7 +335,13 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Issued")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
@@ -346,15 +350,16 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LibraryCardId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Mobile")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("MultipleCheckoutLimit")
+                        .HasColumnType("int");
 
-                    b.HasIndex("LibraryCardId");
+                    b.Property<string>("RegisterId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Patrons");
                 });
@@ -363,8 +368,9 @@ namespace Quark.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AffectedColumns")
                         .HasColumnType("nvarchar(max)");
@@ -407,6 +413,9 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -414,6 +423,9 @@ namespace Quark.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
@@ -441,8 +453,9 @@ namespace Quark.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -451,6 +464,9 @@ namespace Quark.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -463,6 +479,9 @@ namespace Quark.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
@@ -495,6 +514,9 @@ namespace Quark.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -518,6 +540,9 @@ namespace Quark.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedByUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModifiedOn")
@@ -620,61 +645,34 @@ namespace Quark.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Quark.Core.Domain.Entities.BookHeader", b =>
+                {
+                    b.HasOne("Quark.Core.Domain.Entities.Book", "Book")
+                        .WithMany("BookHeaders")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("Quark.Core.Domain.Entities.Checkout", b =>
                 {
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryAssets.LibraryAsset", "Asset")
+                    b.HasOne("Quark.Core.Domain.Entities.BookHeader", "BookHeader")
                         .WithMany()
-                        .HasForeignKey("AssetId");
+                        .HasForeignKey("BookHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryCard", "LibraryCard")
+                    b.HasOne("Quark.Core.Domain.Entities.Patron", "Patron")
                         .WithMany("Checkouts")
-                        .HasForeignKey("LibraryCardId");
+                        .HasForeignKey("PatronId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Asset");
+                    b.Navigation("BookHeader");
 
-                    b.Navigation("LibraryCard");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.CheckoutHistory", b =>
-                {
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryAssets.LibraryAsset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId");
-
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryCard", "LibraryCard")
-                        .WithMany()
-                        .HasForeignKey("LibraryCardId");
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("LibraryCard");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryAssets.Book", b =>
-                {
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryAssets.LibraryAsset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId");
-
-                    b.Navigation("Asset");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryAssets.LibraryAsset", b =>
-                {
-                    b.HasOne("Quark.Core.Domain.Entities.AssetAvailability", "Availability")
-                        .WithMany()
-                        .HasForeignKey("AvailabilityId");
-
-                    b.Navigation("Availability");
-                });
-
-            modelBuilder.Entity("Quark.Core.Domain.Entities.Patron", b =>
-                {
-                    b.HasOne("Quark.Core.Domain.Entities.LibraryCard", "LibraryCard")
-                        .WithMany()
-                        .HasForeignKey("LibraryCardId");
-
-                    b.Navigation("LibraryCard");
+                    b.Navigation("Patron");
                 });
 
             modelBuilder.Entity("Quark.Infrastructure.Models.Identity.ApplicationRoleClaim", b =>
@@ -688,7 +686,12 @@ namespace Quark.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Quark.Core.Domain.Entities.LibraryCard", b =>
+            modelBuilder.Entity("Quark.Core.Domain.Entities.Book", b =>
+                {
+                    b.Navigation("BookHeaders");
+                });
+
+            modelBuilder.Entity("Quark.Core.Domain.Entities.Patron", b =>
                 {
                     b.Navigation("Checkouts");
                 });
