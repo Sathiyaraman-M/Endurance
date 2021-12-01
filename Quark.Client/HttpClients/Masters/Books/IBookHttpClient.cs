@@ -19,4 +19,6 @@ public interface IBookHttpClient
     Task<IResult<string>> ExportToExcelAsync(string searchString = "");
 
     Task<IResult<Guid>> DeleteAsync(Guid id);
+
+    Task<IResult<Guid>> DeleteHeaderAsync(Guid id);
 }

@@ -59,4 +59,10 @@ public class BookHttpClient : IBookHttpClient
         var response = await _httpClient.DeleteAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");
         return await response.ToResult<Guid>();
     }
+
+    public async Task<IResult<Guid>> DeleteHeaderAsync(Guid id)
+    {
+        var response = await _httpClient.DeleteAsync($"{Routes.BookEndpoints.BaseRoute}/header/{id}");
+        return await response.ToResult<Guid>();
+    }
 }
