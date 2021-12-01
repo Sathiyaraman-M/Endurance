@@ -8,7 +8,7 @@ public class BookController : BaseApiController
 {
     [Authorize(Policy = Permissions.Books.View)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         return Ok(await _mediator.Send(new GetBookByIdQuery(id)));
     }
@@ -27,6 +27,13 @@ public class BookController : BaseApiController
         return Ok(await _mediator.Send(command));
     }
 
+    [Authorize(Policy = Permissions.Books.Create)]
+    [HttpPost("header")]
+    public async Task<IActionResult> PostHeadersAsync(AddEditBookHeaderCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
     [Authorize(Policy = Permissions.Books.Edit)]
     [HttpPost("{barcode}")]
     public async Task<IActionResult> UpdateCondition(ChangeBookConditionCommand command)
@@ -36,7 +43,7 @@ public class BookController : BaseApiController
 
     [Authorize(Policy = Permissions.Books.Delete)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         return Ok(await _mediator.Send(new DeleteBookCommand { Id = id }));
     }
