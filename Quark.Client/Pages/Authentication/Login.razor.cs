@@ -1,19 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-
-namespace Quark.Client.Pages.Authentication;
+﻿namespace Quark.Client.Pages.Authentication;
 
 public partial class Login
 {
     private TokenRequest requestModel = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await authStateProvider.GetAuthenticationStateAsync();
-        if (state != new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity())))
-        {
-            navigationManager.NavigateTo("/");
-        }
-    }
 
     private async Task SubmitAsync()
     {
