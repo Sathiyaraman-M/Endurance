@@ -1,4 +1,4 @@
-﻿namespace Quark.Client.Pages.Authentication;
+﻿namespace Quark.Client.Pages.Identity;
 
 public partial class Account
 {
