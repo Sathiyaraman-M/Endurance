@@ -55,6 +55,13 @@ public class BookController : BaseApiController
         return Ok(await _mediator.Send(new DeleteBookCommand(id)));
     }
 
+    [Authorize(Policy = Permissions.Books.Delete)]
+    [HttpDelete("header/{id}")]
+    public async Task<IActionResult> DeleteHeaderAsync(Guid id)
+    {
+        return Ok(await _mediator.Send(new DeleteBookHeaderCommand(id)));
+    }
+
     [Authorize(Policy = Permissions.Books.Export)]
     [HttpGet("export")]
     public async Task<IActionResult> ExportToExcelAsync(string searchString = "")
