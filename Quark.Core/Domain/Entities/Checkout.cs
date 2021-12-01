@@ -2,9 +2,9 @@
 
 public class Checkout : AuditableEntity<int>
 {
-    public virtual Book Book { get; set; }
+    public virtual BookHeader BookHeader { get; set; }
 
-    public int BookId { get; set; }
+    public Guid BookHeaderId { get; set; }
 
     public virtual Patron Patron { get; set; }
 
