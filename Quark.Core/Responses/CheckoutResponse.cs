@@ -3,7 +3,7 @@
 public class CheckoutResponse
 {
     public int Id { get; set; }
-    public int BookId { get; set; }
+    public Guid BookId { get; set; }
     public string BookBarcode { get; set; }
     public string DeweyIndex { get; set; }
     public string BookName { get; set; }
