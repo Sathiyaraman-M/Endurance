@@ -87,6 +87,12 @@
         </div>
         <MudSpacer />
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        @*<div class="justify-center mud-text-align-center">
+            <MudButton DisableElevation Variant=Variant.Filled Color=Color.Primary OnClick=InvokeCheckInModal StartIcon=@Icons.Material.Filled.Update IconColor=Color.Surface Class="me-2">Check In Book Now</MudButton>
+            <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+        </div>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>*@
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">ID</MudTableSortLabel></MudTh>
@@ -243,6 +249,7 @@
                 snackbar.Add(message, Severity.Error);
             }
         }
+        await mudTable.ReloadServerData();
     }
 
     private async Task InvokeCheckInModal()

@@ -1,6 +1,7 @@
 ﻿@inject ICheckoutHttpClient checkoutHttpClient
 
 <EditForm Model=Model OnValidSubmit=CheckInAsync>
+    <FluentValidationValidator @ref=_fluentValidationValidator />
     <MudDialog>
         <TitleContent>
             <MudText Typo=Typo.h6><MudIcon Icon=@Icons.Material.Filled.Update Class="mr-3 mb-n1" />Check In Book</MudText>
