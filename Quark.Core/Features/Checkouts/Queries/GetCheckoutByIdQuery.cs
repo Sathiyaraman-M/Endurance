@@ -29,14 +29,14 @@ internal class GetCheckoutBydIdQueryHandler : IRequestHandler<GetCheckoutByIdQue
         //};
         //var Checkout = _mapper.Map<CheckoutResponse>(await _unitOfWork.Repository<Checkout>().GetByIdAsync(request.Id));
         //var checkout = await _unitOfWork.Repository<Checkout>().Entities.Select(expression).FirstAsync(x => x.Id == request.Id);
-        var checkout = await _unitOfWork.Repository<Checkout>().Entities.Include(x => x.Book).Include(x => x.Patron).FirstAsync(x => x.Id == request.Id);
+        var checkout = await _unitOfWork.Repository<Checkout>().Entities.Include(x => x.BookHeader).ThenInclude(x => x.Book).Include(x => x.Patron).FirstAsync(x => x.Id == request.Id);
         var checkoutResponse = new CheckoutResponse
         {
             Id = checkout.Id,
-            BookId = checkout.BookId,
-            BookName = checkout.Book.Name,
-            DeweyIndex = checkout.Book.DeweyIndex,
-            BookBarcode = checkout.Book.Barcode,
+            BookId = checkout.BookHeaderId,
+            BookName = checkout.BookHeader.Book.Name,
+            DeweyIndex = checkout.BookHeader.Book.DeweyIndex,
+            BookBarcode = checkout.BookHeader.Barcode,
             PatronId = checkout.PatronId,
             PatronRegisterId = checkout.Patron.RegisterId,
             PatronName = checkout.Patron.FirstName + " " + checkout.Patron.LastName,

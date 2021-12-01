@@ -32,10 +32,10 @@ internal class GetAllCheckoutQueryHandler : IRequestHandler<GetAllCheckoutsQuery
         Expression<Func<Checkout, CheckoutResponse>> expression = e => new CheckoutResponse
         {
             Id = e.Id,
-            BookId = e.BookId,
-            BookName = e.Book.Name,
-            DeweyIndex = e.Book.DeweyIndex,
-            BookBarcode = e.Book.Barcode,
+            BookId = e.BookHeaderId,
+            BookName = e.BookHeader.Book.Name,
+            DeweyIndex = e.BookHeader.Book.DeweyIndex,
+            BookBarcode = e.BookHeader.Barcode,
             PatronId = e.PatronId,
             PatronRegisterId = e.Patron.RegisterId,
             PatronName = e.Patron.FirstName + " " + e.Patron.LastName,
@@ -47,7 +47,7 @@ internal class GetAllCheckoutQueryHandler : IRequestHandler<GetAllCheckoutsQuery
         if (request.OrderBy?.Any() != true)
         {
             var list = await _unitOfWork.Repository<Checkout>().Entities
-                .Include(x => x.Book).Include(x => x.Patron)
+                .Include(x => x.BookHeader).Include(x => x.Patron)
                 .Specify(checkoutSpec).Select(expression)
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             return list;
@@ -55,7 +55,7 @@ internal class GetAllCheckoutQueryHandler : IRequestHandler<GetAllCheckoutsQuery
         else
         {
             var list = await _unitOfWork.Repository<Checkout>().Entities
-                .Include(x => x.Book).Include(x => x.Patron)
+                .Include(x => x.BookHeader).Include(x => x.Patron)
                 .Specify(checkoutSpec).Select(expression).OrderBy(string.Join(",", request.OrderBy))
                 .ToPaginatedListAsync(request.PageNumber, request.PageSize);
             return list;

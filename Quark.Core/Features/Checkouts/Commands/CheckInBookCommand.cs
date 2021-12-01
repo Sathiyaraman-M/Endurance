@@ -9,13 +9,18 @@ public class CheckInBookCommand : IRequest<Result<int>>
 internal class CheckInBookCommandHandler : IRequestHandler<CheckInBookCommand, Result<int>>
 {
     private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWorkGuid;
 
-    public CheckInBookCommandHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
+    public CheckInBookCommandHandler(IUnitOfWork<int> unitOfWork, IUnitOfWork<Guid> unitOfWorkGuid)
+    {
+        _unitOfWork = unitOfWork;
+        _unitOfWorkGuid = unitOfWorkGuid;
+    }
 
     public async Task<Result<int>> Handle(CheckInBookCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWork.Repository<Book>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.BookBarcode);
-        var checkout = await _unitOfWork.Repository<Checkout>().Entities.FirstOrDefaultAsync(x => !x.CheckedOutUntil.HasValue && x.BookId == book.Id);
+        var book = await _unitOfWorkGuid.Repository<BookHeader>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.BookBarcode);
+        var checkout = await _unitOfWork.Repository<Checkout>().Entities.FirstOrDefaultAsync(x => !x.CheckedOutUntil.HasValue && x.BookHeaderId == book.Id);
         if (checkout is not null)
         {
             checkout.CheckedOutUntil = request.CheckInDate;
