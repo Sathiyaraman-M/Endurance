@@ -3,6 +3,8 @@
 public class DeleteBookCommand : IRequest<Result<Guid>>
 {
     public Guid Id { get; set; }
+
+    public DeleteBookCommand(Guid id) => Id = id;
 }
 
 internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Result<Guid>>
