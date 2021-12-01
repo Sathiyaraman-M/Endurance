@@ -14,6 +14,13 @@ public class BookController : BaseApiController
     }
 
     [Authorize(Policy = Permissions.Books.View)]
+    [HttpGet("header/{id}")]
+    public async Task<IActionResult> GetHeaderByIdAsync(Guid id)
+    {
+        return Ok(await _mediator.Send(new GetBookHeaderByIdQuery(id)));
+    }
+
+    [Authorize(Policy = Permissions.Books.View)]
     [HttpGet]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize, string searchString, string orderBy = null)
     {
@@ -45,7 +52,7 @@ public class BookController : BaseApiController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
-        return Ok(await _mediator.Send(new DeleteBookCommand { Id = id }));
+        return Ok(await _mediator.Send(new DeleteBookCommand(id)));
     }
 
     [Authorize(Policy = Permissions.Books.Export)]
