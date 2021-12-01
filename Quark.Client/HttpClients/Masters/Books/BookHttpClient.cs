@@ -11,6 +11,12 @@ public class BookHttpClient : IBookHttpClient
         _httpClient = httpClient;
     }
 
+    public async Task<IResult<BookHeaderResponse>> GetHeaderByIdAsync(Guid id)
+    {
+        var response = await _httpClient.GetAsync($"{Routes.BookEndpoints.BaseRoute}/header/{id}");
+        return await response.ToResult<BookHeaderResponse>();
+    }
+
     public async Task<IResult<BookResponse>> GetByIdAsync(Guid id)
     {
         var response = await _httpClient.GetAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");

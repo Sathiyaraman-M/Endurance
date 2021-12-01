@@ -6,6 +6,8 @@ public interface IBookHttpClient
 {
     Task<IResult<BookResponse>> GetByIdAsync(Guid id);
 
+    Task<IResult<BookHeaderResponse>> GetHeaderByIdAsync(Guid id);
+
     Task<PaginatedResult<BookResponse>> GetAllPaginatedAsync(PagedRequest pagedRequest);
 
     Task<IResult<Guid>> SaveAsync(AddEditBookCommand request);
