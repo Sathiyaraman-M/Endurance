@@ -1,32 +1,37 @@
 ﻿namespace Quark.Core.Features.Books.Commands;
 
-public class DeleteBookCommand : IRequest<Result<int>>
+public class DeleteBookCommand : IRequest<Result<Guid>>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }
 
-internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Result<int>>
+internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Result<Guid>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<int> _unitOfWorkInt;
+    private readonly IUnitOfWork<Guid> _unitOfWorkGuid;
 
-    public DeleteBookCommandHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
-
-    public async Task<Result<int>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+    public DeleteBookCommandHandler(IUnitOfWork<Guid> unitOfWorkGuid, IUnitOfWork<int> unitOfWorkInt)
     {
-        if (await _unitOfWork.Repository<Checkout>().Entities.Include(x => x.Book).AnyAsync(x => x.Book.Id == request.Id))
+        _unitOfWorkGuid = unitOfWorkGuid;
+        _unitOfWorkInt = unitOfWorkInt;
+    }
+
+    public async Task<Result<Guid>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+    {
+        if (await _unitOfWorkInt.Repository<Checkout>().Entities.Include(x => x.BookHeader).AnyAsync(x => x.BookHeader.Id == request.Id))
         {
-            return await Result<int>.FailAsync("Deletion not allowed!");
+            return await Result<Guid>.FailAsync("Deletion not allowed!");
         }
-        var book = await _unitOfWork.Repository<Book>().GetByIdAsync(request.Id);
+        var book = await _unitOfWorkGuid.Repository<Book>().GetByIdAsync(request.Id);
         if (book is not null)
         {
-            await _unitOfWork.Repository<Book>().DeleteAsync(book);
-            await _unitOfWork.Commit(cancellationToken);
-            return await Result<int>.SuccessAsync(request.Id, "Book deleted!");
+            await _unitOfWorkGuid.Repository<Book>().DeleteAsync(book);
+            await _unitOfWorkGuid.Commit(cancellationToken);
+            return await Result<Guid>.SuccessAsync(request.Id, "Book deleted!");
         }
         else
         {
-            return await Result<int>.FailAsync("Book Not Found!");
+            return await Result<Guid>.FailAsync("Book Not Found!");
         }
     }
 }

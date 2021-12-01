@@ -13,17 +13,17 @@ public class ChangeBookConditionCommand : IRequest<Result<string>>
 
 internal class ChangeBookConditionCommandHandler : IRequestHandler<ChangeBookConditionCommand, Result<string>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public ChangeBookConditionCommandHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
+    public ChangeBookConditionCommandHandler(IUnitOfWork<Guid> unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<Result<string>> Handle(ChangeBookConditionCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWork.Repository<Book>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.Barcode);
+        var book = await _unitOfWork.Repository<BookHeader>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.Barcode, cancellationToken);
         if (book is not null)
         {
             book.Condition = request.Condition;
-            await _unitOfWork.Repository<Book>().UpdateAsync(book);
+            await _unitOfWork.Repository<BookHeader>().UpdateAsync(book);
             await _unitOfWork.Commit(cancellationToken);
             return await Result<string>.SuccessAsync(book.Condition, "Book condition updated!");
         }
