@@ -20,13 +20,13 @@ internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Res
 
     public async Task<Result<Guid>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
     {
-        if (await _unitOfWorkInt.Repository<Checkout>().Entities.Include(x => x.BookHeader).AnyAsync(x => x.BookHeader.Id == request.Id))
-        {
-            return await Result<Guid>.FailAsync("Deletion not allowed!");
-        }
-        var book = await _unitOfWorkGuid.Repository<Book>().GetByIdAsync(request.Id);
+        var book = await _unitOfWorkGuid.Repository<Book>().Entities.Include(x => x.BookHeaders).FirstAsync(x => x.Id == request.Id);
         if (book is not null)
         {
+            if (await _unitOfWorkInt.Repository<Checkout>().Entities.Include(x => x.BookHeader).AnyAsync(x => book.BookHeaders.Any(y => y.Id == x.BookHeader.Id)))
+            {
+                return await Result<Guid>.FailAsync("Deletion not allowed!");
+            }
             await _unitOfWorkGuid.Repository<Book>().DeleteAsync(book);
             await _unitOfWorkGuid.Commit(cancellationToken);
             return await Result<Guid>.SuccessAsync(request.Id, "Book deleted!");
