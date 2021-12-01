@@ -10,7 +10,9 @@ public class BookProfile : Profile
     public BookProfile()
     {
         CreateMap<AddEditBookCommand, Book>();
+        CreateMap<AddEditBookHeaderCommand, BookHeader>();
         CreateMap<BookResponse, Book>().ReverseMap();
+        CreateMap<BookHeaderResponse, BookHeader>().ReverseMap();
     }
 }
 public class CheckoutProfile : Profile
@@ -33,7 +35,7 @@ public class PatronProfile : Profile
     public PatronProfile()
     {
         CreateMap<AddEditPatronCommand, Patron>()
-            .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth.HasValue ? src.DateOfBirth.Value : DateTime.MinValue))
+            .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth ?? DateTime.MinValue))
             .ReverseMap();
         CreateMap<Patron, PatronResponse>().ReverseMap();
     }
