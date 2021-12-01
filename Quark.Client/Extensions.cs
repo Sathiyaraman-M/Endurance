@@ -41,7 +41,6 @@ internal static class WebAssemblyHostBuilderExtensions
         builder.Services.AddAuthorizationCore(options => RegisterPermissionClaims(options));
         builder.Services.AddMudServices();
         builder.Services.AddBlazoredLocalStorage();
-        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddTransient<AuthenticationHeaderHandler>();
         builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName).EnableIntercept(sp));
         builder.Services.AddHttpClient(ClientName, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)).AddHttpMessageHandler<AuthenticationHeaderHandler>();
