@@ -12,10 +12,10 @@ public class ExportBooksQuery : IRequest<Result<string>>
 
 internal class ExportBooksQueryHandler : IRequestHandler<ExportBooksQuery, Result<string>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IExcelService _excelService;
 
-    public ExportBooksQueryHandler(IUnitOfWork<int> unitOfWork, IExcelService excelService)
+    public ExportBooksQueryHandler(IUnitOfWork<Guid> unitOfWork, IExcelService excelService)
     {
         _unitOfWork = unitOfWork;
         _excelService = excelService;
@@ -30,14 +30,17 @@ internal class ExportBooksQueryHandler : IRequestHandler<ExportBooksQuery, Resul
             { "Book Title", x => x.Name },
             { "ISBN", x => x.ISBN },
             { "Dewey Index", x => x.DeweyIndex },
-            { "Barcode", x => x.Barcode },
             { "Author", x => x.Author },
             { "Publisher Name", x => x.Publisher },
             { "Cost", x => x.Cost },
-            { "Book latest condition", x => x.Condition },
             { "Edition", x => x.Edition },
             { "Publication Date", x => x.PublicationYear },
-            { "Description", x => x.Description }
+            { "Description", x => x.Description },
+            { "Copies", x => x.Copies },
+            { "Available", x => x.AvailableCopies },
+            { "Damaged", x => x.DamagedCopies },
+            { "Lost", x => x.LostCopies },
+            { "Unknown status", x => x.UnknownStatusCopies }
         }, sheetName: "Books", cancellationToken);
         return await Result<string>.SuccessAsync(data: data);
     }
