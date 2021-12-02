@@ -14,6 +14,5 @@ public class AddEditBookCommandValidator : AbstractValidator<AddEditBookCommand>
         RuleFor(x => x.Publisher).NotEmpty().WithMessage("Publisher Name is required");
         RuleFor(x => x.Edition).NotEmpty().WithMessage("Edition is required");
         RuleFor(x => x.Cost).GreaterThanOrEqualTo(0).WithMessage("Cost cannot be negative");
-        RuleFor(x => x.Copies).GreaterThanOrEqualTo(1).WithMessage("Copies must be greater than 0");
     }
 }
