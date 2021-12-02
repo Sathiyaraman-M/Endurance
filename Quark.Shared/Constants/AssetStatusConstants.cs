@@ -6,4 +6,5 @@ public static class AssetStatusConstants
     public const string GoodCondition = "The book is in good condition.";
     public const string Unknown = "The book is in unknown whereabouts and condition.";
     public const string Damaged = "The book has been damaged.";
+    public const string Disposed = "The book has been disposed.";
 }
