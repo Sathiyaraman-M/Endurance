@@ -18,5 +18,6 @@ public class BookResponse
     public int DamagedCopies { get; set; }
     public int LostCopies { get; set; }
     public int UnknownStatusCopies { get; set; }
+    public int DisposedCopies { get; set; }
     public List<BookHeaderResponse> BookHeaders { get; set; }
 }

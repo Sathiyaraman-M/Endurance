@@ -17,5 +17,6 @@ public class Book : AuditableEntity<Guid>
     public int DamagedCopies { get; set; }
     public int LostCopies { get; set; }
     public int UnknownStatusCopies { get; set; }
+    public int DisposedCopies { get; set; }
     public List<BookHeader> BookHeaders { get; set; }
 }
