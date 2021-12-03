@@ -38,14 +38,16 @@ public class BookController : BaseApiController
     [HttpPost("header")]
     public async Task<IActionResult> PostHeadersAsync(AddEditBookHeaderCommand command)
     {
-        return Ok(await _mediator.Send(command));
+        var headerResult = await _mediator.Send(command);
+        return Ok(await _mediator.Send(new UpdateBookCopiesCommand(headerResult.Data)));
     }
 
     [Authorize(Policy = Permissions.Books.Edit)]
     [HttpPost("{barcode}")]
     public async Task<IActionResult> UpdateCondition(ChangeBookConditionCommand command)
     {
-        return Ok(await _mediator.Send(command));
+        var headerResult = await _mediator.Send(command);
+        return Ok(await _mediator.Send(new UpdateBookCopiesCommand(headerResult.Data)));
     }
 
     [Authorize(Policy = Permissions.Books.Delete)]
