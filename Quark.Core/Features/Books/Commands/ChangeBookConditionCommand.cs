@@ -1,6 +1,6 @@
 ﻿namespace Quark.Core.Features.Books.Commands;
 
-public class ChangeBookConditionCommand : IRequest<Result<string>>
+public class ChangeBookConditionCommand : IRequest<Result<Guid>>
 {
     public ChangeBookConditionCommand(string barcode, string condition)
     {
@@ -11,22 +11,22 @@ public class ChangeBookConditionCommand : IRequest<Result<string>>
     public string Condition { get; set; }
 }
 
-internal class ChangeBookConditionCommandHandler : IRequestHandler<ChangeBookConditionCommand, Result<string>>
+internal class ChangeBookConditionCommandHandler : IRequestHandler<ChangeBookConditionCommand, Result<Guid>>
 {
     private readonly IUnitOfWork<Guid> _unitOfWork;
 
     public ChangeBookConditionCommandHandler(IUnitOfWork<Guid> unitOfWork) => _unitOfWork = unitOfWork;
 
-    public async Task<Result<string>> Handle(ChangeBookConditionCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(ChangeBookConditionCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWork.Repository<BookHeader>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.Barcode, cancellationToken);
-        if (book is not null)
+        var bookHeader = await _unitOfWork.Repository<BookHeader>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.Barcode, cancellationToken);
+        if (bookHeader is not null)
         {
-            book.Condition = request.Condition;
-            await _unitOfWork.Repository<BookHeader>().UpdateAsync(book);
+            bookHeader.Condition = request.Condition;
+            await _unitOfWork.Repository<BookHeader>().UpdateAsync(bookHeader);
             await _unitOfWork.Commit(cancellationToken);
-            return await Result<string>.SuccessAsync(book.Condition, "Book condition updated!");
+            return await Result<Guid>.SuccessAsync(bookHeader.BookId, "Book condition updated!");
         }
-        return await Result<string>.FailAsync("Book not found!");
+        return await Result<Guid>.FailAsync("Book not found!");
     }
 }
