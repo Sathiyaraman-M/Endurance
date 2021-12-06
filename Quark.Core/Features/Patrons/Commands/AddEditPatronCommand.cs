@@ -1,8 +1,8 @@
 ﻿namespace Quark.Core.Features.Patrons.Commands;
 
-public class AddEditPatronCommand : IRequest<Result<int>>
+public class AddEditPatronCommand : IRequest<Result<Guid>>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string RegisterId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -14,29 +14,29 @@ public class AddEditPatronCommand : IRequest<Result<int>>
     public int MultipleCheckoutLimit { get; set; }
 }
 
-public class AddEditPatronCommandHandler : IRequestHandler<AddEditPatronCommand, Result<int>>
+public class AddEditPatronCommandHandler : IRequestHandler<AddEditPatronCommand, Result<Guid>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IMapper _mapper;
 
-    public AddEditPatronCommandHandler(IUnitOfWork<int> unitOfWork, IMapper mapper)
+    public AddEditPatronCommandHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<Result<int>> Handle(AddEditPatronCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(AddEditPatronCommand request, CancellationToken cancellationToken)
     {
         if (await _unitOfWork.Repository<Patron>().Entities.Where(p => p.Id != request.Id).AnyAsync(x => x.RegisterId == request.RegisterId, cancellationToken))
         {
-            return await Result<int>.FailAsync("Register number already exists!");
+            return await Result<Guid>.FailAsync("Register number already exists!");
         }
         var patron = _mapper.Map<Patron>(request);
-        if (request.Id == 0)
+        if (request.Id == Guid.Empty)
         {
             await _unitOfWork.Repository<Patron>().AddAsync(patron);
             await _unitOfWork.Commit(cancellationToken);
-            return await Result<int>.SuccessAsync(patron.Id, "Patron added!");
+            return await Result<Guid>.SuccessAsync(patron.Id, "Patron added!");
         }
         else
         {
@@ -44,11 +44,11 @@ public class AddEditPatronCommandHandler : IRequestHandler<AddEditPatronCommand,
             {
                 await _unitOfWork.Repository<Patron>().UpdateAsync(patron);
                 await _unitOfWork.Commit(cancellationToken);
-                return await Result<int>.SuccessAsync(patron.Id, "Patron updated!");
+                return await Result<Guid>.SuccessAsync(patron.Id, "Patron updated!");
             }
             else
             {
-                return await Result<int>.FailAsync("Patron not found!");
+                return await Result<Guid>.FailAsync("Patron not found!");
             }
         }
     }

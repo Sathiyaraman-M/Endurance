@@ -14,10 +14,10 @@ public class ExportPatronsQuery : IRequest<Result<string>>
 
 internal class ExportPatronsQueryHandler : IRequestHandler<ExportPatronsQuery, Result<string>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IExcelService _excelService;
 
-    public ExportPatronsQueryHandler(IUnitOfWork<int> unitOfWork, IExcelService excelService)
+    public ExportPatronsQueryHandler(IUnitOfWork<Guid> unitOfWork, IExcelService excelService)
     {
         _unitOfWork = unitOfWork;
         _excelService = excelService;
