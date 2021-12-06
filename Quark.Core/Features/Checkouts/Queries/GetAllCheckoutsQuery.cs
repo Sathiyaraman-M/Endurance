@@ -23,9 +23,9 @@ public class GetAllCheckoutsQuery : IRequest<PaginatedResult<CheckoutResponse>>
 
 internal class GetAllCheckoutQueryHandler : IRequestHandler<GetAllCheckoutsQuery, PaginatedResult<CheckoutResponse>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public GetAllCheckoutQueryHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
+    public GetAllCheckoutQueryHandler(IUnitOfWork<Guid> unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<PaginatedResult<CheckoutResponse>> Handle(GetAllCheckoutsQuery request, CancellationToken cancellationToken)
     {
