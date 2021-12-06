@@ -8,7 +8,7 @@ public class DesignationRepository : IDesignationRepository
         _userManager = userManager;
     }
 
-    public async Task<bool> IsDesignationUsed(int Id)
+    public async Task<bool> IsDesignationUsed(Guid Id)
     {
         return await _userManager.Users.AnyAsync(x => x.DesignationId == Id);
     }
