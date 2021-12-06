@@ -1,30 +1,30 @@
 ﻿namespace Quark.Core.Features.Designations.Commands;
 
-public class AddEditDesignationCommand : IRequest<Result<int>>
+public class AddEditDesignationCommand : IRequest<Result<Guid>>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
 }
 
-public class AddEditDesignationCommandHandler : IRequestHandler<AddEditDesignationCommand, Result<int>>
+public class AddEditDesignationCommandHandler : IRequestHandler<AddEditDesignationCommand, Result<Guid>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IMapper _mapper;
 
-    public AddEditDesignationCommandHandler(IUnitOfWork<int> unitOfWork, IMapper mapper)
+    public AddEditDesignationCommandHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<Result<int>> Handle(AddEditDesignationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(AddEditDesignationCommand request, CancellationToken cancellationToken)
     {
         var designation = _mapper.Map<Designation>(request);
-        if (request.Id == 0)
+        if (request.Id == Guid.Empty)
         {
             await _unitOfWork.Repository<Designation>().AddAsync(designation);
             await _unitOfWork.CommitAndRemoveCache(cancellationToken, ApplicationConstants.Cache.GetAllDesignationsCacheKey);
-            return await Result<int>.SuccessAsync(designation.Id, "Designation Saved!");
+            return await Result<Guid>.SuccessAsync(designation.Id, "Designation Saved!");
         }
         else
         {
@@ -32,11 +32,11 @@ public class AddEditDesignationCommandHandler : IRequestHandler<AddEditDesignati
             {
                 await _unitOfWork.Repository<Designation>().UpdateAsync(designation);
                 await _unitOfWork.CommitAndRemoveCache(cancellationToken, ApplicationConstants.Cache.GetAllDesignationsCacheKey);
-                return await Result<int>.SuccessAsync(request.Id, "Designation Updated!");
+                return await Result<Guid>.SuccessAsync(request.Id, "Designation Updated!");
             }
             else
             {
-                return await Result<int>.FailAsync("Designation Not Found!");
+                return await Result<Guid>.FailAsync("Designation Not Found!");
             }
         }
     }

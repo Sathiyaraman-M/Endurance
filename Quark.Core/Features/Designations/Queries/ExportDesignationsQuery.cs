@@ -12,10 +12,10 @@ public class ExportDesignationsQuery : IRequest<Result<string>>
 
 internal class ExportDesignationsQueryHandler : IRequestHandler<ExportDesignationsQuery, Result<string>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IExcelService _excelService;
 
-    public ExportDesignationsQueryHandler(IUnitOfWork<int> unitOfWork, IExcelService excelService)
+    public ExportDesignationsQueryHandler(IUnitOfWork<Guid> unitOfWork, IExcelService excelService)
     {
         _unitOfWork = unitOfWork;
         _excelService = excelService;
