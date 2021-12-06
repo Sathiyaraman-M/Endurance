@@ -1,6 +1,6 @@
 ﻿namespace Quark.Core.Domain.Entities;
 
-public class Patron : AuditableEntity<int>
+public class Patron : AuditableEntity<Guid>
 {
     public string RegisterId { get; set; }
     public string FirstName { get; set; }
