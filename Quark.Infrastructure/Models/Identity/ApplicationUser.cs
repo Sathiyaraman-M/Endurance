@@ -9,7 +9,7 @@ public class ApplicationUser : IdentityUser<string>, IAuditableEntity<string>
     [Column(TypeName = "text")]
     public string ProfilePictureDataUrl { get; set; }
 
-    public int DesignationId { get; set; }
+    public Guid DesignationId { get; set; }
     //public virtual Designation Designation { get; set; }
 
     public string CreatedBy { get; set; }
