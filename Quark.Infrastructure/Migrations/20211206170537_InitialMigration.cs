@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quark.Infrastructure.Migrations
 {
-    public partial class GenerateDatabase : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,7 @@ namespace Quark.Infrastructure.Migrations
                     DamagedCopies = table.Column<int>(type: "int", nullable: false),
                     LostCopies = table.Column<int>(type: "int", nullable: false),
                     UnknownStatusCopies = table.Column<int>(type: "int", nullable: false),
+                    DisposedCopies = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -68,8 +69,7 @@ namespace Quark.Infrastructure.Migrations
                 name: "Designations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -87,8 +87,7 @@ namespace Quark.Infrastructure.Migrations
                 name: "Patrons",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegisterId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -141,7 +140,7 @@ namespace Quark.Infrastructure.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePictureDataUrl = table.Column<string>(type: "text", nullable: true),
-                    DesignationId = table.Column<int>(type: "int", nullable: false),
+                    DesignationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -327,10 +326,9 @@ namespace Quark.Infrastructure.Migrations
                 name: "Checkouts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookHeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PatronId = table.Column<int>(type: "int", nullable: false),
+                    PatronId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CheckedOutSince = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpectedCheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckedOutUntil = table.Column<DateTime>(type: "datetime2", nullable: true),

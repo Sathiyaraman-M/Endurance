@@ -29,7 +29,7 @@ public class DesignationController : BaseApiController
 
     [Authorize(Policy = Permissions.Designations.Delete)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         return Ok(await _mediator.Send(new DeleteDesignationCommand { Id = id }));
     }

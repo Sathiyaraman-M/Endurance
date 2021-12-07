@@ -21,9 +21,16 @@ internal class DeleteCheckoutCommandHandler : IRequestHandler<DeleteCheckoutComm
         var Checkout = await _unitOfWork.Repository<Checkout>().GetByIdAsync(request.Id);
         if (Checkout is not null)
         {
-            await _unitOfWork.Repository<Checkout>().DeleteAsync(Checkout);
-            await _unitOfWork.Commit(cancellationToken);
-            return await Result<Guid>.SuccessAsync(request.Id, "Checkout deleted!");
+            if (!Checkout.CheckedOutUntil.HasValue)
+            {
+                await _unitOfWork.Repository<Checkout>().DeleteAsync(Checkout);
+                await _unitOfWork.Commit(cancellationToken);
+                return await Result<Guid>.SuccessAsync(request.Id, "Checkout deleted!");
+            }
+            else
+            {
+                return await Result<Guid>.FailAsync("Cannot delete a record after checked in!");
+            }
         }
         else
         {

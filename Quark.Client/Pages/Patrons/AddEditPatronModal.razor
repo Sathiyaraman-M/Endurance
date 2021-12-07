@@ -4,7 +4,7 @@
     <FluentValidationValidator @ref="_fluentValidationValidator" />
     <MudDialog>
         <TitleContent>
-            @if (Model.Id == 0)
+            @if (Model.Id == Guid.Empty)
             {
                 <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />Add Patron</MudText>
             }

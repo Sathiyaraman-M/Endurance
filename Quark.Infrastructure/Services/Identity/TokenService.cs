@@ -16,9 +16,9 @@ public class TokenService : ITokenService
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly AppConfiguration _appConfig;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public TokenService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<AppConfiguration> appConfig, SignInManager<ApplicationUser> signInManager, IUnitOfWork<int> unitOfWork)
+    public TokenService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<AppConfiguration> appConfig, SignInManager<ApplicationUser> signInManager, IUnitOfWork<Guid> unitOfWork)
     {
         _userManager = userManager;
         _roleManager = roleManager;
