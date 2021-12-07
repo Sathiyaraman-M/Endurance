@@ -9,26 +9,24 @@ public class DeleteBookCommand : IRequest<Result<Guid>>
 
 internal class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Result<Guid>>
 {
-    private readonly IUnitOfWork<int> _unitOfWorkInt;
-    private readonly IUnitOfWork<Guid> _unitOfWorkGuid;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public DeleteBookCommandHandler(IUnitOfWork<Guid> unitOfWorkGuid, IUnitOfWork<int> unitOfWorkInt)
+    public DeleteBookCommandHandler(IUnitOfWork<Guid> unitOfWork)
     {
-        _unitOfWorkGuid = unitOfWorkGuid;
-        _unitOfWorkInt = unitOfWorkInt;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<Guid>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWorkGuid.Repository<Book>().Entities.Include(x => x.BookHeaders).FirstAsync(x => x.Id == request.Id);
+        var book = await _unitOfWork.Repository<Book>().Entities.Include(x => x.BookHeaders).FirstAsync(x => x.Id == request.Id, cancellationToken);
         if (book is not null)
         {
-            if (await _unitOfWorkInt.Repository<Checkout>().Entities.Include(x => x.BookHeader).AnyAsync(x => book.BookHeaders.Any(y => y.Id == x.BookHeader.Id)))
+            if (await _unitOfWork.Repository<Checkout>().Entities.Include(x => x.BookHeader).AnyAsync(x => book.BookHeaders.Any(y => y.Id == x.BookHeader.Id), cancellationToken))
             {
                 return await Result<Guid>.FailAsync("Deletion not allowed!");
             }
-            await _unitOfWorkGuid.Repository<Book>().DeleteAsync(book);
-            await _unitOfWorkGuid.Commit(cancellationToken);
+            await _unitOfWork.Repository<Book>().DeleteAsync(book);
+            await _unitOfWork.Commit(cancellationToken);
             return await Result<Guid>.SuccessAsync(request.Id, "Book deleted!");
         }
         else

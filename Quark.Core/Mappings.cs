@@ -10,7 +10,6 @@ public class BookProfile : Profile
     public BookProfile()
     {
         CreateMap<AddEditBookCommand, Book>();
-        CreateMap<AddEditBookHeaderCommand, BookHeader>();
         CreateMap<BookResponse, Book>().ReverseMap();
         CreateMap<BookHeaderResponse, BookHeader>().ReverseMap();
     }
