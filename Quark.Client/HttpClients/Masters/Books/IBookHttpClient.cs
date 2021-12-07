@@ -6,19 +6,11 @@ public interface IBookHttpClient
 {
     Task<IResult<BookResponse>> GetByIdAsync(Guid id);
 
-    Task<IResult<BookHeaderResponse>> GetHeaderByIdAsync(Guid id);
-
     Task<PaginatedResult<BookResponse>> GetAllPaginatedAsync(PagedRequest pagedRequest);
 
     Task<IResult<Guid>> SaveAsync(AddEditBookCommand request);
-    
-    Task<IResult<Guid>> SaveHeaderAsync(AddEditBookHeaderCommand request);
-
-    Task<IResult<string>> UpdateConditionAsync(ChangeBookConditionCommand request);
-
-    Task<IResult<string>> ExportToExcelAsync(string searchString = "");
 
     Task<IResult<Guid>> DeleteAsync(Guid id);
 
-    Task<IResult<Guid>> DeleteHeaderAsync(Guid id);
+    Task<IResult<string>> ExportToExcelAsync(string searchString = "");
 }

@@ -17,33 +17,33 @@ public class CheckoutHttpClient : ICheckoutHttpClient
         return await response.ToPaginatedResult<CheckoutResponse>();
     }
 
-    public async Task<IResult<CheckoutResponse>> GetByIdAsync(int id)
+    public async Task<IResult<CheckoutResponse>> GetByIdAsync(Guid id)
     {
         var response = await _httpClient.GetAsync($"{Routes.CheckoutEndpoints.BaseRoute}/{id}");
         return await response.ToResult<CheckoutResponse>();
     }
 
-    public async Task<IResult<int>> AddCheckoutAsync(AddCheckoutCommand command)
+    public async Task<IResult<Guid>> AddCheckoutAsync(AddCheckoutCommand command)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.CheckoutEndpoints.BaseRoute, command);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
-    public async Task<IResult<int>> ExtendDaysAsync(ExtendCheckoutCommand command)
+    public async Task<IResult<Guid>> ExtendDaysAsync(ExtendCheckoutCommand command)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.CheckoutEndpoints.ExtendCheckoutRoute, command);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
-    public async Task<IResult<int>> CheckInAsync(CheckInBookCommand command)
+    public async Task<IResult<Guid>> CheckInAsync(CheckInBookCommand command)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.CheckoutEndpoints.CheckInRoute, command);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
-    public async Task<IResult<int>> DeleteCheckoutAsync(int id)
+    public async Task<IResult<Guid>> DeleteCheckoutAsync(Guid id)
     {
         var response = await _httpClient.DeleteAsync($"{Routes.CheckoutEndpoints.BaseRoute}/{id}");
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 }

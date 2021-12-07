@@ -6,13 +6,13 @@ public interface ICheckoutHttpClient
 {
     Task<PaginatedResult<CheckoutResponse>> GetAllPaginatedAsync(PagedRequest request);
 
-    Task<IResult<CheckoutResponse>> GetByIdAsync(int id);
+    Task<IResult<CheckoutResponse>> GetByIdAsync(Guid id);
 
-    Task<IResult<int>> AddCheckoutAsync(AddCheckoutCommand command);
+    Task<IResult<Guid>> AddCheckoutAsync(AddCheckoutCommand command);
 
-    Task<IResult<int>> ExtendDaysAsync(ExtendCheckoutCommand command);
+    Task<IResult<Guid>> ExtendDaysAsync(ExtendCheckoutCommand command);
 
-    Task<IResult<int>> CheckInAsync(CheckInBookCommand command);
+    Task<IResult<Guid>> CheckInAsync(CheckInBookCommand command);
 
-    Task<IResult<int>> DeleteCheckoutAsync(int id);
+    Task<IResult<Guid>> DeleteCheckoutAsync(Guid id);
 }
