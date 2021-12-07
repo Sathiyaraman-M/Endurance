@@ -15,7 +15,7 @@ public class PatronController : BaseApiController
 
     [Authorize(Policy = Permissions.Patrons.View)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         return Ok(await _mediator.Send(new GetPatronByIdQuery(id)));
     }
@@ -36,7 +36,7 @@ public class PatronController : BaseApiController
 
     [Authorize(Policy = Permissions.Patrons.Delete)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         return Ok(await _mediator.Send(new DeletePatronCommand { Id = id }));
     }

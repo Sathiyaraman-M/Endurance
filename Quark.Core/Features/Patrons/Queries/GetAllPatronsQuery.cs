@@ -23,9 +23,9 @@ public class GetAllPatronsQuery : IRequest<PaginatedResult<PatronResponse>>
 
 public class GetAllPatronsQueryHandler : IRequestHandler<GetAllPatronsQuery, PaginatedResult<PatronResponse>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public GetAllPatronsQueryHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
+    public GetAllPatronsQueryHandler(IUnitOfWork<Guid> unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<PaginatedResult<PatronResponse>> Handle(GetAllPatronsQuery request, CancellationToken cancellationToken)
     {

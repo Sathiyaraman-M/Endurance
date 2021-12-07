@@ -17,16 +17,16 @@ public class PatronHttpClient : IPatronHttpClient
         return await response.ToPaginatedResult<PatronResponse>();
     }
 
-    public async Task<IResult<PatronResponse>> GetByIdAsync(int id)
+    public async Task<IResult<PatronResponse>> GetByIdAsync(Guid id)
     {
         var response = await _httpClient.GetAsync($"{Routes.PatronEndpoints.BaseRoute}/{id}");
         return await response.ToResult<PatronResponse>();
     }
 
-    public async Task<IResult<int>> SaveAsync(AddEditPatronCommand command)
+    public async Task<IResult<Guid>> SaveAsync(AddEditPatronCommand command)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.PatronEndpoints.BaseRoute, command);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
     public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")
     {
@@ -35,9 +35,9 @@ public class PatronHttpClient : IPatronHttpClient
         return await response.ToResult<string>();
     }
 
-    public async Task<IResult<int>> DeleteAsync(int id)
+    public async Task<IResult<Guid>> DeleteAsync(Guid id)
     {
         var response = await _httpClient.DeleteAsync($"{Routes.PatronEndpoints.BaseRoute}/{id}");
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/account/reset-password/"
 @attribute [AllowAnonymous]
+@layout AuthLayout
 
 <EditForm Model="@_resetPasswordModel" OnValidSubmit="SubmitAsync">
     <FluentValidationValidator @ref="_fluentValidationValidator" />

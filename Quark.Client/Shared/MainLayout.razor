@@ -4,95 +4,84 @@
 <MudThemeProvider Theme=_currentTheme />
 <MudDialogProvider />
 <MudSnackbarProvider />
-<AuthorizeView>
-    <NotAuthorized>
-        <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
-            <MudPaper Elevation="0" Outlined Class="pa-8" Style="width: 500px;">
-                @Body
-            </MudPaper>
-        </MudContainer>
-    </NotAuthorized>
-    <Authorized>
-        <MudSwipeArea OnSwipe=OnSwipe>
-            <MudLayout>
-                <MudAppBar>
-                    <MudToolBar DisableGutters="true">
-                        @if (Navigation.CanNavigateBack)
-                        {
-                            <MudIconButton Edge=Edge.Start Icon="@Icons.Material.Filled.ArrowBack" OnClick="Navigation.NavigateBack" Color="Color.Inherit" />
-                        }
-                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="ToggleDrawer" />
-                    </MudToolBar>
-                    <MudSpacer />
-                    @*<MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" ViewBox="0 0 500 500" />*@
-                    <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large"  />
-                    <MudHidden Breakpoint="Breakpoint.Xs">
-                        <MudText Typo="Typo.h5" Class="ml-4">@ApplicationConstants.LibraryName</MudText>
-                    </MudHidden>
-                    <MudSpacer />
-                    <MudTooltip Text="Toggle light/dark theme">
-                        <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
-                    </MudTooltip>
-                    <MudMenu Direction=Direction.Right OffsetY Dense Color=Color.Inherit Class="ms-2">
-                        <ActivatorContent>
-                            @if (string.IsNullOrEmpty(ImageDataUrl))
-                            {
-                                <MudAvatar Color="Color.Secondary">@FirstLetterOfName</MudAvatar>
-                            }
-                            else
-                            {
-                                <MudAvatar Image="@ImageDataUrl" Style="height:50px; width:50px;"> </MudAvatar>
-                            }
-                        </ActivatorContent>
-                        <ChildContent>
-                            <MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
-                                <MudCardHeader>
-                                    <CardHeaderAvatar>
-                                        <MudAvatar Style="height:75px; width:75px;" Image="@ImageDataUrl" />
-                                    </CardHeaderAvatar>
-                                    <CardHeaderContent>
-                                        <MudText Typo="Typo.h6">@FullName</MudText>
-                                        <MudText Typo="Typo.body1">@Designation</MudText>
-                                        <MudText Typo="Typo.body2">@Email</MudText>
-                                    </CardHeaderContent>
-                                </MudCardHeader>
-                            </MudCard>
-                            <MudDivider />
-                            <MudListItem Text="Account" Href="/account" Icon="@Icons.Material.Outlined.Person" />
-                            <MudListItem Text="Logout" Icon="@Icons.Material.Filled.Logout" OnClick="Logout" />
-                        </ChildContent>
-                    </MudMenu>
-                </MudAppBar>
-                <MudDrawer @bind-Open="_drawerOpen" Breakpoint="Breakpoint.Lg" Class="mudblazor-appbar-band" ClipMode="DrawerClipMode.Docked">
+<MudSwipeArea OnSwipe=OnSwipe>
+    <MudLayout>
+        <MudAppBar>
+            <MudToolBar DisableGutters="true">
+                @if (Navigation.CanNavigateBack)
+                {
+                    <MudIconButton Edge=Edge.Start Icon="@Icons.Material.Filled.ArrowBack" OnClick="Navigation.NavigateBack" Color="Color.Inherit" />
+                }
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="ToggleDrawer" />
+            </MudToolBar>
+            <MudSpacer />
+            @*<MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" ViewBox="0 0 500 500" />*@
+            <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" />
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <MudText Typo="Typo.h5" Class="ml-4">@ApplicationConstants.LibraryName</MudText>
+            </MudHidden>
+            <MudSpacer />
+            <MudTooltip Text="Toggle light/dark theme">
+                <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
+            </MudTooltip>
+            <MudMenu Direction=Direction.Right OffsetY Dense Color=Color.Inherit Class="ms-2">
+                <ActivatorContent>
+                    @if (string.IsNullOrEmpty(ImageDataUrl))
+                    {
+                        <MudAvatar Color="Color.Secondary">@FirstLetterOfName</MudAvatar>
+                    }
+                    else
+                    {
+                        <MudAvatar Image="@ImageDataUrl" Style="height:50px; width:50px;"> </MudAvatar>
+                    }
+                </ActivatorContent>
+                <ChildContent>
                     <MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
                         <MudCardHeader>
-                            <CardHeaderAvatar>            
-                                @if (string.IsNullOrEmpty(ImageDataUrl))
-                                {
-                                    <MudAvatar Color="Color.Secondary">@FirstLetterOfName</MudAvatar>
-                                }
-                                else
-                                {
-                                    <MudAvatar Image="@ImageDataUrl"></MudAvatar>
-                                }
+                            <CardHeaderAvatar>
+                                <MudAvatar Style="height:75px; width:75px;" Image="@ImageDataUrl" />
                             </CardHeaderAvatar>
                             <CardHeaderContent>
-                                <MudText Typo="Typo.body1">@FullName</MudText>
-                                <MudText Typo="Typo.body2">@Designation</MudText>
+                                <MudText Typo="Typo.h6">@FullName</MudText>
+                                <MudText Typo="Typo.body1">@Designation</MudText>
+                                <MudText Typo="Typo.body2">@Email</MudText>
                             </CardHeaderContent>
                         </MudCardHeader>
                     </MudCard>
-                    <NavMenu />
-                </MudDrawer>
-                <MudMainContent>
-                    <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
-                        @Body
-                    </MudContainer>
-                </MudMainContent>
-                <MudScrollToTop TopOffset="400" Style="z-index:2000;">
-                    <MudFab Color="Color.Primary" Icon="@Icons.Filled.KeyboardArrowUp" />
-                </MudScrollToTop>
-            </MudLayout>
-        </MudSwipeArea>
-    </Authorized>
-</AuthorizeView>
+                    <MudDivider />
+                    <MudListItem Text="Account" Href="/account" Icon="@Icons.Material.Outlined.Person" />
+                    <MudListItem Text="Logout" Icon="@Icons.Material.Filled.Logout" OnClick="Logout" />
+                </ChildContent>
+            </MudMenu>
+        </MudAppBar>
+        <MudDrawer @bind-Open="_drawerOpen" Breakpoint="Breakpoint.Lg" Class="mudblazor-appbar-band" ClipMode="DrawerClipMode.Docked">
+            <MudCard Elevation="0" Square="true" Style="background-color: var(--mud-palette-drawer-background); color: var(--mud-palette-drawer-text);">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        @if (string.IsNullOrEmpty(ImageDataUrl))
+                        {
+                            <MudAvatar Color="Color.Secondary">@FirstLetterOfName</MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Image="@ImageDataUrl"></MudAvatar>
+                        }
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@FullName</MudText>
+                        <MudText Typo="Typo.body2">@Designation</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+            <NavMenu />
+        </MudDrawer>
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+        <MudScrollToTop TopOffset="400" Style="z-index:2000;">
+            <MudFab Color="Color.Primary" Icon="@Icons.Filled.KeyboardArrowUp" />
+        </MudScrollToTop>
+    </MudLayout>
+</MudSwipeArea>

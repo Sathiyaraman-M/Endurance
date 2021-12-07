@@ -11,7 +11,7 @@ public class BookHttpClient : IBookHttpClient
         _httpClient = httpClient;
     }
 
-    public async Task<IResult<BookResponse>> GetByIdAsync(int id)
+    public async Task<IResult<BookResponse>> GetByIdAsync(Guid id)
     {
         var response = await _httpClient.GetAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");
         return await response.ToResult<BookResponse>();
@@ -23,16 +23,16 @@ public class BookHttpClient : IBookHttpClient
         return await response.ToPaginatedResult<BookResponse>();
     }
 
-    public async Task<IResult<int>> SaveAsync(AddEditBookCommand request)
+    public async Task<IResult<Guid>> SaveAsync(AddEditBookCommand request)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.BookEndpoints.BaseRoute, request);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
-    public async Task<IResult<string>> UpdateConditionAsync(ChangeBookConditionCommand request)
+    public async Task<IResult<Guid>> DeleteAsync(Guid id)
     {
-        var response = await _httpClient.PostAsJsonAsync($"{Routes.BookEndpoints.BaseRoute}/{request.Barcode}", request);
-        return await response.ToResult<string>();
+        var response = await _httpClient.DeleteAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");
+        return await response.ToResult<Guid>();
     }
 
     public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")
@@ -40,11 +40,5 @@ public class BookHttpClient : IBookHttpClient
         var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString)
             ? Routes.BookEndpoints.Export : Routes.BookEndpoints.ExportFiltered(searchString));
         return await response.ToResult<string>();
-    }
-
-    public async Task<IResult<int>> DeleteAsync(int id)
-    {
-        var response = await _httpClient.DeleteAsync($"{Routes.BookEndpoints.BaseRoute}/{id}");
-        return await response.ToResult<int>();
     }
 }

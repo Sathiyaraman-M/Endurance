@@ -2,7 +2,7 @@
 
 public class BookResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string ISBN { get; set; }
     public string Author { get; set; }
@@ -11,9 +11,13 @@ public class BookResponse
     public string Edition { get; set; }
     public int PublicationYear { get; set; }
     public string Description { get; set; }
-    public string Barcode { get; set; }
     public decimal Cost { get; set; }
     public string ImageUrl { get; set; }
-    public bool IsAvailable { get; set; }
-    public string Condition { get; set; }
+    public int Copies { get; set; }
+    public int AvailableCopies { get; set; }
+    public int DamagedCopies { get; set; }
+    public int LostCopies { get; set; }
+    public int UnknownStatusCopies { get; set; }
+    public int DisposedCopies { get; set; }
+    public List<BookHeaderResponse> BookHeaders { get; set; }
 }

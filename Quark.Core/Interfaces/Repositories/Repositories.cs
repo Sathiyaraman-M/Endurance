@@ -2,7 +2,7 @@
 
 public interface IDesignationRepository
 {
-    Task<bool> IsDesignationUsed(int Id);
+    Task<bool> IsDesignationUsed(Guid Id);
 }
 public interface IDashboardRepository
 {

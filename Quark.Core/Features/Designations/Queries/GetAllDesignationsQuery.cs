@@ -7,11 +7,11 @@ public class GetAllDesignationsQuery : IRequest<Result<List<DesignationResponse>
 
 public class GetAllDesignationQueryHandler : IRequestHandler<GetAllDesignationsQuery, Result<List<DesignationResponse>>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IAppCache _appCache;
 
-    public GetAllDesignationQueryHandler(IUnitOfWork<int> unitOfWork, IMapper mapper, IAppCache appCache)
+    public GetAllDesignationQueryHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper, IAppCache appCache)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

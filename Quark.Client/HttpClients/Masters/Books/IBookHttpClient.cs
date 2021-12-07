@@ -4,15 +4,13 @@ namespace Quark.Client.HttpClients.Masters.Books;
 
 public interface IBookHttpClient
 {
-    Task<IResult<BookResponse>> GetByIdAsync(int id);
+    Task<IResult<BookResponse>> GetByIdAsync(Guid id);
 
     Task<PaginatedResult<BookResponse>> GetAllPaginatedAsync(PagedRequest pagedRequest);
 
-    Task<IResult<int>> SaveAsync(AddEditBookCommand request);
+    Task<IResult<Guid>> SaveAsync(AddEditBookCommand request);
 
-    Task<IResult<string>> UpdateConditionAsync(ChangeBookConditionCommand request);
+    Task<IResult<Guid>> DeleteAsync(Guid id);
 
     Task<IResult<string>> ExportToExcelAsync(string searchString = "");
-
-    Task<IResult<int>> DeleteAsync(int id);
 }

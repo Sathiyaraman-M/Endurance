@@ -1,48 +1,48 @@
 ﻿namespace Quark.Core.Features.Checkouts.Commands;
 
-public class AddCheckoutCommand : IRequest<Result<int>>
+public class AddCheckoutCommand : IRequest<Result<Guid>>
 {
-    public int Id { get; set; }
-    public int BookId { get; set; }
+    public Guid Id { get; set; }
+    public Guid BookHeaderId { get; set; }
     public string BookBarcode { get; set; }
-    public int PatronId { get; set; }
+    public Guid PatronId { get; set; }
     public string PatronRegisterId { get; set; }
     public DateTime? CheckedOutSince { get; set; } = DateTime.Now;
     public DateTime? ExpectedCheckInDate { get; set; } = DateTime.Now.AddDays(15); //TODO: Update the default period
 }
 
-internal class AddCheckoutCommandHandler : IRequestHandler<AddCheckoutCommand, Result<int>>
+internal class AddCheckoutCommandHandler : IRequestHandler<AddCheckoutCommand, Result<Guid>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IMapper _mapper;
 
-    public AddCheckoutCommandHandler(IUnitOfWork<int> unitOfWork, IMapper mapper)
+    public AddCheckoutCommandHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<Result<int>> Handle(AddCheckoutCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(AddCheckoutCommand request, CancellationToken cancellationToken)
     {
-        var book = await _unitOfWork.Repository<Book>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.BookBarcode);
+        var book = await _unitOfWork.Repository<BookHeader>().Entities.FirstOrDefaultAsync(x => x.Barcode == request.BookBarcode, cancellationToken);
         if(book is null)
         {
-            return await Result<int>.FailAsync("Invalid Book barcode");
+            return await Result<Guid>.FailAsync("Invalid Book barcode");
         }
-        request.BookId = book.Id;
-        var patron = await _unitOfWork.Repository<Patron>().Entities.FirstOrDefaultAsync(x => x.RegisterId == request.PatronRegisterId);
+        request.BookHeaderId = book.Id;
+        var patron = await _unitOfWork.Repository<Patron>().Entities.FirstOrDefaultAsync(x => x.RegisterId == request.PatronRegisterId, cancellationToken);
         if(patron is null)
         {
-            return await Result<int>.FailAsync("Invalid Patron Register Id");
+            return await Result<Guid>.FailAsync("Invalid Patron Register Id");
         }
         request.PatronId = patron.Id;
-        if (await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.PatronId == patron.Id && x.CheckedOutSince.Date == DateTime.Today.Date) == patron.MultipleCheckoutLimit)
+        if (await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.PatronId == patron.Id && x.CheckedOutSince.Date == DateTime.Today.Date, cancellationToken) == patron.MultipleCheckoutLimit)
         {
-            return await Result<int>.FailAsync("Cannot checkout! Day-limit reached!");
+            return await Result<Guid>.FailAsync("Cannot checkout! Day-limit reached!");
         }
         var checkout = _mapper.Map<Checkout>(request);
         await _unitOfWork.Repository<Checkout>().AddAsync(checkout);
         await _unitOfWork.Commit(cancellationToken);
-        return await Result<int>.SuccessAsync(request.Id, "Checked out successfully");
+        return await Result<Guid>.SuccessAsync(request.Id, "Checked out successfully");
     }
 }

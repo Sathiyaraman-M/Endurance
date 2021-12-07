@@ -1,14 +1,14 @@
 ﻿namespace Quark.Core.Domain.Entities;
 
-public class Checkout : AuditableEntity<int>
+public class Checkout : AuditableEntity<Guid>
 {
-    public virtual Book Book { get; set; }
+    public virtual BookHeader BookHeader { get; set; }
 
-    public int BookId { get; set; }
+    public Guid BookHeaderId { get; set; }
 
     public virtual Patron Patron { get; set; }
 
-    public int PatronId { get; set; }
+    public Guid PatronId { get; set; }
 
     public DateTime CheckedOutSince { get; set; }
 
