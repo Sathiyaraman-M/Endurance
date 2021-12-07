@@ -11,6 +11,7 @@ public class BookProfile : Profile
     {
         CreateMap<AddEditBookCommand, Book>();
         CreateMap<BookResponse, Book>().ReverseMap();
+        CreateMap<BookHeaderResponse, BookHeader>().ReverseMap();
     }
 }
 public class CheckoutProfile : Profile
@@ -33,7 +34,7 @@ public class PatronProfile : Profile
     public PatronProfile()
     {
         CreateMap<AddEditPatronCommand, Patron>()
-            .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth.HasValue ? src.DateOfBirth.Value : DateTime.MinValue))
+            .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth ?? DateTime.MinValue))
             .ReverseMap();
         CreateMap<Patron, PatronResponse>().ReverseMap();
     }

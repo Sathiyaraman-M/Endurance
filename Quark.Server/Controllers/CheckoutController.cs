@@ -15,7 +15,7 @@ public class CheckoutController : BaseApiController
 
     [Authorize(Policy = Permissions.Checkouts.View)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         return Ok(await _mediator.Send(new GetCheckoutByIdQuery(id)));
     }
@@ -43,7 +43,7 @@ public class CheckoutController : BaseApiController
 
     [Authorize(Policy = Permissions.Checkouts.Delete)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
     {
         return Ok(await _mediator.Send(new DeleteCheckoutCommand(id)));
     }

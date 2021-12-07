@@ -136,6 +136,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(1000);
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
         canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
         canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;

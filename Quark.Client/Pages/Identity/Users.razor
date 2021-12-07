@@ -1,0 +1,26 @@
+﻿@page "/identity/users"
+@attribute [Authorize(Policy = Permissions.Users.View)]
+
+<PageTitle>Users | @ApplicationConstants.LibraryName</PageTitle>
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<MudText Typo=Typo.h5 Color=Color.Primary Class="mb-2">Users</MudText>
+<MudText Color=Color.Surface Class="mb-4">Manage all application users here</MudText>
+<MudDivider Class="mb-4" />
+@(!_loaded)
+{
+    <MudProgressLinear Color=Color.Primary Indeterminate />
+}
+else
+{
+    <MudTable Items=_userList Dense Outlined Elevation=0 @bind-user=_user>
+        <HeaderContent>
+
+        </HeaderContent>
+    </MudTable>
+}

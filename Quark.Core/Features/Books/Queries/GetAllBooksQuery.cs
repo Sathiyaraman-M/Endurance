@@ -23,9 +23,14 @@ public class GetAllBooksQuery : IRequest<PaginatedResult<BookResponse>>
 
 internal class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, PaginatedResult<BookResponse>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetAllBooksQueryHandler(IUnitOfWork<int> unitOfWork) => _unitOfWork = unitOfWork;
+    public GetAllBooksQueryHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper)
+    {
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
 
     public Task<PaginatedResult<BookResponse>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
@@ -40,11 +45,14 @@ internal class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, Pagin
             Publisher = e.Publisher,
             PublicationYear = e.PublicationYear,
             Edition = e.Edition,
-            IsAvailable = e.IsAvailable,
-            Barcode = e.Barcode,
             Cost = e.Cost,
             ImageUrl = e.ImageUrl,
-            Condition = e.Condition
+            Copies = e.Copies,
+            AvailableCopies = e.AvailableCopies,
+            DamagedCopies = e.DamagedCopies,
+            LostCopies = e.LostCopies,
+            UnknownStatusCopies = e.UnknownStatusCopies,
+            BookHeaders = _mapper.Map<List<BookHeaderResponse>>(e.BookHeaders)
         };
         var bookSpec = new BookFilterSpecification(request.SearchString);
         if (request.OrderBy?.Any() != true)

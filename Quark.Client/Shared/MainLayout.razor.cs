@@ -2,7 +2,7 @@
 
 namespace Quark.Client.Shared;
 
-public partial class MainLayout
+public partial class MainLayout : IDisposable
 {
     private bool _drawerOpen = true;
 

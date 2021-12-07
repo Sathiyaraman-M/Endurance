@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject Navigation Navigation
 <audio src="/media/notification.mp3" id="notification" />
+<MudThemeProvider Theme=_currentTheme />
+<MudDialogProvider />
+<MudSnackbarProvider />
 <MudSwipeArea OnSwipe=OnSwipe>
     <MudLayout>
         <MudAppBar>

@@ -17,16 +17,16 @@ public class DesignationHttpClient : IDesignationHttpClient
         return await response.ToResult<List<DesignationResponse>>();
     }
 
-    public async Task<IResult<int>> SaveAsync(AddEditDesignationCommand request)
+    public async Task<IResult<Guid>> SaveAsync(AddEditDesignationCommand request)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.DesignationEndpoints.BaseRoute, request);
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
-    public async Task<IResult<int>> DeleteAsync(int id)
+    public async Task<IResult<Guid>> DeleteAsync(Guid id)
     {
         var response = await _httpClient.DeleteAsync($"{Routes.DesignationEndpoints.BaseRoute}/{id}");
-        return await response.ToResult<int>();
+        return await response.ToResult<Guid>();
     }
 
     public async Task<IResult<string>> ExportToExcelAsync(string searchString = "")

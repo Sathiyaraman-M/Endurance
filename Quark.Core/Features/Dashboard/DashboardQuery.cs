@@ -7,13 +7,11 @@ public class DashboardQuery : IRequest<Result<DashboardResponse>>
 
 internal class DashboardQueryHandler : IRequestHandler<DashboardQuery, Result<DashboardResponse>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
-    private readonly IDashboardRepository _repository;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public DashboardQueryHandler(IUnitOfWork<int> unitOfWork, IDashboardRepository repository)
+    public DashboardQueryHandler(IUnitOfWork<Guid> unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _repository = repository;
     }
 
     public async Task<Result<DashboardResponse>> Handle(DashboardQuery request, CancellationToken cancellationToken)
@@ -23,8 +21,8 @@ internal class DashboardQueryHandler : IRequestHandler<DashboardQuery, Result<Da
             PatronsCount = await _unitOfWork.Repository<Patron>().CountAsync(),
             CheckoutsCount = await _unitOfWork.Repository<Checkout>().CountAsync(),
             BooksCount = await _unitOfWork.Repository<Book>().CountAsync(),
-            CheckInTodayCount = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.CheckedOutUntil.Value.Date == DateTime.Today.Date),
-            CheckInPending = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => !x.CheckedOutUntil.HasValue),
+            CheckInTodayCount = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => x.CheckedOutUntil.Value.Date == DateTime.Today.Date, cancellationToken),
+            CheckInPending = await _unitOfWork.Repository<Checkout>().Entities.CountAsync(x => !x.CheckedOutUntil.HasValue, cancellationToken),
         };
         return await Result<DashboardResponse>.SuccessAsync(model);
     }

@@ -2,16 +2,16 @@
 
 public class GetPatronByIdQuery : IRequest<Result<PatronResponse>>
 {
-    public int Id { get; set; }
-    public GetPatronByIdQuery(int id) => Id = id;
+    public Guid Id { get; set; }
+    public GetPatronByIdQuery(Guid id) => Id = id;
 }
 
 internal class GetPatronByIdQueryHandler : IRequestHandler<GetPatronByIdQuery, Result<PatronResponse>>
 {
-    private readonly IUnitOfWork<int> _unitOfWork;
+    private readonly IUnitOfWork<Guid> _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetPatronByIdQueryHandler(IUnitOfWork<int> unitOfWork, IMapper mapper)
+    public GetPatronByIdQueryHandler(IUnitOfWork<Guid> unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Quark.Core.Domain.Enums;
 
-namespace Quark.Client.Pages.Authentication;
+namespace Quark.Client.Pages.Identity;
 
 public partial class Profile
 {
@@ -91,7 +91,7 @@ public partial class Profile
 
     private async Task DeleteAsync()
     {
-        if ((await dialogService.ShowMessageBox("Confirm Delete?", String.Format("Are you sure want to delete the profile picture of {0}?", _profileModel.Email), yesText: "Yes", cancelText: "No")) == true)
+        if (await dialogService.ShowMessageBox("Confirm Delete?", string.Format("Are you sure want to delete the profile picture of {0}?", _profileModel.Email), yesText: "Yes", cancelText: "No") == true)
         {
             var request = new UpdateProfilePictureRequest { Data = null, FileName = string.Empty, UploadType = UploadType.ProfilePicture };
             var data = await accountHttpClient.UpdateProfilePictureAsync(request, UserId);
