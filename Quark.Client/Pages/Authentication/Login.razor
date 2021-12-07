@@ -1,6 +1,7 @@
 ﻿@page "/login"
 <PageTitle>Login | @ApplicationConstants.LibraryName</PageTitle>
 @attribute [AllowAnonymous]
+@layout AuthLayout
 <EditForm Model="requestModel" OnValidSubmit="SubmitAsync">
     <FluentValidationValidator />
     <div class="d-flex justify-center">
