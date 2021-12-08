@@ -5,7 +5,6 @@ public partial class ViewBook
     [Parameter]
     public Guid Id { get; set; }
     private BookResponse Book;
-    private string Condition;
 
     private ClaimsPrincipal _currentUser;
     private bool _loaded = false;

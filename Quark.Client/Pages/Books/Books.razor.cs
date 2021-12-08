@@ -2,7 +2,6 @@
 public partial class Books
 {
     private List<BookResponse> _books;
-    private BookResponse _book;
     private string _searchString;
     private MudTable<BookResponse> MudTable { get; set; }
     private int _totalItems;
