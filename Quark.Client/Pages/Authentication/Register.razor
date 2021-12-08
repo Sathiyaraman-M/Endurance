@@ -1,0 +1,41 @@
+﻿@page "/register"
+@layout AuthLayout
+@attribute [AllowAnonymous]
+
+<EditForm Model="@_registerUserModel" OnValidSubmit="SubmitAsync">
+    <div class="d-flex justify-center">
+        <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Primary" Size="Size.Large" Style="width: 100px; height: 100px;" />
+    </div>
+    <div class="d-flex justify-center">
+        <MudText Typo="Typo.h5">Register to @ApplicationConstants.LibraryName!</MudText>
+    </div>
+    <MudDivider Class="my-8" />
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudGrid>
+        <MudItem  xs="12" md="6">
+            <MudTextField For="@(() => _registerUserModel.UserName)" @bind-Value="_registerUserModel.UserName" Label="User Name" />
+        </MudItem>
+        <MudItem  xs="12" md="6">
+            <MudTextField For="@(() => _registerUserModel.FullName)" @bind-Value="_registerUserModel.FullName" Label="Full Name" />
+        </MudItem>
+        <MudItem  xs="12" md="6">
+            <MudTextField T="string" Label="E-mail" @bind-Value="_registerUserModel.Email" For="@(() => _registerUserModel.Email)" />
+        </MudItem>
+        <MudItem  xs="12" md="6">
+            <MudTextField T="string" Label="Phone Number" @bind-Value="_registerUserModel.PhoneNumber" For="@(() => _registerUserModel.PhoneNumber)" />
+        </MudItem>
+        <MudItem  xs="12" sm="6" md="6">
+            <MudTextField For="@(() => _registerUserModel.Password)" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" @bind-Value="_registerUserModel.Password" Label="Password" />
+        </MudItem>
+        <MudItem  xs="12" sm="6" md="6">
+            <MudTextField For="@(() => _registerUserModel.ConfirmPassword)" InputType="InputType.Password" @bind-Value="_registerUserModel.ConfirmPassword" Label="Confirm Password" />
+        </MudItem>
+        <MudItem  xs="12" Class="d-flex justify-center">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Disabled="@(!Validated)" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Register</MudButton>
+        </MudItem>
+    </MudGrid>
+    <MudDivider Class="my-8" />
+    <div class="d-flex justify-center">
+        <MudText>Already have an account? <MudLink Href="/login">Sign In</MudLink></MudText>
+    </div>
+</EditForm>
