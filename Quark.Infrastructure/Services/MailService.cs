@@ -26,6 +26,7 @@ public class MailService : IMailService
             Email.DefaultSender = new SmtpSender(() =>  new SmtpClient(origin)
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
+                Host = _config.Host,
                 Port = _config.Port
             });
             var email = await Email.From(_config.From).To(request.To).Subject(request.Subject).Body(request.Body).SendAsync();

@@ -57,6 +57,7 @@ public class AccountService : IAccountService
             user.FullName = model.FullName;
             user.UserName = model.UserName;
             user.PhoneNumber = model.PhoneNumber;
+            user.Email = model.Email;
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (model.PhoneNumber != phoneNumber)
             {
