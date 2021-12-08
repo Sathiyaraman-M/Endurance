@@ -16,15 +16,13 @@ public class TokenService : ITokenService
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly AppConfiguration _appConfig;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IUnitOfWork<Guid> _unitOfWork;
 
-    public TokenService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<AppConfiguration> appConfig, SignInManager<ApplicationUser> signInManager, IUnitOfWork<Guid> unitOfWork)
+    public TokenService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<AppConfiguration> appConfig, SignInManager<ApplicationUser> signInManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _appConfig = appConfig.Value;
         _signInManager = signInManager;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<TokenResponse>> LoginAsync(TokenRequest model)
@@ -97,15 +95,13 @@ public class TokenService : ITokenService
             var allPermissionsForThisRoles = await _roleManager.GetClaimsAsync(thisRole);
             permissionClaims.AddRange(allPermissionsForThisRoles);
         }
-        var desig = (await _unitOfWork.Repository<Designation>().GetByIdAsync(user.DesignationId))?.Name;
         var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.Id),
                 new(ClaimTypes.Email, user.Email),
                 new(ClaimTypes.Name, user.UserName),
                 new("FullName", user.FullName),
-                new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty),
-                new("Designation", desig ?? "designation")
+                new(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty)
             }
         .Union(userClaims)
         .Union(roleClaims)

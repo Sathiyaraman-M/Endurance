@@ -18,7 +18,7 @@ public class DeleteDesignationCommandHandler : IRequestHandler<DeleteDesignation
 
     public async Task<Result<Guid>> Handle(DeleteDesignationCommand request, CancellationToken cancellationToken)
     {
-        if (await _designationRepository.IsDesignationUsed(request.Id))
+        if (_designationRepository.IsDesignationUsed(request.Id))
         {
             return await Result<Guid>.FailAsync("Deletion not allowed");
         }

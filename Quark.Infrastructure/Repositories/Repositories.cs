@@ -8,9 +8,9 @@ public class DesignationRepository : IDesignationRepository
         _userManager = userManager;
     }
 
-    public async Task<bool> IsDesignationUsed(Guid Id)
+    public bool IsDesignationUsed(Guid Id)
     {
-        return await _userManager.Users.AnyAsync(x => x.DesignationId == Id);
+        return false; //return await _userManager.Users.AnyAsync(x => x.DesignationId == Id);
     }
 }
 public class DashboardRepository : IDashboardRepository
