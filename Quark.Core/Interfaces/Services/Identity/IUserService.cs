@@ -21,4 +21,5 @@ public interface IUserService
     Task<IResult> ForgotPasswordAsync(ForgotPasswordRequest request, string origin);
 
     Task<IResult> ResetPasswordAsync(ResetPasswordRequest request);
+    Task<string> ExportToExcelAsync(string searchString = "");
 }

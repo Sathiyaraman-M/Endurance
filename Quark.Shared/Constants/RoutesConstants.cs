@@ -83,6 +83,8 @@ public static class Routes
         public const string ToggleActivation = "api/identity/user/toggle-activate";
         public const string ForgotPassword = "api/identity/user/forgot-password";
         public const string ResetPassword = "api/identity/user/reset-password";
+        public const string Export = "api/identity/user/export";
+        public static string ExportFiltered(string searchString) => $"{Export}?searchString={searchString}";
     }
 
     public static class RolesEndpoints

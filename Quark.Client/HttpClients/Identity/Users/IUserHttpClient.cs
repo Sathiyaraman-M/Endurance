@@ -20,5 +20,5 @@ public interface IUserHttpClient
 
     Task<IResult> UpdateRolesAsync(UpdateUserRolesRequest request);
 
-    //Task<string> ExportToExcelAsync(string searchString = "");
+    Task<string> ExportToExcelAsync(string searchString = "");
 }

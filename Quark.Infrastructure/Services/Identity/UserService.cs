@@ -1,7 +1,10 @@
 ﻿using Hangfire;
 using Microsoft.AspNetCore.WebUtilities;
+using Quark.Core.Extensions;
 using Quark.Core.Requests.Mail;
+using Quark.Infrastructure.Specifications;
 using Quark.Shared;
+using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 
@@ -14,14 +17,16 @@ public class UserService : IUserService
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly ICurrentUserService _currentUserService;
     private readonly IMailService _mailService;
+    private readonly IExcelService _excelService;
 
-    public UserService(UserManager<ApplicationUser> userManager, IMapper mapper, RoleManager<ApplicationRole> roleManager, ICurrentUserService currentUserService, IMailService mailService)
+    public UserService(UserManager<ApplicationUser> userManager, IMapper mapper, RoleManager<ApplicationRole> roleManager, ICurrentUserService currentUserService, IMailService mailService, IExcelService excelService)
     {
         _userManager = userManager;
         _mapper = mapper;
         _roleManager = roleManager;
         _currentUserService = currentUserService;
         _mailService = mailService;
+        _excelService = excelService;
     }
 
     public async Task<IResult<string>> ConfirmEmailAsync(string userId, string code)
@@ -226,5 +231,30 @@ public class UserService : IUserService
         var result = await _userManager.RemoveFromRolesAsync(user, roles);
         result = await _userManager.AddToRolesAsync(user, selectedRoles.Select(y => y.RoleName));
         return await Result.SuccessAsync("Roles Updated");
+    }
+
+    public async Task<string> ExportToExcelAsync(string searchString = "")
+    {
+        var userSpec = new UserFilterSpecification(searchString);
+        var users = await _userManager.Users
+            .Specify(userSpec)
+            .OrderByDescending(a => a.CreatedOn)
+            .ToListAsync();
+        var result = await _excelService.ExportAsync(users,
+            new Dictionary<string, Func<ApplicationUser, object>>
+            {
+                    { "Id", item => item.Id },
+                    { "UserName", item => item.UserName },
+                    { "FirstName", item => item.FullName },
+                    { "Email", item => item.Email },
+                    { "EmailConfirmed", item => item.EmailConfirmed },
+                    { "PhoneNumber", item => item.PhoneNumber },
+                    { "PhoneNumberConfirmed", item => item.PhoneNumberConfirmed },
+                    { "IsActive", item => item.IsActive },
+                    { "CreatedOn", item => item.CreatedOn.ToString("g") },
+                    { "ProfilePictureDataUrl", item => item.ProfilePictureDataUrl },
+            }, "Users");
+
+        return result;
     }
 }

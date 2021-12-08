@@ -72,4 +72,12 @@ public class UserController : ControllerBase
     {
         return Ok(await _userService.ResetPasswordAsync(request));
     }
+
+    [Authorize(Policy = Permissions.Users.Export)]
+    [HttpGet(Routes.UserEndpoints.Export)]
+    public async Task<IActionResult> Export(string searchString = "")
+    {
+        var data = await _userService.ExportToExcelAsync(searchString);
+        return Ok(data);
+    }
 }

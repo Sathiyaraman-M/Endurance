@@ -59,12 +59,12 @@ public class UserHttpClient : IUserHttpClient
         return await response.ToResult();
     }
 
-    //public async Task<string> ExportToExcelAsync(string searchString = "")
-    //{
-    //    var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString)
-    //        ? Routes.UserEndpoints.Export
-    //        : Routes.UserEndpoints.ExportFiltered(searchString));
-    //    var data = await response.Content.ReadAsStringAsync();
-    //    return data;
-    //}
+    public async Task<string> ExportToExcelAsync(string searchString = "")
+    {
+        var response = await _httpClient.GetAsync(string.IsNullOrWhiteSpace(searchString)
+            ? Routes.UserEndpoints.Export
+            : Routes.UserEndpoints.ExportFiltered(searchString));
+        var data = await response.Content.ReadAsStringAsync();
+        return data;
+    }
 }
