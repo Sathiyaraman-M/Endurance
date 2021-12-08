@@ -1,5 +1,7 @@
 global using Blazored.FluentValidation;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Components;
+global using Microsoft.JSInterop;
 global using MudBlazor;
 global using Quark.Client.Extensions;
 global using Quark.Core.Requests;

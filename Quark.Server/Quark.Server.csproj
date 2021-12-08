@@ -29,7 +29,10 @@
   <ItemGroup>
     <Folder Include="Files\Documents\" />
     <Folder Include="Files\Images\Assets\" />
+    <Folder Include="Files\Images\Assets\" />
     <Folder Include="Files\Images\ProfilePictures\" />
+    <Folder Include="Files\Images\ProfilePictures\" />
+    <Folder Include="Files\Documents\" />
   </ItemGroup>
 
 </Project>
