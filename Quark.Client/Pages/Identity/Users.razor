@@ -1,5 +1,6 @@
 ﻿@page "/identity/users"
 @attribute [Authorize(Policy = Permissions.Users.View)]
+@using Quark.Core.Responses.Identity
 
 <PageTitle>Users | @ApplicationConstants.LibraryName</PageTitle>
 
@@ -11,16 +12,61 @@
 
 <MudText Typo=Typo.h5 Color=Color.Primary Class="mb-2">Users</MudText>
 <MudText Color=Color.Surface Class="mb-4">Manage all application users here</MudText>
-<MudDivider Class="mb-4" />
-@(!_loaded)
+@if(!_loaded)
 {
     <MudProgressLinear Color=Color.Primary Indeterminate />
 }
 else
 {
     <MudTable Items=_userList Dense Outlined Elevation=0 @bind-user=_user>
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreate)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Create</MudButton>
+                }
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="GetUsersAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Users..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </ToolBarContent>
         <HeaderContent>
-
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.UserName)">User Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.FullName)">Full Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.Email)">Email</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.PhoneNumber)">PhoneNumber</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.EmailConfirmed)">Email Confirmation</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
+            <MudTh Style="text-align:right">View Profile</MudTh>
+            <MudTh Style="text-align:right">Manage Roles</MudTh>
         </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="User Name">
+                <MudHighlighter Text="@context.UserName" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Full Name">
+                <MudHighlighter Text="@context.FullName" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Email">
+                <MudHighlighter Text="@context.Email" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="PhoneNumber">
+                <MudHighlighter Text="@context.PhoneNumber" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="EmailConfirmed"><MudCheckBox @bind-Checked="@context.EmailConfirmed" ReadOnly Color="Color.Secondary"></MudCheckBox></MudTd>
+            <MudTd DataLabel="Active"><MudCheckBox @bind-Checked="@context.IsActive" ReadOnly Color="Color.Secondary"></MudCheckBox></MudTd>
+            <MudTd DataLabel="View Profile">
+                <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => ViewProfile(context.Id))" />
+            </MudTd>
+            @if (_canViewRoles)
+            {
+                <MudTd DataLabel="Manage Roles">
+                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => ManageRoles(context.Id, context.Email))" />
+                </MudTd>
+            }
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
     </MudTable>
 }
