@@ -40,6 +40,7 @@ internal static class WebAssemblyHostBuilderExtensions
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
         builder.Services.AddAuthorizationCore(options => RegisterPermissionClaims(options));
         builder.Services.AddMudServices();
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddBlazoredLocalStorage();
         builder.Services.AddTransient<AuthenticationHeaderHandler>();
         builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName).EnableIntercept(sp));

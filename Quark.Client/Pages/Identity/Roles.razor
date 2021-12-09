@@ -1,0 +1,85 @@
+﻿@page "/identity/roles"
+@using Quark.Core.Responses.Identity
+@attribute [Authorize(Policy = Permissions.Roles.View)]
+@inject IRoleHttpClient _roleHttpClient
+
+<PageTitle>Roles | @ApplicationConstants.LibraryName</PageTitle>
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Roles</MudText>
+<MudText Color="Color.Surface" Class="mb-4">Manage all roles here</MudText>
+@if (!_loaded)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate />
+}
+else
+{
+    <MudTable Hover Elevation="0" Outlined Items="_roleList" Dense Filter="new Func<RoleResponse, bool>(Search)" @bind-role="_role">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreateRoles)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">Create</MudButton>
+                    <MudButton DisableElevation Variant="Variant.Filled" OnClick="GetRolesAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                }
+                else
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" OnClick="GetRolesAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">Reload</MudButton>
+                }
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Roles..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<RoleResponse, object>(x => x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<RoleResponse, object>(x => x.Name)">Role</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<RoleResponse, object>(x => x.Description)">Description</MudTableSortLabel></MudTh>
+            @if (_canViewRoleClaims)
+            {
+                <MudTh Style="text-align:right">Permissions</MudTh>
+            }
+            @if (_canEditRoles)
+            {
+                <MudTh Style="text-align:right">Edit</MudTh>
+            }
+            @if (_canDeleteRoles)
+            {
+                <MudTh Style="text-align:right">Delete</MudTh>
+            }
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="Role">
+                <MudHighlighter Text="@context.Name" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Description">
+                <MudHighlighter Text="@context.Description" HighlightedText="@_searchString" />
+            </MudTd>
+            @if (_canViewRoleClaims)
+            {
+                <MudTd DataLabel="Permissions" Style="text-align:right">
+                    <MudFab DisableElevation Color="Color.Warning" Label="Manage Permissions" Size="Size.Small" OnClick="(() => ManagePermissions(context.Id))" />
+                </MudTd>
+            }@if (_canEditRoles)
+            {
+                <MudTd DataLabel="Edit" Style="text-align:right">
+                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="(() => InvokeModal(context.Id))" />
+                </MudTd>
+            }
+            @if (_canDeleteRoles)
+            {
+                <MudTd DataLabel="Delete" Style="text-align:right">
+                    <MudFab DisableElevation Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
+                </MudTd>
+            }
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}

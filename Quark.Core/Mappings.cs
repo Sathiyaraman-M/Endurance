@@ -39,3 +39,19 @@ public class PatronProfile : Profile
         CreateMap<Patron, PatronResponse>().ReverseMap();
     }
 }
+
+public class PermissionProfile : Profile
+{
+    public PermissionProfile()
+    {
+        CreateMap<PermissionRequest, PermissionResponse>().ReverseMap();
+    }
+}
+
+public class RoleClaimProfile : Profile
+{
+    public RoleClaimProfile()
+    {
+        CreateMap<RoleClaimRequest, RoleClaimResponse>().ReverseMap();
+    }
+}
