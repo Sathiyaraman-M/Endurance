@@ -38,7 +38,7 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.EmailConfirmed)">Email Confirmation</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
             <MudTh Style="text-align:center">View Profile</MudTh>
-            <MudTh Style="text-align:center">Manage Permissions</MudTh>
+            <MudTh Style="text-align:center">Manage Roles</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="User Name">
@@ -60,8 +60,8 @@ else
             </MudTd>
             @if (_canViewRoles)
             {
-                <MudTd DataLabel="Manage Permissions" Style="text-align:center">
-                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => ManagePermissions(context.Id, context.Email))" />
+                <MudTd DataLabel="Manage Roles" Style="text-align:center">
+                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => ManageRoles(context.Id, context.Email))" />
                 </MudTd>
             }
         </RowTemplate>

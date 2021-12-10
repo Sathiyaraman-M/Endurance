@@ -1,0 +1,48 @@
+﻿@page "/identity/user-roles/{Id}"
+@using Quark.Core.Responses.Identity
+@attribute [Authorize(Policy = Permissions.Roles.View)]
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<MudText Typo=Typo.h5 Color=Color.Primary Class="mb-2">Users Roles</MudText>
+<MudText Color=Color.Surface Class="mb-4">Manage all roles of application users here</MudText>
+@if (!_loaded)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate />
+}
+else
+{
+    <MudTable Hover Elevation=0 Outlined Items="UserRolesList" Filter="new Func<UserRoleModel, bool>(Search)" @bind-userRole="_userRole">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canEditUsers)
+                {
+                    <MudButton Variant="Variant.Filled" DisableElevation Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync" ButtonType="ButtonType.Submit">Update User Roles</MudButton>
+                }
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false Placeholder="Search For User Roles" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserRoleModel, object>(x => x.RoleName)">Role Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserRoleModel, object>(x => x.RoleDescription)">Description</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<UserRoleModel, object>(x => x.Selected)">Status</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Role Name">
+                <MudHighlighter Text="@context.RoleName" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Description">
+                <MudHighlighter Text="@context.RoleDescription" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Role"><MudCheckBox @bind-Checked="@context.Selected" Disabled="@(!_canEditUsers)" Color="Color.Secondary"></MudCheckBox></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}
