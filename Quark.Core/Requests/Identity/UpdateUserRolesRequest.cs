@@ -1,6 +1,4 @@
-﻿using Quark.Core.Responses.Identity;
-
-namespace Quark.Core.Requests.Identity;
+﻿namespace Quark.Core.Requests.Identity;
 
 public class UpdateUserRolesRequest
 {
