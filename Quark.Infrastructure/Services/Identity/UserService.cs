@@ -4,7 +4,6 @@ using Quark.Core.Extensions;
 using Quark.Core.Requests.Mail;
 using Quark.Infrastructure.Specifications;
 using Quark.Shared;
-using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 
@@ -208,7 +207,7 @@ public class UserService : IUserService
     public async Task<IResult> UpdateRolesAsync(UpdateUserRolesRequest request)
     {
         var user = await _userManager.FindByIdAsync(request.UserId);
-        if (user.Email == "bruce@wayne-enterprises.com")
+        if (user.Email == "admin@wayne-enterprises.com")
         {
             return await Result.FailAsync("Not Allowed.");
         }

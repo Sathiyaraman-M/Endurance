@@ -99,7 +99,7 @@ public class RoleService : IRoleService
         return await Result<PermissionResponse>.SuccessAsync(model);
     }
 
-    private List<RoleClaimResponse> GetAllPermissions()
+    private static List<RoleClaimResponse> GetAllPermissions()
     {
         var allPermissions = new List<RoleClaimResponse>();
 
