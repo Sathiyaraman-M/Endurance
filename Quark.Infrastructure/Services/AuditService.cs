@@ -7,13 +7,8 @@ namespace Quark.Infrastructure.Services;
 public class AuditService : IAuditService
 {
     private readonly LibraryDbContext _dbContext;
-    private readonly IMapper _mapper;
 
-    public AuditService(LibraryDbContext dbContext, IMapper mapper)
-    {
-        _dbContext = dbContext;
-        _mapper = mapper;
-    }
+    public AuditService(LibraryDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<IResult<List<AuditResponse>>> GetCurrentUserTrailsAsync(string userId = "")
     {
@@ -29,8 +24,15 @@ public class AuditService : IAuditService
             AffectedColumns = e.AffectedColumns,
             PrimaryKey = e.PrimaryKey
         };
-        //var trails = await _dbContext.AuditTrails.Where(x => x.UserId == userId).OrderByDescending(a => a.Id).Take(250).ToListAsync();
-        var auditTrails = await _dbContext.AuditTrails.Where(x => x.UserId == userId).Select(expression).OrderByDescending(a => a.Id).Take(250).ToListAsync();
-        return await Result<List<AuditResponse>>.SuccessAsync(auditTrails);
+        if (userId == "")
+        {
+            var auditTrails = await _dbContext.AuditTrails.Where(x => x.UserId == userId).Select(expression).OrderByDescending(a => a.Id).Take(250).ToListAsync();
+            return await Result<List<AuditResponse>>.SuccessAsync(auditTrails);
+        }
+        else
+        {
+            var auditTrails = await _dbContext.AuditTrails.Select(expression).OrderByDescending(a => a.Id).Take(250).ToListAsync();
+            return await Result<List<AuditResponse>>.SuccessAsync(auditTrails);
+        }
     }
 }
