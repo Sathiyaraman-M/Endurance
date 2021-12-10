@@ -10,10 +10,6 @@
     {
         <MudNavLink Href="/books">Books</MudNavLink>
     }
-    @if (canViewDesignations)
-    {
-        <MudNavLink Href="/designations">Designations</MudNavLink>
-    }
     @if (canViewPatrons)
     {
         <MudNavLink Href="/patrons">Patrons</MudNavLink>
@@ -49,7 +45,6 @@
     private bool canViewAuditTrails;
     private bool canViewBooks;
     private bool canViewCheckouts;
-    private bool canViewDesignations;
     private bool canViewPatrons;
     private bool canViewUsers;
     private bool canViewRoles;
@@ -57,7 +52,6 @@
     protected override async Task OnInitializedAsync()
     {
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
-        canViewDesignations = (await authorizationService.AuthorizeAsync(User, Permissions.Designations.View)).Succeeded;
         canViewAuditTrails = (await authorizationService.AuthorizeAsync(User, Permissions.AuditTrails.View)).Succeeded;
         canViewBooks = (await authorizationService.AuthorizeAsync(User, Permissions.Books.View)).Succeeded;
         canViewPatrons = (await authorizationService.AuthorizeAsync(User, Permissions.Patrons.View)).Succeeded;

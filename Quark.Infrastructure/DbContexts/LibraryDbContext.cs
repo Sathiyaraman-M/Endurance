@@ -10,7 +10,6 @@ public class LibraryDbContext : AuditableContext
     }
 
     //TODO: DbSets Here>>
-    public DbSet<Designation> Designations { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Patron> Patrons { get; set; }
     public DbSet<Checkout> Checkouts { get; set; }

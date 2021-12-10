@@ -1,6 +1,5 @@
 ﻿using Quark.Core.Features.Books.Commands;
 using Quark.Core.Features.Checkouts.Commands;
-using Quark.Core.Features.Designations.Commands;
 using Quark.Core.Features.Patrons.Commands;
 
 namespace Quark.Core;
@@ -19,14 +18,6 @@ public class CheckoutProfile : Profile
     public CheckoutProfile()
     {
         CreateMap<AddCheckoutCommand, Checkout>();
-    }
-}
-public class DesignationProfile : Profile
-{
-    public DesignationProfile()
-    {
-        CreateMap<AddEditDesignationCommand, Designation>();
-        CreateMap<DesignationResponse, Designation>().ReverseMap();
     }
 }
 public class PatronProfile : Profile

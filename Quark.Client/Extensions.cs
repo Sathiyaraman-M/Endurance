@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -14,7 +13,6 @@ using Quark.Client.HttpClients.Identity.Users;
 using Quark.Client.HttpClients.Interceptors;
 using Quark.Client.HttpClients.Masters.Books;
 using Quark.Client.HttpClients.Masters.Checkouts;
-using Quark.Client.HttpClients.Masters.Designations;
 using Quark.Client.HttpClients.Masters.Patrons;
 using Quark.Client.Preferences;
 using System.Reflection;
@@ -61,7 +59,6 @@ internal static class WebAssemblyHostBuilderExtensions
         services.AddTransient<IAuthenticationHttpClient, AuthenticationHttpClient>();
         services.AddTransient<IBookHttpClient, BookHttpClient>();
         services.AddTransient<ICheckoutHttpClient, CheckoutHttpClient>();
-        services.AddTransient<IDesignationHttpClient, DesignationHttpClient>();
         services.AddTransient<IHttpClientInterceptor, HttpClientInterceptor>();
         services.AddTransient<IPatronHttpClient, PatronHttpClient>();
         services.AddTransient<IRoleHttpClient, RoleHttpClient>();
