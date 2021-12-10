@@ -1,0 +1,78 @@
+﻿@page "/user-profile/{Id}"
+
+<MudText Typo=Typo.h5 Color=Color.Primary Class="mb-2">User Profile</MudText>
+<MudText Inline Color=Color.Surface Class="mb-4">UserId : </MudText>
+<MudText Inline Color=Color.Surface Typo="Typo.button" Class="mb-4">@Id</MudText>
+<MudDivider Class="my-4" />
+@if (!_loaded)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate />
+}
+else
+{
+    <MudGrid>
+        <AuthorizeView Roles="@RoleConstants.AdministratorRole">
+            <MudItem xs="12" sm="12" md="12">
+                <MudCard Elevation="0" Outlined>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1">Administrator Settings.</MudText>
+                            <MudText Typo="Typo.body2">This is an Administrator Only View.</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent Class="pa-46" Style="padding:26px!important">
+                        <MudGrid>
+                            <MudCheckBox @bind-Checked="@_active" Label="Active?" Color="Color.Primary"></MudCheckBox>
+                            <MudFab Color="Color.Primary" DisableElevation Size=Size.Medium Class="ml-auto" OnClick="ToggleUserStatus" ButtonType="ButtonType.Submit" Label="Save Changes" />
+                        </MudGrid>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </AuthorizeView>
+        <MudItem xs="12" sm="4" md="3">
+            <MudCard Elevation="0" Outlined>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Profile</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center mb-4">
+                        @if (!string.IsNullOrEmpty(@ImageDataUrl))
+                        {
+                            <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px;"> </MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@_firstLetterOfName</MudAvatar>
+                        }
+                    </div>
+                    <MudText Typo="Typo.h6" Align="Align.Center">@_fullName</MudText>
+                    <MudText Align="Align.Center">@_email</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="8" md="9">
+            <MudCard Elevation="0" Outlined>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Public Profile</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="12" md="6">
+                            <MudField Label="First Name" Variant="Variant.Text">@_fullName</MudField>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudField Label="Phone Number" Variant="Variant.Text">@_phoneNumber</MudField>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudField Label="Email" Variant="Variant.Text">@_email</MudField>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+}
