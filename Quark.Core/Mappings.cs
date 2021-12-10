@@ -40,18 +40,11 @@ public class PatronProfile : Profile
     }
 }
 
-public class PermissionProfile : Profile
+public class IdentityProfile : Profile
 {
-    public PermissionProfile()
+    public IdentityProfile()
     {
         CreateMap<PermissionRequest, PermissionResponse>().ReverseMap();
-    }
-}
-
-public class RoleClaimProfile : Profile
-{
-    public RoleClaimProfile()
-    {
         CreateMap<RoleClaimRequest, RoleClaimResponse>().ReverseMap();
     }
 }

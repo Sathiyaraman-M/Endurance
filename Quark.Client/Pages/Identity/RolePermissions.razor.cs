@@ -31,7 +31,7 @@ public partial class RolePermissions
 
     private async Task GetRolePermissionsAsync()
     {
-        _mapper = new MapperConfiguration(c => { c.AddProfile<PermissionProfile>(); c.AddProfile<RoleClaimProfile>(); }).CreateMapper();
+        _mapper = new MapperConfiguration(c => { c.AddProfile<IdentityProfile>(); }).CreateMapper();
         var roleId = Id;
         var result = await _roleHttpClient.GetPermissionsAsync(roleId);
         if (result.Succeeded)
