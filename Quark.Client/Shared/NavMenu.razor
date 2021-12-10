@@ -31,6 +31,18 @@
         <MudNavLink Href="/audit-trails">Audit Trails</MudNavLink>
     }
 </MudNavMenu>
+<MudDivider />
+<MudText Class="ml-4 my-2" Typo="Typo.overline">IDENTITY</MudText>
+<MudNavMenu>
+    @if (canViewUsers)
+    {
+        <MudNavLink Href="/identity/users">Users</MudNavLink>
+    }
+    @if (canViewRoles)
+    {
+        <MudNavLink Href="/identity/roles">Roles</MudNavLink>
+    }
+</MudNavMenu>
 @code
 {
     private ClaimsPrincipal User;
@@ -39,6 +51,8 @@
     private bool canViewCheckouts;
     private bool canViewDesignations;
     private bool canViewPatrons;
+    private bool canViewUsers;
+    private bool canViewRoles;
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,5 +62,7 @@
         canViewBooks = (await authorizationService.AuthorizeAsync(User, Permissions.Books.View)).Succeeded;
         canViewPatrons = (await authorizationService.AuthorizeAsync(User, Permissions.Patrons.View)).Succeeded;
         canViewCheckouts = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
+        canViewUsers = (await authorizationService.AuthorizeAsync(User, Permissions.Users.View)).Succeeded;
+        canViewRoles = (await authorizationService.AuthorizeAsync(User, Permissions.Roles.View)).Succeeded;
     }
 }
