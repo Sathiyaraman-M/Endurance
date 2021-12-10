@@ -29,26 +29,40 @@
         <col style="width: 10%"/>
     </ColGroup>
     <ToolBarContent>
-        <div class="justify-center mud-text-align-center">
-            @if (_canCreate)
-                {
-                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal(Guid.Empty))" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
-                }
-            <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+        <MudHidden Breakpoint=Breakpoint.SmAndDown Invert>
+            @if(_canCreate)
+            {
+                <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => InvokeModal(Guid.Empty))" Icon=@Icons.Material.Filled.Add Size=Size.Small Class="me-2" />
+            }
+            <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" Icon="@Icons.Material.Filled.Refresh" Size=Size.Small Class="me-2" />
             @if (_canExport)
             {
-                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Surface" OnClick="ExportToExcelAsync" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Class="me-2">Export To Excel</MudButton>
-            } 
-        </div>
-        <MudSpacer />
-        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+                <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Dark" OnClick="ExportToExcelAsync" Icon="@Icons.Custom.FileFormats.FileExcel" Size=Size.Small Class="me-2" />
+            }
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Small" Margin="Margin.Dense" Class="mt-0 mb-3"></MudTextField>
+        </MudHidden>
+        <MudHidden Breakpoint=Breakpoint.MdAndUp Invert>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreate)
+                    {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="(() => InvokeModal(Guid.Empty))" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
+                    }
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
+                @if (_canExport)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Dark" OnClick="ExportToExcelAsync" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Success" Class="me-2">Export To Excel</MudButton>
+                } 
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </MudHidden>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="RegisterId">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="RegisterId">Register ID</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Email">Email</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Mobile">Mobile</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="CurrentFees">Current due</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="CurrentFees">Current Due</MudTableSortLabel></MudTh>
         @if (_canView)
             {
             <MudTh Style="text-align:right">View</MudTh>
@@ -63,7 +77,7 @@
             }
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Id">
+        <MudTd DataLabel="Register ID">
             <MudHighlighter Text="@context.RegisterId" HighlightedText="@_searchString" />
         </MudTd>
         <MudTd DataLabel="Name">

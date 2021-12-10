@@ -12,11 +12,11 @@
 <MudText Color="Color.Surface" Class="mb-4">See all the library history here</MudText>
 @if (!_loaded)
 {
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+    <MudProgressLinear Color="Color.Primary" Indeterminate />
 }
 else
 {
-    <MudTable Items="Trails" Dense="true" Filter="new Func<RelatedAuditTrail, bool>(Search)" @bind-trail="_trail" CustomHeader="true">
+    <MudTable Items="Trails" Dense="true" Elevation=0 Outlined Filter="new Func<RelatedAuditTrail, bool>(Search)" @bind-trail="_trail" CustomHeader="true">
         <ToolBarContent>
             <div class="justify-center mud-text-align-center">
                 <MudButton DisableElevation IconColor="Color.Secondary" Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Surface">Export To Excel</MudButton>
@@ -56,7 +56,7 @@ else
             <MudTd DataLabel="Date">@context.LocalTime.ToString("G")</MudTd>
             <MudTd DataLabel="Tax">@context.Type</MudTd>
             <MudTd Style="text-align:right">
-                <MudFab DisableElevation Icon="@Icons.Filled.KeyboardArrowDown" Disabled=@(context.TableName == "ApplicationUser") IconColor="Color.Secondary" OnClick="@(() => OnClickingShow(context.Id))" Label="@((context.ShowDetails == true)? "Hide Trail Details" : "Show Trail Details")" />
+                <MudFab DisableElevation Icon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" OnClick="@(() => OnClickingShow(context.Id))" Label="@((context.ShowDetails == true)? "Hide Trail Details" : "Show Trail Details")" />
             </MudTd>
         </RowTemplate>
         <ChildRowContent>
@@ -155,6 +155,9 @@ else
                 </MudTr>
                 }
         </ChildRowContent>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
     </MudTable>
 }
 

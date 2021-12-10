@@ -55,15 +55,15 @@
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Publisher">Publisher</MudTableSortLabel></MudTh>
         @if (_canView)
         {
-            <MudTh Style="text-align:right">View</MudTh>
+            <MudTh Style="text-align:center">View</MudTh>
         }
         @if (_canEdit)
         {
-            <MudTh Style="text-align:right">Edit</MudTh>
+            <MudTh Style="text-align:center">Edit</MudTh>
         }
         @if (_canDelete)
         {
-            <MudTh Style="text-align:right">Delete</MudTh>
+            <MudTh Style="text-align:center">Delete</MudTh>
         }
     </HeaderContent>
     <RowTemplate>
@@ -84,19 +84,19 @@
         </MudTd>
         @if (_canView)
         {
-            <MudTd DataLabel="View" Style="text-align:right">
+            <MudTd DataLabel="View" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"books/{context.Id}"))" />
             </MudTd>
         }
         @if (_canEdit)
         {
-            <MudTd DataLabel="Edit" Style="text-align:right">
+            <MudTd DataLabel="Edit" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"books/{context.Id}/edit"))" />
             </MudTd>
         }
         @if (_canDelete)
         {
-            <MudTd DataLabel="Delete" Style="text-align:right">
+            <MudTd DataLabel="Delete" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
             </MudTd>
         }
