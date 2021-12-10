@@ -37,8 +37,8 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.PhoneNumber)">PhoneNumber</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.EmailConfirmed)">Email Confirmation</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<UserResponse, object>(x => x.IsActive)">Active</MudTableSortLabel></MudTh>
-            <MudTh Style="text-align:right">View Profile</MudTh>
-            <MudTh Style="text-align:right">Manage Roles</MudTh>
+            <MudTh Style="text-align:center">View Profile</MudTh>
+            <MudTh Style="text-align:center">Manage Permissions</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="User Name">
@@ -55,13 +55,13 @@ else
             </MudTd>
             <MudTd DataLabel="EmailConfirmed"><MudCheckBox @bind-Checked="@context.EmailConfirmed" ReadOnly Color="Color.Secondary"></MudCheckBox></MudTd>
             <MudTd DataLabel="Active"><MudCheckBox @bind-Checked="@context.IsActive" ReadOnly Color="Color.Secondary"></MudCheckBox></MudTd>
-            <MudTd DataLabel="View Profile">
+            <MudTd DataLabel="View Profile" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => ViewProfile(context.Id))" />
             </MudTd>
             @if (_canViewRoles)
             {
-                <MudTd DataLabel="Manage Roles">
-                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => ManageRoles(context.Id, context.Email))" />
+                <MudTd DataLabel="Manage Permissions" Style="text-align:center">
+                    <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => ManagePermissions(context.Id, context.Email))" />
                 </MudTd>
             }
         </RowTemplate>

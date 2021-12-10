@@ -94,9 +94,9 @@ public partial class Users
         navigationManager.NavigateTo($"/user-profile/{userId}");
     }
 
-    private void ManageRoles(string userId, string email)
+    private void ManagePermissions(string userId, string email)
     {
         if (email == "mukesh@blazorhero.com") snackbar.Add("Not Allowed.", Severity.Error);
-        else navigationManager.NavigateTo($"/identity/user-roles/{userId}");
+        else navigationManager.NavigateTo($"/identity/user-permissions/{userId}");
     }
 }
