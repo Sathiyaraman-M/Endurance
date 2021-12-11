@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Quark.Client.Authentication;
-using Quark.Client.HttpClients.Audit;
+using Quark.Client.HttpClients;
 using Quark.Client.HttpClients.Generic;
 using Quark.Client.HttpClients.Identity.Account;
 using Quark.Client.HttpClients.Identity.Authentication;
 using Quark.Client.HttpClients.Identity.Roles;
 using Quark.Client.HttpClients.Identity.Users;
-using Quark.Client.HttpClients.Interceptors;
-using Quark.Client.HttpClients.Masters.Books;
+using Quark.Client.HttpClients.Masters;
 using Quark.Client.HttpClients.Masters.Checkouts;
 using Quark.Client.HttpClients.Masters.Patrons;
 using Quark.Client.Preferences;
@@ -54,16 +53,15 @@ internal static class WebAssemblyHostBuilderExtensions
 
     internal static IServiceCollection AddHttpClients(this IServiceCollection services)
     {
-        services.AddTransient<IAuditHttpClient, AuditHttpClient>();
+        services.AddTransient<AuditHttpClient>();
         services.AddTransient<IAccountHttpClient, AccountHttpClient>();
         services.AddTransient<IAuthenticationHttpClient, AuthenticationHttpClient>();
-        services.AddTransient<IBookHttpClient, BookHttpClient>();
+        services.AddTransient<BookHttpClient>();
         services.AddTransient<ICheckoutHttpClient, CheckoutHttpClient>();
-        services.AddTransient<IHttpClientInterceptor, HttpClientInterceptor>();
+        services.AddTransient<HttpClientInterceptor>();
         services.AddTransient<IPatronHttpClient, PatronHttpClient>();
         services.AddTransient<IRoleHttpClient, RoleHttpClient>();
         services.AddTransient<IUserHttpClient, UserHttpClient>();
-        services.AddTransient(typeof(IGenericHttpClient<,>), typeof(GenericHttpClient<,>));
         return services;
     }
 

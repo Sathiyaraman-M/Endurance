@@ -18,8 +18,8 @@
 @using Quark.Client.HttpClients.Identity.Authentication
 @using Quark.Client.HttpClients.Identity.Roles
 @using Quark.Client.HttpClients.Identity.Users
-@using Quark.Client.HttpClients.Interceptors
-@using Quark.Client.HttpClients.Masters.Books
+@using Quark.Client.HttpClients
+@using Quark.Client.HttpClients.Masters
 @using Quark.Client.HttpClients.Masters.Checkouts
 @using Quark.Client.HttpClients.Masters.Patrons
 @using Quark.Client.Pages.Authentication
@@ -47,7 +47,7 @@
 @inject HttpClient httpClient
 @inject IClientPreferenceManager clientPreferenceManager
 @inject IDialogService dialogService
-@inject IHttpClientInterceptor httpInterceptorManager
+@inject HttpClientInterceptor httpInterceptorManager
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorageService
 @inject NavigationManager navigationManager

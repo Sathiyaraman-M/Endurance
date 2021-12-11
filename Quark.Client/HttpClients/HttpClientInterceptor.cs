@@ -2,9 +2,9 @@
 using System.Net.Http.Headers;
 using Toolbelt.Blazor;
 
-namespace Quark.Client.HttpClients.Interceptors;
+namespace Quark.Client.HttpClients;
 
-public class HttpClientInterceptor : IHttpClientInterceptor
+public class HttpClientInterceptor
 {
     private readonly Toolbelt.Blazor.HttpClientInterceptor _interceptor;
     private readonly IAuthenticationHttpClient _authenticationHttpClient;
