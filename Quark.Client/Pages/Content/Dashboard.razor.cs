@@ -21,10 +21,11 @@ public partial class Dashboard
         canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
         canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;
         canCreateCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.Create)).Succeeded;
-        var response = await (await _httpClient.GetAsync(Routes.DashboardRoute)).ToResult<DashboardResponse>();
-        if (response.Succeeded)
+        var response = await httpClient.GetAsync(Routes.DashboardRoute);
+        var result = await response.ToResult<DashboardResponse>();
+        if (result.Succeeded)
         {
-            DashboardData = response.Data;
+            DashboardData = result.Data;
         }
     }
 

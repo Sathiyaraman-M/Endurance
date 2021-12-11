@@ -1,6 +1,6 @@
 ﻿@page "/administration/checkouts"
 @attribute [Authorize(Policy = Permissions.Checkouts.View)]
-@inject ICheckoutHttpClient _checkoutHttpClient
+@inject CheckoutHttpClient _checkoutHttpClient
 <PageTitle>Checkouts | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>

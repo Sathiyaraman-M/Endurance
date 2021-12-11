@@ -1,8 +1,8 @@
 ﻿using Quark.Core.Features.Patrons.Commands;
 
-namespace Quark.Client.HttpClients.Masters.Patrons;
+namespace Quark.Client.HttpClients.Masters;
 
-public class PatronHttpClient : IPatronHttpClient
+public class PatronHttpClient
 {
     private readonly HttpClient _httpClient;
 

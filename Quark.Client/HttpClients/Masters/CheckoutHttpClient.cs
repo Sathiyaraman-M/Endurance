@@ -1,8 +1,8 @@
 ﻿using Quark.Core.Features.Checkouts.Commands;
 
-namespace Quark.Client.HttpClients.Masters.Checkouts;
+namespace Quark.Client.HttpClients.Masters;
 
-public class CheckoutHttpClient : ICheckoutHttpClient
+public class CheckoutHttpClient
 {
     private readonly HttpClient _httpClient;
 

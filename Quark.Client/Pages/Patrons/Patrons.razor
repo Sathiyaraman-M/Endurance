@@ -1,6 +1,6 @@
 ﻿@page "/administration/patrons"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
-@inject IPatronHttpClient _patronHttpClient
+@inject PatronHttpClient _patronHttpClient
 <PageTitle>Patrons | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>

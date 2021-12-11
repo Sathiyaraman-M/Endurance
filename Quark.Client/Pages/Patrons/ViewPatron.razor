@@ -1,6 +1,6 @@
 ﻿@page "/administration/patrons/{Id:guid}"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
-@inject IPatronHttpClient _patronHttpClient
+@inject PatronHttpClient _patronHttpClient
 
 @if (!_loaded)
 {
