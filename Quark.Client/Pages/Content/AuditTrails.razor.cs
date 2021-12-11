@@ -1,4 +1,4 @@
-﻿using Quark.Client.HttpClients.Audit;
+﻿using Quark.Client.HttpClients;
 using Quark.Core.Responses.Audit;
 
 namespace Quark.Client.Pages.Content;
@@ -6,7 +6,7 @@ namespace Quark.Client.Pages.Content;
 public partial class AuditTrails
 {
     [Inject]
-    private IAuditHttpClient auditHttpClient { get; set; }
+    private AuditHttpClient auditHttpClient { get; set; }
 
     public List<RelatedAuditTrail> Trails = new();
 

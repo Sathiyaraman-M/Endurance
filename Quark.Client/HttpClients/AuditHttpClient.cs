@@ -1,8 +1,8 @@
 ﻿using Quark.Core.Responses.Audit;
 
-namespace Quark.Client.HttpClients.Audit;
+namespace Quark.Client.HttpClients;
 
-public class AuditHttpClient : IAuditHttpClient
+public class AuditHttpClient
 {
     private readonly HttpClient _httpClient;
 
