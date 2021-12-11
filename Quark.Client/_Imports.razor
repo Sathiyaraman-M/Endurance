@@ -14,10 +14,7 @@
 @using Quark.Client
 @using Quark.Client.Authentication
 @using Quark.Client.Extensions
-@using Quark.Client.HttpClients.Identity.Account
-@using Quark.Client.HttpClients.Identity.Authentication
-@using Quark.Client.HttpClients.Identity.Roles
-@using Quark.Client.HttpClients.Identity.Users
+@using Quark.Client.HttpClients.Identity
 @using Quark.Client.HttpClients
 @using Quark.Client.HttpClients.Masters
 @using Quark.Client.Pages.Authentication
@@ -39,16 +36,16 @@
 @using System.Security.Claims
 
 @attribute [Authorize]
-@inject IAccountHttpClient accountHttpClient
-@inject IAuthenticationHttpClient authenticationHttpClient
+@inject AccountHttpClient accountHttpClient
+@inject AuthenticationHttpClient authenticationHttpClient
 @inject IAuthorizationService authorizationService
 @inject HttpClient httpClient
-@inject IClientPreferenceManager clientPreferenceManager
+@inject ClientPreferenceManager clientPreferenceManager
 @inject IDialogService dialogService
 @inject HttpClientInterceptor httpInterceptorManager
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorageService
 @inject NavigationManager navigationManager
 @inject ISnackbar snackbar
-@inject IUserHttpClient userHttpClient
+@inject UserHttpClient userHttpClient
 @inject UserAuthenticationStateProvider authStateProvider 

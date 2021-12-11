@@ -2,7 +2,7 @@
 
 namespace Quark.Client.Preferences;
 
-public class ClientPreferenceManager : IClientPreferenceManager
+public class ClientPreferenceManager
 {
     private readonly ILocalStorageService _localStorageService;
 

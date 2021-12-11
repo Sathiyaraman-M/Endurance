@@ -4,9 +4,9 @@ using Quark.Client.Authentication;
 using Quark.Core.Responses.Identity;
 using System.Net.Http.Headers;
 
-namespace Quark.Client.HttpClients.Identity.Authentication;
+namespace Quark.Client.HttpClients.Identity;
 
-public class AuthenticationHttpClient : IAuthenticationHttpClient
+public class AuthenticationHttpClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILocalStorageService _localStorageService;

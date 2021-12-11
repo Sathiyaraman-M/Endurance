@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Quark.Client.Authentication;
 using Quark.Client.HttpClients;
-using Quark.Client.HttpClients.Identity.Account;
-using Quark.Client.HttpClients.Identity.Authentication;
-using Quark.Client.HttpClients.Identity.Roles;
-using Quark.Client.HttpClients.Identity.Users;
+using Quark.Client.HttpClients.Identity;
 using Quark.Client.HttpClients.Masters;
 using Quark.Client.Preferences;
 using System.Reflection;
@@ -43,7 +40,7 @@ internal static class WebAssemblyHostBuilderExtensions
         builder.Services.AddScoped<UserAuthenticationStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider, UserAuthenticationStateProvider>();
         builder.Services.AddSingleton<Navigation>();
-        builder.Services.AddTransient<IClientPreferenceManager, ClientPreferenceManager>();
+        builder.Services.AddTransient<ClientPreferenceManager>();
         builder.Services.AddHttpClients();
         return builder;
     }
@@ -51,14 +48,14 @@ internal static class WebAssemblyHostBuilderExtensions
     internal static IServiceCollection AddHttpClients(this IServiceCollection services)
     {
         services.AddTransient<AuditHttpClient>();
-        services.AddTransient<IAccountHttpClient, AccountHttpClient>();
-        services.AddTransient<IAuthenticationHttpClient, AuthenticationHttpClient>();
+        services.AddTransient<AccountHttpClient>();
+        services.AddTransient<AuthenticationHttpClient>();
         services.AddTransient<BookHttpClient>();
         services.AddTransient<CheckoutHttpClient>();
         services.AddTransient<HttpClientInterceptor>();
         services.AddTransient<PatronHttpClient>();
-        services.AddTransient<IRoleHttpClient, RoleHttpClient>();
-        services.AddTransient<IUserHttpClient, UserHttpClient>();
+        services.AddTransient<RoleHttpClient>();
+        services.AddTransient<UserHttpClient>();
         return services;
     }
 

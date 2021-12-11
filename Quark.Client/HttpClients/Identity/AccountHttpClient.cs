@@ -1,6 +1,6 @@
-﻿namespace Quark.Client.HttpClients.Identity.Account;
+﻿namespace Quark.Client.HttpClients.Identity;
 
-public class AccountHttpClient : IAccountHttpClient
+public class AccountHttpClient
 {
     private readonly HttpClient _httpClient;
 

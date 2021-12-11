@@ -1,4 +1,4 @@
-﻿using Quark.Client.HttpClients.Identity.Authentication;
+﻿using Quark.Client.HttpClients.Identity;
 using System.Net.Http.Headers;
 using Toolbelt.Blazor;
 
@@ -7,11 +7,11 @@ namespace Quark.Client.HttpClients;
 public class HttpClientInterceptor
 {
     private readonly Toolbelt.Blazor.HttpClientInterceptor _interceptor;
-    private readonly IAuthenticationHttpClient _authenticationHttpClient;
+    private readonly AuthenticationHttpClient _authenticationHttpClient;
     private readonly NavigationManager _navigationManager;
     private readonly ISnackbar _snackBar;
 
-    public HttpClientInterceptor(Toolbelt.Blazor.HttpClientInterceptor interceptor, IAuthenticationHttpClient authenticationManager, NavigationManager navigationManager, ISnackbar snackBar)
+    public HttpClientInterceptor(Toolbelt.Blazor.HttpClientInterceptor interceptor, AuthenticationHttpClient authenticationManager, NavigationManager navigationManager, ISnackbar snackBar)
     {
         _interceptor = interceptor;
         _authenticationHttpClient = authenticationManager;

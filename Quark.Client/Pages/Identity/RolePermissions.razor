@@ -1,6 +1,6 @@
 ﻿@page "/administration/identity/role-permissions/{Id}"
 @using Quark.Core.Responses.Identity
-@inject IRoleHttpClient _roleHttpClient
+@inject RoleHttpClient _roleHttpClient
 @attribute [Authorize(Policy = Permissions.RoleClaims.View)]
 
 <MudText Typo=Typo.h5 Color=Color.Primary Class="mb-2">Role Permissions</MudText>

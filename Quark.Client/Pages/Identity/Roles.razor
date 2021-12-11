@@ -1,7 +1,7 @@
 ﻿@page "/administration/identity/roles"
 @using Quark.Core.Responses.Identity
 @attribute [Authorize(Policy = Permissions.Roles.View)]
-@inject IRoleHttpClient _roleHttpClient
+@inject RoleHttpClient _roleHttpClient
 
 <PageTitle>Roles | @ApplicationConstants.LibraryName</PageTitle>
 

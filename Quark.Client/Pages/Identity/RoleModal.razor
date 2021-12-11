@@ -1,4 +1,4 @@
-﻿@inject IRoleHttpClient _roleHttpClient
+﻿@inject RoleHttpClient _roleHttpClient
 
 <EditForm Model="@RoleModel" OnValidSubmit="SaveAsync">
     <FluentValidationValidator @ref="_fluentValidationValidator" />

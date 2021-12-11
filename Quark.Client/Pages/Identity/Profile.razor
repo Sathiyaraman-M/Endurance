@@ -1,60 +1,62 @@
-﻿<MudGrid>
-    <MudItem xs=12 sm=4 md=3>
-        <MudCard Elevation=0 Outlined>
-            <MudCardContent>
-                <div class="d-flex justify-center mb-4">
+﻿<MudPaper Elevation=0 Class="pa-4">
+    <MudGrid>
+        <MudItem xs=12 sm=4 md=3>
+            <MudCard Elevation=0 Outlined>
+                <MudCardContent>
+                    <div class="d-flex justify-center mb-4">
+                        @if(!string.IsNullOrEmpty(ImageDataUrl))
+                        {
+                            <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px"></MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@_firstLetterOfName</MudAvatar>
+                        }
+                    </div>
+                    <MudText Typo="Typo.h6" Align="Align.Center">@_profileModel.UserName</MudText>
+                    <MudText Typo="Typo.body1" Align="Align.Center">@_profileModel.FullName</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center">@_profileModel.Email</MudText>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <InputFile id="fileInput" OnChange=UploadFiles hidden />
+                    <MudButton HtmlTag="label" Variant=Variant.Outlined Color=Color.Primary Size=Size.Small StartIcon=@Icons.Material.Filled.CloudUpload for="fileInput">Upload Image</MudButton>
                     @if(!string.IsNullOrEmpty(ImageDataUrl))
                     {
-                        <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px"></MudAvatar>
+                        <MudButton Variant=Variant.Outlined Color=Color.Error StartIcon=@Icons.Material.Filled.Delete Size=Size.Small OnClick=DeleteAsync>Delete Image</MudButton>
                     }
-                    else
-                    {
-                        <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@_firstLetterOfName</MudAvatar>
-                    }
-                </div>
-                <MudText Typo="Typo.h6" Align="Align.Center">@_profileModel.UserName</MudText>
-                <MudText Typo="Typo.body1" Align="Align.Center">@_profileModel.FullName</MudText>
-                <MudText Typo="Typo.caption" Align="Align.Center">@_profileModel.Email</MudText>
-            </MudCardContent>
-            <MudCardActions Class="d-flex justify-center">
-                <InputFile id="fileInput" OnChange=UploadFiles hidden />
-                <MudButton HtmlTag="label" Variant=Variant.Text Color=Color.Primary Size=Size.Small StartIcon=@Icons.Material.Filled.CloudUpload for="fileInput">Upload Image</MudButton>
-                @if(!string.IsNullOrEmpty(ImageDataUrl))
-                {
-                    <MudButton Variant=Variant.Text Color=Color.Error StartIcon=@Icons.Material.Filled.Delete Size=Size.Small OnClick=DeleteAsync>Delete Image</MudButton>
-                }
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
-    <MudItem xs=12 sm=8 md=9>
-        <EditForm Model=@_profileModel OnValidSubmit=UpdateProfileAsync>
-            <FluentValidationValidator @ref=_fluentValidationValidator />
-            <MudCard Elevation=0 Outlined>
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText>Profile Details</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudGrid>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@_profileModel.UserName" For="@(() => _profileModel.UserName)" Label="User Name" Variant="Variant.Outlined" />
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@_profileModel.FullName" For="@(() => _profileModel.FullName)" Label="Full Name" Variant="Variant.Outlined" />
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Label="Phone Number" Variant="Variant.Outlined" />
-                        </MudItem>
-                        <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@_profileModel.Email" For="@(() => _profileModel.Email)" Label="Email" Variant="Variant.Outlined" InputType="InputType.Email" />
-                        </MudItem>
-                    </MudGrid>
-                </MudCardContent>
-                <MudCardActions Class="pb-4 pl-4">
-                    <MudButton Variant="Variant.Filled" Disabled="@(!Validated)" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">Save Changes</MudButton>
                 </MudCardActions>
             </MudCard>
-        </EditForm>
-    </MudItem>
-</MudGrid>
+        </MudItem>
+        <MudItem xs=12 sm=7 md=6>
+            <EditForm Model=@_profileModel OnValidSubmit=UpdateProfileAsync>
+                <FluentValidationValidator @ref=_fluentValidationValidator />
+                <MudCard Elevation=0 Outlined>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Profile Details</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@_profileModel.UserName" For="@(() => _profileModel.UserName)" Label="User Name" Variant="Variant.Outlined" />
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@_profileModel.FullName" For="@(() => _profileModel.FullName)" Label="Full Name" Variant="Variant.Outlined" />
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@_profileModel.PhoneNumber" For="@(() => _profileModel.PhoneNumber)" Label="Phone Number" Variant="Variant.Outlined" />
+                            </MudItem>
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="@_profileModel.Email" For="@(() => _profileModel.Email)" Label="Email" Variant="Variant.Outlined" InputType="InputType.Email" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Disabled="@(!Validated)" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">Save Changes</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </EditForm>
+        </MudItem>
+    </MudGrid>
+</MudPaper>

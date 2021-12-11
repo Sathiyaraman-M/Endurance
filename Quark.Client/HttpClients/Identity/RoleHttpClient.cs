@@ -1,8 +1,8 @@
 ﻿using Quark.Core.Responses.Identity;
 
-namespace Quark.Client.HttpClients.Identity.Roles;
+namespace Quark.Client.HttpClients.Identity;
 
-public class RoleHttpClient : IRoleHttpClient
+public class RoleHttpClient
 {
     private readonly HttpClient _httpClient;
 
