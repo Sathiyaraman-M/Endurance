@@ -24,7 +24,7 @@
     async Task Submit()
     {
         await authenticationHttpClient.Logout();
-        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/administration/dashboard");
         MudDialog.Close(DialogResult.Ok(true));
     }
     void Cancel() => MudDialog.Cancel();

@@ -23,7 +23,7 @@ public partial class UserProfile
         if (result.Succeeded)
         {
             snackbar.Add("Updated User Status.", Severity.Success);
-            navigationManager.NavigateTo("/identity/users");
+            navigationManager.NavigateTo("/administration/identity/users");
         }
         else
         {

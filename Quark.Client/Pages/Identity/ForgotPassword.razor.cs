@@ -16,7 +16,7 @@ public partial class ForgotPassword
             {
                 snackbar.Add(message, Severity.Success);
             }
-            navigationManager.NavigateTo("/");
+            navigationManager.NavigateTo("/administration/dashboard");
         }
         else
         {

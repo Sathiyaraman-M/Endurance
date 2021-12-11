@@ -58,13 +58,14 @@ public partial class ViewPatron
         if ((await dialogService.ShowMessageBox("Confirm Delete?", "Are you sure want to delete this patron?", yesText: "Delete", cancelText: "Cancel")) == true)
         {
             var response = await _patronHttpClient.DeleteAsync(Id);
-            foreach (var message in response.Messages)
+            if(response.Succeeded)
             {
-                if (response.Succeeded)
-                {
-                    snackbar.Add(message, Severity.Success);
-                }
-                else
+                snackbar.Add(response.Messages[0], Severity.Success);
+                navigationManager.NavigateTo("administration/patrons");
+            }
+            else
+            {
+                foreach (var message in response.Messages)
                 {
                     snackbar.Add(message, Severity.Error);
                 }

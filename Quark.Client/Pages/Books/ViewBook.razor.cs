@@ -38,10 +38,8 @@ public partial class ViewBook
             var response = await _bookHttpClient.DeleteAsync(Id);
             if (response.Succeeded)
             {
-                foreach (var message in response.Messages)
-                {
-                    snackbar.Add(message, Severity.Success);
-                }
+                snackbar.Add(response.Messages[0], Severity.Success);
+                navigationManager.NavigateTo("/administration/books");
                 StateHasChanged();
             }
             else

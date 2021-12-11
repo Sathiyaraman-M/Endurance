@@ -10,7 +10,7 @@ public partial class Login
         if (result.Succeeded)
         {
             snackbar.Add(string.Format("Welcome {0}", requestModel.UserName), Severity.Success);
-            navigationManager.NavigateTo("/", true);
+            navigationManager.NavigateTo("/administration/dashboard", true);
         }
         else
         {

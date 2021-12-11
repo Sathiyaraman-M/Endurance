@@ -27,7 +27,7 @@ public partial class Reset
             if (result.Succeeded)
             {
                 snackbar.Add(result.Messages[0], Severity.Success);
-                navigationManager.NavigateTo("/");
+                navigationManager.NavigateTo("/administration/dashboard");
             }
             else
             {

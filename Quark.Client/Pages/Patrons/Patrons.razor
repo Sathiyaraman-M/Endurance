@@ -1,4 +1,4 @@
-﻿@page "/patrons"
+﻿@page "/administration/patrons"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
 @inject IPatronHttpClient _patronHttpClient
 <PageTitle>Patrons | @ApplicationConstants.LibraryName</PageTitle>
@@ -13,21 +13,11 @@
 <MudText Color="Color.Surface" Class="mb-4">Manage all patrons here</MudText>
 <MudTable Elevation="0" Outlined HorizontalScrollbar Dense ServerData="new Func<TableState, Task<TableData<PatronResponse>>>(OnServerReloadAsync)" @ref="mudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
-        <MudAlert Severity="Severity.Normal">No patrons enrolled in the library. Try to fill 'em up!</MudAlert>
+        <MudAlert Severity="Severity.Normal">No patrons records available</MudAlert>
     </NoRecordsContent>
     <LoadingContent>
         <MudText Typo="Typo.body1" Align="Align.Center" GutterBottom="true">Loading...</MudText>
     </LoadingContent>
-    <ColGroup>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col style="width: 10%"/>
-        <col style="width: 10%"/>
-        <col style="width: 10%"/>
-    </ColGroup>
     <ToolBarContent>
         <MudHidden Breakpoint=Breakpoint.SmAndDown Invert>
             @if(_canCreate)
@@ -58,22 +48,22 @@
         </MudHidden>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="RegisterId">Register ID</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="PatronResponse" InitialDirection="SortDirection.Ascending" SortLabel="RegisterId">Register ID</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Email">Email</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="Mobile">Mobile</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="PatronResponse" SortLabel="CurrentFees">Current Due</MudTableSortLabel></MudTh>
         @if (_canView)
             {
-            <MudTh Style="text-align:right">View</MudTh>
+            <MudTh Style="text-align:center">View</MudTh>
             }
         @if (_canEdit)
             {
-            <MudTh Style="text-align:right">Edit</MudTh>
+            <MudTh Style="text-align:center">Edit</MudTh>
             }
         @if (_canDelete)
             {
-            <MudTh Style="text-align:right">Delete</MudTh>
+            <MudTh Style="text-align:center">Delete</MudTh>
             }
     </HeaderContent>
     <RowTemplate>
@@ -94,19 +84,19 @@
         </MudTd>
         @if (_canView)
             {
-            <MudTd DataLabel="View" Style="text-align:right">
-                <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"patrons/{context.Id}"))" />
+            <MudTd DataLabel="View" Style="text-align:center">
+                <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"administration/patrons/{context.Id}"))" />
             </MudTd>
             }
         @if (_canEdit)
             {
-            <MudTd DataLabel="Edit" Style="text-align:right">
+            <MudTd DataLabel="Edit" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="(() => InvokeModal(context.Id))" />
             </MudTd>
             }
         @if (_canDelete)
             {
-            <MudTd DataLabel="Delete" Style="text-align:right">
+            <MudTd DataLabel="Delete" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
             </MudTd>
             }

@@ -1,4 +1,4 @@
-﻿@page "/books"
+﻿@page "/administration/books"
 @attribute [Authorize(Policy = Permissions.Books.View)]
 @inject IBookHttpClient _bookHttpClient
 <PageTitle>Books | @ApplicationConstants.LibraryName</PageTitle>
@@ -22,7 +22,7 @@
         <MudHidden Breakpoint=Breakpoint.SmAndDown Invert>
             @if(_canCreate)
             {
-                <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => navigationManager.NavigateTo("books/add"))" Icon=@Icons.Material.Filled.Add Size=Size.Small Class="me-2" />
+                <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => navigationManager.NavigateTo("administration/books/add"))" Icon=@Icons.Material.Filled.Add Size=Size.Small Class="me-2" />
             }
             <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" Icon="@Icons.Material.Filled.Refresh" Size=Size.Small Class="me-2" />
             @if (_canExport)
@@ -35,7 +35,7 @@
             <div class="justify-center mud-text-align-center">
                 @if (_canCreate)
                 {
-                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => navigationManager.NavigateTo("books/add"))" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => navigationManager.NavigateTo("administration/books/add"))" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface" Class="me-2">Add</MudButton>
                 }
                 <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
                 @if (_canExport)
@@ -85,13 +85,13 @@
         @if (_canView)
         {
             <MudTd DataLabel="View" Style="text-align:center">
-                <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"books/{context.Id}"))" />
+                <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"administration/books/{context.Id}"))" />
             </MudTd>
         }
         @if (_canEdit)
         {
             <MudTd DataLabel="Edit" Style="text-align:center">
-                <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"books/{context.Id}/edit"))" />
+                <MudFab DisableElevation Color="Color.Warning" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"administration/books/{context.Id}/edit"))" />
             </MudTd>
         }
         @if (_canDelete)

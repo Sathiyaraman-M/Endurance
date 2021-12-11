@@ -1,4 +1,4 @@
-﻿@page "/patrons/{Id:guid}"
+﻿@page "/administration/patrons/{Id:guid}"
 @attribute [Authorize(Policy = Permissions.Patrons.View)]
 @inject IPatronHttpClient _patronHttpClient
 
@@ -10,11 +10,11 @@ else
 {
     if (Patron is not null)
     {
-        <MudCard>
+        <MudCard Elevation=0 Outlined Class="mb-6">
             <MudCardHeader>
                 <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@Patron.Name</MudText>
-                    <MudText Typo="Typo.body1">@Patron.RegisterId</MudText>
+                    <MudText Typo="Typo.h5" Class="mb-2" Color=Color.Primary>Patron Info</MudText>
+                    <MudText Typo="Typo.body1" Inline>@Patron.Name, </MudText><MudText Typo="Typo.body2" Inline>@Patron.RegisterId</MudText>
                 </CardHeaderContent>
                 <CardHeaderActions>
                     @if (_canEdit)
@@ -32,6 +32,7 @@ else
                 </CardHeaderActions>
             </MudCardHeader>
             <MudCardContent>
+                <MudDivider Class="mb-4 mt-n4" />
                 <MudGrid>
                     <MudItem xs="12" sm="6" md="3" lg="2">
                         <MudPaper Class="pa-4" Outlined>

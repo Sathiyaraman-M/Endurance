@@ -91,12 +91,12 @@ public partial class Users
 
     private void ViewProfile(string userId)
     {
-        navigationManager.NavigateTo($"/user-profile/{userId}");
+        navigationManager.NavigateTo($"/administration/user-profile/{userId}");
     }
 
     private void ManageRoles(string userId, string email)
     {
         if (email == "admin@wayne-enterprises.com") snackbar.Add("Not Allowed.", Severity.Error);
-        else navigationManager.NavigateTo($"/identity/user-roles/{userId}");
+        else navigationManager.NavigateTo($"/administration/identity/user-roles/{userId}");
     }
 }

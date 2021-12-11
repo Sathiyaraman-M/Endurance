@@ -12,7 +12,7 @@ public partial class Register
         if (response.Succeeded)
         {
             snackbar.Add(response.Messages[0], Severity.Success);
-            navigationManager.NavigateTo("/login");
+            navigationManager.NavigateTo("/administration/login");
             _registerUserModel = new RegisterRequest();
         }
         else

@@ -7,7 +7,7 @@ public partial class AddEditBook
     [Parameter]
     public Guid? Id { get; set; }
 
-    private AddEditBookCommand Model = new();
+    private AddEditBookCommand Model { get; set; } = new() { Headers = new() { new() { Condition = AssetStatusConstants.GoodCondition, Barcode = "00000" } } };
 
     private FluentValidationValidator _fluentValidationValidator;
     private bool Validated => _fluentValidationValidator.Validate(options => { options.IncludeAllRuleSets(); });
@@ -73,9 +73,17 @@ public partial class AddEditBook
     private async Task SaveAsync()
     {
         var response = await _bookHttpClient.SaveAsync(Model);
-        foreach (var message in response.Messages)
+        if(response.Succeeded)
         {
-            snackbar.Add(message, response.Succeeded ? Severity.Normal : Severity.Error);
+            snackbar.Add(response.Messages[0], Severity.Success);
+            navigationManager.NavigateTo("/administration/books");
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                snackbar.Add(message, Severity.Error);
+            }
         }
     }
 }

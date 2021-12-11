@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/administration/login"
 <PageTitle>Login | @ApplicationConstants.LibraryName</PageTitle>
 @layout AuthLayout
 @attribute [AllowAnonymous]
@@ -26,10 +26,10 @@
     <MudDivider Class="my-8" />
     <MudGrid>
         <MudItem xs=12>
-            <MudLink Href="/register" Typo="Typo.body1">Register</MudLink>
+            <MudLink Href="/administration/register" Typo="Typo.body1">Register</MudLink>
         </MudItem>
         <MudItem xs=12>
-            <MudLink Href="/account/forgot-password" Typo="Typo.body1">Forgot Password?</MudLink>
+            <MudLink Href="/administration/account/forgot-password" Typo="Typo.body1">Forgot Password?</MudLink>
         </MudItem>
     </MudGrid>
 </EditForm>

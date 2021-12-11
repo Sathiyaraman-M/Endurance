@@ -1,6 +1,6 @@
 ﻿
 <MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/administration/dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
     <MudNavLink Href="/swagger/index.html">Swagger</MudNavLink>
 </MudNavMenu>
 <MudDivider />
@@ -8,11 +8,11 @@
 <MudNavMenu>
     @if (canViewBooks)
     {
-        <MudNavLink Href="/books">Books</MudNavLink>
+        <MudNavLink Href="/administration/books">Books</MudNavLink>
     }
     @if (canViewPatrons)
     {
-        <MudNavLink Href="/patrons">Patrons</MudNavLink>
+        <MudNavLink Href="/administration/patrons">Patrons</MudNavLink>
     }
 </MudNavMenu>
 <MudDivider />
@@ -20,11 +20,11 @@
 <MudNavMenu>
     @if (canViewCheckouts)
     {
-        <MudNavLink Href="/checkouts">Checkouts</MudNavLink>
+        <MudNavLink Href="/administration/checkouts">Checkouts</MudNavLink>
     }
     @if (canViewAuditTrails)
     {
-        <MudNavLink Href="/audit-trails">Audit Trails</MudNavLink>
+        <MudNavLink Href="/administration/audit-trails">Audit Trails</MudNavLink>
     }
 </MudNavMenu>
 <MudDivider />
@@ -32,11 +32,11 @@
 <MudNavMenu>
     @if (canViewUsers)
     {
-        <MudNavLink Href="/identity/users">Users</MudNavLink>
+        <MudNavLink Href="/administration/identity/users">Users</MudNavLink>
     }
     @if (canViewRoles)
     {
-        <MudNavLink Href="/identity/roles">Roles</MudNavLink>
+        <MudNavLink Href="/administration/identity/roles">Roles</MudNavLink>
     }
 </MudNavMenu>
 @code

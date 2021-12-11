@@ -60,7 +60,7 @@ public partial class RolePermissions
             {
                 snackbar.Add(error, Severity.Error);
             }
-            navigationManager.NavigateTo("/identity/roles");
+            navigationManager.NavigateTo("/administration/identity/roles");
         }
     }
 
@@ -71,7 +71,7 @@ public partial class RolePermissions
         if (result.Succeeded)
         {
             snackbar.Add(result.Messages[0], Severity.Success);
-            navigationManager.NavigateTo("/identity/roles");
+            navigationManager.NavigateTo("/administration/identity/roles");
         }
         else
         {

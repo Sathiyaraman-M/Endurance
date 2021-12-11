@@ -11,7 +11,6 @@ public partial class MainLayout : IDisposable
     private string ImageDataUrl { get; set; }
     private string UserName { get; set; }
     private string FullName { get; set; }
-    private string Designation { get; set; }
     private string Email { get; set; }
     private char FirstLetterOfName { get; set; }
 
@@ -26,7 +25,6 @@ public partial class MainLayout : IDisposable
         {
             UserName = _user.GetUserName();
             FullName = _user.GetFullName();
-            Designation = _user.GetDesignation();
             CurrentUserId = _user.GetUserId();
             if (UserName.Length > 0)
             {
@@ -53,7 +51,7 @@ public partial class MainLayout : IDisposable
         if (await dialogService.ShowMessageBox("Confirm Logout", "Are you sure want to logout?", yesText: "Log out", cancelText: "Cancel") == true)
         {
             await authenticationHttpClient.Logout();
-            navigationManager.NavigateTo("/");
+            navigationManager.NavigateTo("/administration/dashboard");
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Quark.Client.Pages.Content;
 
-public partial class Index
+public partial class Dashboard
 {
     private DashboardResponse DashboardData;
     private AddCheckoutCommand Checkout = new();

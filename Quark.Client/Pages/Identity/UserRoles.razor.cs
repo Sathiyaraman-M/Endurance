@@ -49,7 +49,7 @@ public partial class UserRoles
         if (result.Succeeded)
         {
             snackbar.Add(result.Messages[0], Severity.Success);
-            navigationManager.NavigateTo("/identity/users");
+            navigationManager.NavigateTo("/administration/identity/users");
         }
         else
         {

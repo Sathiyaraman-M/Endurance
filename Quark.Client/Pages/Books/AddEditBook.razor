@@ -1,5 +1,5 @@
-﻿@page "/books/add"
-@page "/books/{Id:guid}/edit"
+﻿@page "/administration/books/add"
+@page "/administration/books/{Id:guid}/edit"
 @inject Navigation _navigation
 @inject IBookHttpClient _bookHttpClient
 
@@ -46,7 +46,9 @@
                     <MudTextField T="string" For="(() => Model.Description)" @bind-Value="Model.Description" Label="Description" Variant=Variant.Outlined Margin=Margin.Dense />
                 </MudItem>
             </MudGrid>
-            <MudTable Items="Model.Headers" Dense Outlined Elevation=0 Class="mt-6">
+            <MudDivider Class="my-4" />
+            <MudText Typo=Typo.button>Book Items</MudText>
+            <MudTable Items="Model.Headers" Dense Outlined Elevation=0 Class="mt-4">
                 <ToolBarContent>
                     <MudButton Variant=Variant.Filled Color=Color.Success DisableElevation StartIcon=@Icons.Material.Filled.Add OnClick=AddBookItem>Add Book Item</MudButton>
                 </ToolBarContent>
