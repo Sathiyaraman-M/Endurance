@@ -17,9 +17,7 @@ public partial class Profile
         var response = await accountHttpClient.UpdateProfileAsync(_profileModel);
         if (response.Succeeded)
         {
-            await authenticationHttpClient.Logout();
-            snackbar.Add("Your Profile has been updated. Please Login to Continue.", Severity.Success);
-            navigationManager.NavigateTo("/");
+            snackbar.Add("Your Profile has been updated.", Severity.Success);
         }
         else
         {
