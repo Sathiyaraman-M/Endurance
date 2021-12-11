@@ -1,6 +1,6 @@
 ﻿@page "/administration/books"
 @attribute [Authorize(Policy = Permissions.Books.View)]
-@inject IBookHttpClient _bookHttpClient
+@inject BookHttpClient _bookHttpClient
 <PageTitle>Books | @ApplicationConstants.LibraryName</PageTitle>
 
 <style>

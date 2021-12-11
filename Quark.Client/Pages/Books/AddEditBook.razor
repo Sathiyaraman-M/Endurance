@@ -1,7 +1,7 @@
 ﻿@page "/administration/books/add"
 @page "/administration/books/{Id:guid}/edit"
 @inject Navigation _navigation
-@inject IBookHttpClient _bookHttpClient
+@inject BookHttpClient _bookHttpClient
 
 <EditForm Model="Model" OnValidSubmit="SaveAsync">
     <MudCard Elevation=0 Outlined>

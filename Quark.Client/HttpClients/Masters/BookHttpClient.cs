@@ -1,8 +1,8 @@
 ﻿using Quark.Core.Features.Books.Commands;
 
-namespace Quark.Client.HttpClients.Masters.Books;
+namespace Quark.Client.HttpClients.Masters;
 
-public class BookHttpClient : IBookHttpClient
+public class BookHttpClient
 {
     private readonly HttpClient _httpClient;
 

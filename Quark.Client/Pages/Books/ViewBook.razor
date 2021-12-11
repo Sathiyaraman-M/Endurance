@@ -1,6 +1,6 @@
 ﻿@page "/administration/books/{Id:guid}"
 @attribute [Authorize(Policy = Permissions.Books.View)]
-@inject IBookHttpClient _bookHttpClient
+@inject BookHttpClient _bookHttpClient
 @if (!_loaded)
 {
     <MudProgressLinear Class="d-flex justify-center" Indeterminate Color="Color.Secondary" />
