@@ -29,7 +29,8 @@ public abstract class AuditableContext : IdentityDbContext<ApplicationUser, Appl
         {
             if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                 continue;
-
+            if (entry.Entity is ApplicationUser && entry.Properties.Any(x => x.Metadata.Name == nameof(ApplicationUser.RefreshToken)))
+                continue;
             var auditEntry = new AuditEntry(entry)
             {
                 TableName = entry.Entity.GetType().Name,
