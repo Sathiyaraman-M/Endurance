@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Quark.Core.Configurations;
 using Quark.Core.Requests.Mail;
+using System.Net;
 using System.Net.Mail;
 
 namespace Quark.Infrastructure.Services;
@@ -23,13 +24,17 @@ public class MailService : IMailService
     {
         try
         {
-            Email.DefaultSender = new SmtpSender(() =>  new SmtpClient(origin)
+            using var smtpClient = new SmtpClient()
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                EnableSsl = _config.EnableSSL,
                 Host = _config.Host,
-                Port = _config.Port
-            });
-            var email = await Email.From(_config.From).To(request.To).Subject(request.Subject).Body(request.Body).SendAsync();
+                Port = _config.Port,
+                Credentials = new NetworkCredential(_config.UserName, _config.Password)
+            };
+            Email.DefaultSender = new SmtpSender(smtpClient);
+            await Email.From(_config.UserName, _config.DisplayName).To(request.To).Subject(request.Subject).Body(request.Body).SendAsync();
         }
         catch (Exception e)
         {

@@ -55,7 +55,7 @@ public class UserService : IUserService
         var passwordResetURL = QueryHelpers.AddQueryString(endpointUri.ToString(), "Token", code);
         var mailRequest = new MailRequest
         {
-            Body = string.Format("Please reset your password by <a href='{0}'>clicking here</a>.", HtmlEncoder.Default.Encode(passwordResetURL)),
+            Body = string.Format("Please reset your password by <a href=\"{0}\">clicking here</a>.", HtmlEncoder.Default.Encode(passwordResetURL)),
             Subject = "Reset Password",
             To = request.Email
         };
@@ -144,9 +144,8 @@ public class UserService : IUserService
                     var verificationUri = await SendVerificationEmail(user, origin);
                     var mailRequest = new MailRequest
                     {
-                        From = "mail@wayne-enterprises.com",
                         To = user.Email,
-                        Body = string.Format("Please confirm your account by <a href='{0}'>clicking here</a>.", verificationUri),
+                        Body = string.Format("Please confirm your account by <a href=\"{0}\">clicking here</a>.", verificationUri),
                         Subject = "Confirm Registration"
                     };
                     BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest, origin));
