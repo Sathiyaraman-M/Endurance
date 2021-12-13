@@ -16,7 +16,7 @@
 }
 else
 {
-    <MudTable Items="Trails" Dense="true" Elevation=0 Outlined Filter="new Func<RelatedAuditTrail, bool>(Search)" @bind-trail="_trail" CustomHeader="true">
+    <MudTable Items="Trails" Dense Virtualize Elevation=0 Outlined Filter="new Func<RelatedAuditTrail, bool>(Search)" @bind-trail="_trail" CustomHeader="true">
         <ToolBarContent>
             <div class="justify-center mud-text-align-center">
                 <MudButton DisableElevation IconColor="Color.Secondary" Variant="Variant.Filled" StartIcon="@Icons.Custom.FileFormats.FileExcel" Color="Color.Surface">Export To Excel</MudButton>
