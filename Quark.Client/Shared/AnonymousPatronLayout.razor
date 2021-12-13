@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+<MudThemeProvider Theme=_currentTheme />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar>
+        <MudSpacer />
+        <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" />
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Typo="Typo.h5" Class="ml-4">@ApplicationConstants.LibraryName</MudText>
+        </MudHidden>
+        <MudSpacer />
+        <MudTooltip Text="Toggle light/dark theme">
+            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => DarkMode())" />
+        </MudTooltip>
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+    <MudScrollToTop TopOffset="400" Style="z-index:2000;">
+        <MudFab Color="Color.Primary" Icon="@Icons.Filled.KeyboardArrowUp" />
+    </MudScrollToTop>
+</MudLayout>
