@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  quark.server:
+    image: ${DOCKER_REGISTRY-}quarkserver
+    build:
+      context: .
+      dockerfile: Quark.Server/Dockerfile
+    environment:
+      - "ConnectionStrings__DefaultConnection=Server=db;Database=Endurance;User=Bruce;Password=Muthu@123;MultipleActiveResultSets=true"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=securePassword123"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    ports:
+      - "5005:5005"  
+      - "5006:5006"    
+    depends_on:
+      - db
+    restart: on-failure  
+    container_name: endurance
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      - "SA_PASSWORD=Muthu@123"
+      - "ACCEPT_EULA=Y"
+    container_name: mssql
