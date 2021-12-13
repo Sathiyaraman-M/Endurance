@@ -6,18 +6,28 @@ namespace Quark.Server.Controllers;
 [Route(Routes.BookEndpoints.BaseRoute)]
 public class BookController : BaseApiController
 {
-    [Authorize(Policy = Permissions.Books.View)]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         return Ok(await _mediator.Send(new GetBookByIdQuery(id)));
     }
 
-    [Authorize(Policy = Permissions.Books.View)]
     [HttpGet]
     public async Task<IActionResult> GetAllAsync(int pageNumber, int pageSize, string searchString, string orderBy = null)
     {
         return Ok(await _mediator.Send(new GetAllBooksQuery(pageNumber, pageSize, searchString, orderBy)));
+    }
+    
+    [HttpGet("authors")]
+    public async Task<IActionResult> GetAllAuthors()
+    {
+        return Ok(await _mediator.Send(new GetAllAuthorsQuery()));
+    }
+
+    [HttpGet("authors/{author}")]
+    public async Task<IActionResult> GetBookNamesByAuthor(string author)
+    {
+        return Ok(await _mediator.Send(new GetBooksByAuthorQuery(author)));
     }
 
     [Authorize(Policy = Permissions.Books.Create)]
