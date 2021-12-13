@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Quark.Core.Configurations;
+using Quark.Core.Interfaces;
 using Quark.Core.Interfaces.Serialization.Options;
 using Quark.Core.Interfaces.Serialization.Serializers;
 using Quark.Core.Interfaces.Serialization.Settings;
@@ -233,5 +235,17 @@ internal static class ServiceCollectionExtensions
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IUploadService, UploadService>();
         return services;
+    }
+
+    public static void ConfigureWritable<T>(this IServiceCollection services, IConfigurationSection section, string file = "appsettings.json") where T : class, new()
+    {
+        services.Configure<T>(section);
+        services.AddTransient<IWritableOptions<T>>(provider =>
+        {
+            var configuration = (IConfigurationRoot)provider.GetService<IConfiguration>();
+            var environment = provider.GetService<IHostEnvironment>();
+            var options = provider.GetService<IOptionsMonitor<T>>();
+            return new WritableOptions<T>(environment, options, configuration, section.Key, file);
+        });
     }
 }

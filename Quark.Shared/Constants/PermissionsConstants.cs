@@ -87,6 +87,12 @@ public static class Permissions
         public const string View = "Permissions.Dashboard.View";
     }
 
+    public static class Settings
+    {
+        public const string View = "Permissions.Settings.View";
+        public const string Update = "Permissions.Settings.Update";
+    }
+
     public static IEnumerable<string> GetRegisteredPermissions()
     {
         //var permssions = new List<string>();

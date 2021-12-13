@@ -55,6 +55,7 @@ internal static class WebAssemblyHostBuilderExtensions
         services.AddTransient<HttpClientInterceptor>();
         services.AddTransient<PatronHttpClient>();
         services.AddTransient<RoleHttpClient>();
+        services.AddTransient<SettingsHttpClient>();
         services.AddTransient<UserHttpClient>();
         return services;
     }

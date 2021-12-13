@@ -4,6 +4,12 @@ public static class Routes
 {
     public const string DashboardRoute = "api/dashboard";
 
+    public static class SettingsEndpoints
+    {
+        public const string Get = "api/settings/get";
+        public const string Update = "api/settings/update";
+    }
+
     public static class BookEndpoints
     {
         public const string BaseRoute = "api/books";

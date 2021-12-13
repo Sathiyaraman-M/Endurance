@@ -1,0 +1,26 @@
+﻿@page "/administration/settings"
+@attribute [Authorize(Policy = Permissions.Settings.View)]
+@inject SettingsHttpClient _settingsHttpClient
+
+<EditForm Model=Model OnValidSubmit=SaveSettingsAsync>
+    <MudCard Elevation=0 Outlined>
+        <MudCardHeader>
+            <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Settings" Class="mr-3 mb-n1" />Settings</MudText>
+        </MudCardHeader>
+        <MudCardContent>
+            <FluentValidationValidator @ref="_fluentValidationValidator" />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudNumericField T="decimal" For="(() => Model.CheckInDelayFinePerDay)" @bind-Value="Model.CheckInDelayFinePerDay" Label="Description" Variant=Variant.Outlined Margin=Margin.Dense />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudNumericField T="int" For="(() => Model.DefaultMultipleCheckoutLimit)" @bind-Value="Model.DefaultMultipleCheckoutLimit" Label="Description" Variant=Variant.Outlined Margin=Margin.Dense />
+                </MudItem>
+            </MudGrid>
+            <MudDivider Class="my-4" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType=ButtonType.Submit Size=Size.Large Color=Color.Primary DisableElevation Disabled=@(!Validated) Variant=Variant.Filled Class="mx-2">Save Changes</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>

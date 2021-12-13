@@ -39,6 +39,15 @@
         <MudNavLink Href="/administration/identity/roles">Roles</MudNavLink>
     }
 </MudNavMenu>
+<MudDivider />
+<MudText Class="ml-4 my-2" Typo="Typo.overline">OTHER</MudText>
+<MudNavMenu>
+    @if (canViewSettings)
+    {
+        <MudNavLink Href="/administration/settings">Settings</MudNavLink>
+    }
+</MudNavMenu>
+
 @code
 {
     private ClaimsPrincipal User;
@@ -48,6 +57,7 @@
     private bool canViewPatrons;
     private bool canViewUsers;
     private bool canViewRoles;
+    private bool canViewSettings;
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,5 +68,6 @@
         canViewCheckouts = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
         canViewUsers = (await authorizationService.AuthorizeAsync(User, Permissions.Users.View)).Succeeded;
         canViewRoles = (await authorizationService.AuthorizeAsync(User, Permissions.Roles.View)).Succeeded;
+        canViewSettings = (await authorizationService.AuthorizeAsync(User, Permissions.Settings.View)).Succeeded;
     }
 }
