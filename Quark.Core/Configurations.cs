@@ -14,3 +14,9 @@ public class MailConfiguration
     public string Password { get; set; }
     public string DisplayName { get; set; }
 }
+
+public class LibrarySettings
+{
+    public decimal CheckInDelayFinePerDay { get; set; }
+    public int DefaultMultipleCheckoutLimit { get; set; }
+}

@@ -1,0 +1,42 @@
+﻿@page "/books"
+@attribute [AllowAnonymous]
+@layout AnonymousPatronLayout
+@inject BookHttpClient _bookHttpClient
+
+<MudText Typo=Typo.h5 Color=Color.Primary>Books</MudText>
+<MudText Typo=Typo.body1>Complete books catalog</MudText>
+<MudDivider Class="mb-4" />
+<MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense Virtualize ServerData="new Func<TableState, Task<TableData<BookResponse>>>(OnServerReloadAsync)" @ref="MudTable" LoadingProgressColor="Color.Secondary">
+    <NoRecordsContent>
+        <MudAlert Severity="Severity.Normal">No books in the library.</MudAlert>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText Typo="Typo.body1" Align="Align.Center" GutterBottom>Loading...</MudText>
+    </LoadingContent>
+    <ToolBarContent>
+        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Author">Author</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Publisher">Publisher</MudTableSortLabel></MudTh>
+        <MudTh Style="text-align:center">View</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">
+            <MudHighlighter Text="@context.Name" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Author">
+            <MudHighlighter Text="@context.Author" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="Publisher">
+            <MudHighlighter Text="@context.Publisher" HighlightedText="@_searchString" />
+        </MudTd>
+        <MudTd DataLabel="View" Style="text-align:center">
+            <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" OnClick="@(() => navigationManager.NavigateTo($"books/{context.Id}"))" />
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
