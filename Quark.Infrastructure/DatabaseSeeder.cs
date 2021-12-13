@@ -41,7 +41,7 @@ public class DatabaseSeeder : IDatabaseSeeder
                 var superUser = new ApplicationUser
             {
                 FullName = "Administrator",
-                Email = "bruce@wayne-enterprises.com",
+                Email = "admin@wayne-enterprises.com",
                 UserName = "Admin",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
