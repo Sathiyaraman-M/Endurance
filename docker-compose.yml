@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Quark.Server/Dockerfile
     environment:
-      - "ConnectionStrings__DefaultConnection=Server=db;Database=Endurance;User=Bruce;Password=Muthu@123;MultipleActiveResultSets=true"
+      - "ConnectionStrings__DefaultConnection=Server=db;Database=Endurance;User=Bruce;Password=ABCD@123;MultipleActiveResultSets=true"
       - "ASPNETCORE_Kestrel__Certificates__Default__Password=securePassword123"
       - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx"
     volumes:
@@ -23,6 +23,6 @@ services:
   db:
     image: "mcr.microsoft.com/mssql/server"
     environment:
-      - "SA_PASSWORD=Muthu@123"
+      - "SA_PASSWORD=ABCD@123"
       - "ACCEPT_EULA=Y"
     container_name: mssql
