@@ -14,10 +14,10 @@
     <MudGrid>
         <DataAnnotationsValidator />
         <MudItem xs="12">
-            <MudTextField Margin=Margin.Dense Label="UserName" Variant="Variant.Outlined" @bind-Value="requestModel.UserName" For="(() => requestModel.UserName)" />
+            <MudTextField Margin=Margin.Dense Label="UserName" Variant="Variant.Outlined" Immediate @bind-Value="requestModel.UserName" For="(() => requestModel.UserName)" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField Margin=Margin.Dense Label="Password" Variant="Variant.Outlined" @bind-Value="requestModel.Password" For="(() => requestModel.Password)" InputType="_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+            <MudTextField Margin=Margin.Dense Label="Password" Variant="Variant.Outlined" Immediate @bind-Value="requestModel.Password" For="(() => requestModel.Password)" InputType="_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
         </MudItem>
         <MudItem xs="12" Class="d-flex justify-center">
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width: 100%;">Sign In</MudButton>
