@@ -19,4 +19,5 @@ public class LibrarySettings
 {
     public decimal CheckInDelayFinePerDay { get; set; }
     public int DefaultMultipleCheckoutLimit { get; set; }
+    public int DefaultExpectedCheckInInterval { get; set; }
 }

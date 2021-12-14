@@ -11,16 +11,18 @@
             <FluentValidationValidator @ref="_fluentValidationValidator" />
             <MudGrid>
                 <MudItem xs="12">
-                    <MudNumericField T="decimal" For="(() => Model.CheckInDelayFinePerDay)" @bind-Value="Model.CheckInDelayFinePerDay" Label="Description" Variant=Variant.Outlined Margin=Margin.Dense />
+                    <MudNumericField T="decimal" For="(() => Model.CheckInDelayFinePerDay)" @bind-Value="Model.CheckInDelayFinePerDay" Label="Check In Delay Fine Per Day" Variant=Variant.Outlined Margin=Margin.Dense />
                 </MudItem>
                 <MudItem xs="12">
-                    <MudNumericField T="int" For="(() => Model.DefaultMultipleCheckoutLimit)" @bind-Value="Model.DefaultMultipleCheckoutLimit" Label="Description" Variant=Variant.Outlined Margin=Margin.Dense />
+                    <MudNumericField T="int" For="(() => Model.DefaultMultipleCheckoutLimit)" @bind-Value="Model.DefaultMultipleCheckoutLimit" Label="Default Simultaneous Mulitple Checkout Limit" Variant=Variant.Outlined Margin=Margin.Dense />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudNumericField T="int" For="(() => Model.DefaultExpectedCheckInInterval)" @bind-Value="Model.DefaultExpectedCheckInInterval" Label="Default Expected Check In Time Interval" Variant=Variant.Outlined Margin=Margin.Dense />
                 </MudItem>
             </MudGrid>
-            <MudDivider Class="my-4" />
         </MudCardContent>
         <MudCardActions>
-            <MudButton ButtonType=ButtonType.Submit Size=Size.Large Color=Color.Primary DisableElevation Disabled=@(!Validated) Variant=Variant.Filled Class="mx-2">Save Changes</MudButton>
+            <MudButton ButtonType=ButtonType.Submit Size=Size.Large Color=Color.Primary DisableElevation Disabled=@(!Validated) Variant=Variant.Filled Class="ml-auto mr-2">Save Changes</MudButton>
         </MudCardActions>
     </MudCard>
 </EditForm>

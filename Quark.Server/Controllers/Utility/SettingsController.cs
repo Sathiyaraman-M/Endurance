@@ -26,6 +26,7 @@ public class SettingsController : ControllerBase
             {
                 _settings.CheckInDelayFinePerDay = settings.CheckInDelayFinePerDay;
                 _settings.DefaultMultipleCheckoutLimit = settings.DefaultMultipleCheckoutLimit;
+                _settings.DefaultExpectedCheckInInterval = settings.DefaultExpectedCheckInInterval;
             });
         return Ok(await Result.SuccessAsync("Updated settings"));
     }
