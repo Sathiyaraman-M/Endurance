@@ -33,7 +33,7 @@ public class Navigation : IDisposable
     private void OnLocationChanged(object sender, LocationChangedEventArgs e)
     {
         EnsureSize();
-        if (_navigationManager.ToBaseRelativePath(e.Location) == "administration/dashboard")
+        if (_navigationManager.ToBaseRelativePath(e.Location) == "administration/dashboard" || _navigationManager.ToBaseRelativePath(e.Location) == "")
         {
             _history.Clear();
         }

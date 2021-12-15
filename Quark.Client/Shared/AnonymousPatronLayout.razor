@@ -4,6 +4,12 @@
 <MudSnackbarProvider />
 <MudLayout>
     <MudAppBar>
+        <MudToolBar DisableGutters="true">
+            @if (Navigation.CanNavigateBack)
+            {
+                <MudIconButton Edge=Edge.Start Icon="@Icons.Material.Filled.ArrowBack" OnClick="Navigation.NavigateBack" Color="Color.Inherit" />
+            }
+        </MudToolBar>
         <MudSpacer />
         <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Color="Color.Inherit" Size="Size.Large" />
         <MudHidden Breakpoint="Breakpoint.Xs">
