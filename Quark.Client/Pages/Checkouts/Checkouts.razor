@@ -17,27 +17,21 @@
     <EditForm Model="Checkout" OnValidSubmit="AddCheckoutAsync">
         <MudCard Outlined Elevation="0">
             <MudCardHeader>
-                <CardHeaderAvatar>
-                    <MudAvatar Image="fas fa-bolt" />
-                </CardHeaderAvatar>
                 <CardHeaderContent>
                     <MudText Typo="Typo.body1">Checkout</MudText>
                     <MudText Typo="Typo.body2">Enter Patron RegisterID and Book Barcode</MudText>
                 </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudFab Color="Color.Default" Icon="@Icons.Material.Filled.Delete" DisableElevation OnClick="ResetModel" Label="Clear" />
-                </CardHeaderActions>
             </MudCardHeader>
             <MudCardContent>
                 <MudGrid>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudTextField @bind-Value="Checkout.BookBarcode" Label="Book Barcode" HelperText="Enter book barcode here" />
+                        <MudTextField Variant=Variant.Outlined Margin=Margin.Dense @bind-Value="Checkout.BookBarcode" Label="Book Barcode" HelperText="Enter book barcode here" />
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudTextField @bind-Value="Checkout.PatronRegisterId" Label="Patron ID" HelperText="Enter patron register ID here" />
+                        <MudTextField Variant=Variant.Outlined Margin=Margin.Dense @bind-Value="Checkout.PatronRegisterId" Label="Patron ID" HelperText="Enter patron register ID here" />
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker1" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
+                        <MudDatePicker Variant=Variant.Outlined Margin=Margin.Dense PickerVariant="PickerVariant.Dialog" @ref="picker1" DateFormat="dd/MM/yyyy" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
                         <PickerActions>
                             <MudButton OnClick="@(() => picker1.Close(false))">Cancel</MudButton>
                             <MudButton Color="Color.Primary" OnClick="@(() => picker1.Close())">Ok</MudButton>
@@ -45,7 +39,7 @@
                         </MudDatePicker>
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker2" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
+                        <MudDatePicker Variant=Variant.Outlined Margin=Margin.Dense PickerVariant="PickerVariant.Dialog" @ref="picker2" DateFormat="dd/MM/yyyy" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
                             <PickerActions>
                                 <MudButton OnClick="@(() => picker2.Close(false))">Cancel</MudButton>
                                 <MudButton Color="Color.Primary" OnClick="@(() => picker2.Close())">Ok</MudButton>
@@ -55,6 +49,7 @@
                 </MudGrid>
             </MudCardContent>
             <MudCardActions>
+                <MudButton DisableElevation Variant="Variant.Filled" Class="ml-auto my-2" Color="Color.Default" Size="Size.Large" OnClick="ResetModel">Clear</MudButton>
                 <MudButton DisableElevation ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
             </MudCardActions>
         </MudCard>
@@ -75,9 +70,6 @@
         <col />
         <col />
         <col />
-        <col />
-        <col style="width:10%" />
-        <col style="width:10%" />
     </ColGroup>
     <ToolBarContent>
         <div class="justify-center mud-text-align-center">
@@ -85,7 +77,7 @@
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
         </div>
         <MudSpacer />
-        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        <MudTextField T=string ValueChanged=@((S) => OnSearch(S)) Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
         @*<div class="justify-center mud-text-align-center">
             <MudButton DisableElevation Variant=Variant.Filled Color=Color.Primary OnClick=InvokeCheckInModal StartIcon=@Icons.Material.Filled.Update IconColor=Color.Surface Class="me-2">Check In Book Now</MudButton>
             <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(() => OnSearch(""))" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Class="me-2">Reload</MudButton>
@@ -94,7 +86,6 @@
         <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Checkouts" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>*@
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">ID</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookBarcode">Book Barcode</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookName">Book Name</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="PatronRegisterId">Patron ID</MudTableSortLabel></MudTh>
@@ -104,15 +95,14 @@
         <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutUntil">Check In Date</MudTableSortLabel></MudTh>
         @if (_canView)
         {
-            <MudTh Style="text-align:right">View</MudTh>
+            <MudTh Style="text-align:center">View</MudTh>
         }
         @if (_canDelete)
         {
-            <MudTh Style="text-align:right">Delete</MudTh>
+            <MudTh Style="text-align:center">Delete</MudTh>
         }
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ID">@context.Id</MudTd>
         <MudTd DataLabel="Book Barcode">
             <MudHighlighter Text="@context.BookBarcode" HighlightedText="@_searchString" />
         </MudTd>
@@ -131,7 +121,7 @@
         <MudTd DataLabel="Expected Return Date">
             <MudHighlighter Text="@context.ExpectedCheckInDate.ToString("dd/MM/yyyy")" HighlightedText="@_searchString" />
         </MudTd>
-        <MudTd DataLabel="Check In Date" Style="text-:right">
+        <MudTd DataLabel="Check In Date">
             @if (context.CheckedOutUntil.HasValue)
             {
                 <MudHighlighter Text="@context.CheckedOutUntil.Value.ToString("dd/MM/yyyy")" HighlightedText="@_searchString" />
@@ -143,13 +133,13 @@
         </MudTd>
         @if (_canView)
         {
-            <MudTd DataLabel="View" Style="text-align:right">
+            <MudTd DataLabel="View" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Secondary" Icon="@Icons.Material.Filled.OpenInNew" Size="Size.Small" />
             </MudTd>
         }
         @if (_canDelete)
         {
-            <MudTd DataLabel="Delete" Style="text-align:right">
+            <MudTd DataLabel="Delete" Style="text-align:center">
                 <MudFab DisableElevation Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="(() => Delete(context.Id))" />
             </MudTd>
         }
