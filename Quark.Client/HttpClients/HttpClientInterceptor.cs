@@ -24,7 +24,7 @@ public class HttpClientInterceptor
     public async Task InterceptBeforeHttpAsync(object sender, HttpClientInterceptorEventArgs e)
     {
         var absPath = e.Request.RequestUri.AbsolutePath;
-        if (!absPath.Contains("token") && !absPath.Contains("accounts"))
+        if (!absPath.Contains("token") && !absPath.Contains("accounts") && !absPath.Contains("dashboard"))
         {
             try
             {
