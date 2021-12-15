@@ -8,12 +8,6 @@ public partial class BooksCatalog
     private int _totalItems;
     private int _currentPage;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await authenticationHttpClient.Logout();
-        await base.OnInitializedAsync();
-    }
-
     private async Task<TableData<BookResponse>> OnServerReloadAsync(TableState tableState)
     {
         if (!string.IsNullOrWhiteSpace(_searchString))

@@ -5,7 +5,7 @@
 
 <MudText Typo=Typo.h5 Color=Color.Primary>Books</MudText>
 <MudText Typo=Typo.body1>Complete books catalog</MudText>
-<MudDivider Class="mb-4" />
+<MudDivider Class="my-4" />
 <MudTable Elevation="0" Outlined Hover HorizontalScrollbar Dense Virtualize ServerData="new Func<TableState, Task<TableData<BookResponse>>>(OnServerReloadAsync)" @ref="MudTable" LoadingProgressColor="Color.Secondary">
     <NoRecordsContent>
         <MudAlert Severity="Severity.Normal">No books in the library.</MudAlert>
@@ -14,7 +14,7 @@
         <MudText Typo="Typo.body1" Align="Align.Center" GutterBottom>Loading...</MudText>
     </LoadingContent>
     <ToolBarContent>
-        <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Books" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        <MudTextField T=string ValueChanged=@((S) => OnSearch(S)) Immediate="true" Placeholder="Search by Title, Author, Publisher" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel T="BookResponse" SortLabel="Name">Name</MudTableSortLabel></MudTh>
