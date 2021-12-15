@@ -29,7 +29,7 @@
             {
                 <MudIconButton DisableElevation Variant="Variant.Filled" Color="Color.Dark" OnClick="ExportToExcelAsync" Icon="@Icons.Custom.FileFormats.FileExcel" Size=Size.Small Class="me-2" />
             }
-            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Small" Margin="Margin.Dense" Class="mt-0 mb-3"></MudTextField>
+            <MudTextField T=string ValueChanged=@(S => OnSearch(S)) Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Small" Margin="Margin.Dense" Class="mt-0 mb-3"></MudTextField>
         </MudHidden>
         <MudHidden Breakpoint=Breakpoint.MdAndUp Invert>
             <div class="justify-center mud-text-align-center">
@@ -44,7 +44,7 @@
                 } 
             </div>
             <MudSpacer />
-            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+            <MudTextField T=string ValueChanged=@(S => OnSearch(S)) Immediate="true" Placeholder="Search for Patrons" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
         </MudHidden>
     </ToolBarContent>
     <HeaderContent>
