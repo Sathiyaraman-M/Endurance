@@ -20,6 +20,13 @@ public class CheckoutController : BaseApiController
         return Ok(await _mediator.Send(new GetCheckoutByIdQuery(id)));
     }
 
+    [Authorize(Policy = Permissions.Checkouts.View)]
+    [HttpGet("checkins")]
+    public async Task<IActionResult> GetCheckInsByDateAsync([FromQuery] DateTime date)
+    {
+        return Ok(await _mediator.Send(new GetCheckInByDateQuery(date)));
+    }
+
     [Authorize(Policy = Permissions.Checkouts.Create)]
     [HttpPost]
     public async Task<IActionResult> CreateAsync(AddCheckoutCommand command)

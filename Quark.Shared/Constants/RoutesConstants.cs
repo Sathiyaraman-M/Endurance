@@ -53,6 +53,7 @@ public static class Routes
     {
         public const string BaseRoute = "api/checkouts";
         public const string ExtendCheckoutRoute = "api/checkouts/extend";
+        public static string GetCheckInRoute(DateTime date) => $"api/checkouts/checkins?date={date:s}";
         public const string CheckInRoute = "api/checkouts/close";
         public const string Export = "api/checkouts/export";
         public static string ExportFiltered(string searchString)

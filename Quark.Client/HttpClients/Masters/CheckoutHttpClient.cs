@@ -23,6 +23,12 @@ public class CheckoutHttpClient
         return await response.ToResult<CheckoutResponse>();
     }
 
+    public async Task<IResult<List<CheckoutResponse>>> GetCheckInByDateAsync(DateTime date)
+    {
+        var response = await _httpClient.GetAsync(Routes.CheckoutEndpoints.GetCheckInRoute(date));
+        return await response.ToResult<List<CheckoutResponse>>();
+    }
+
     public async Task<IResult<Guid>> AddCheckoutAsync(AddCheckoutCommand command)
     {
         var response = await _httpClient.PostAsJsonAsync(Routes.CheckoutEndpoints.BaseRoute, command);

@@ -4,29 +4,32 @@ namespace Quark.Client.Pages.Content;
 
 public partial class Dashboard
 {
-    private DashboardResponse DashboardData;
-    private AddCheckoutCommand Checkout = new();
-    private MudDatePicker picker1;
-    private MudDatePicker picker2;
+    private DashboardResponse DashboardData { get; set; }
+    private AddCheckoutCommand Checkout { get; set; } = new();
+    private MudDatePicker _picker1;
+    private MudDatePicker _picker2;
 
     private ClaimsPrincipal User;
-    private bool canViewCheckout;
-    private bool canCreateCheckout;
-    private bool canViewDashboard;
+    private bool _canViewCheckout;
+    private bool _canCreateCheckout;
+    private bool _canViewDashboard;
+
+    private List<CheckoutResponse> _checkInsToday = new();
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(1000);
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
-        canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
-        canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;
-        canCreateCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.Create)).Succeeded;
+        _canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
+        _canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;
+        _canCreateCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.Create)).Succeeded;
         var response = await httpClient.GetAsync(Routes.DashboardRoute);
         var result = await response.ToResult<DashboardResponse>();
         if (result.Succeeded)
         {
             DashboardData = result.Data;
         }
+        var checkIns = await _checkoutHttpClient.GetCheckInByDateAsync(DateTime.Today);
+        if (checkIns.Succeeded) _checkInsToday = checkIns.Data;
     }
 
     private void ResetModel()

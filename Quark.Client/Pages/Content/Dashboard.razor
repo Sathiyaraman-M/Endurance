@@ -7,7 +7,7 @@
 <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2">Dashboard</MudText>
 <MudText Color="Color.Surface" Class="mb-4">Manage your library from here</MudText>
 <MudDivider />
-@if (canViewDashboard)
+@if (_canViewDashboard)
 {
     @if (DashboardData is not null)
     {
@@ -29,8 +29,19 @@
                         <MudIcon Icon="@Icons.Material.Filled.LibraryBooks" />
                     </MudAvatar>
                     <div>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Books</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Book Titles</MudText>
                         <MudText Typo="Typo.h5">@DashboardData.BooksCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="0" Outlined Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudAvatar Variant="Variant.Filled" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;">
+                        <MudIcon Icon="@Icons.Material.Filled.LibraryBooks" />
+                    </MudAvatar>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Books</MudText>
+                        <MudText Typo="Typo.h5">@DashboardData.BookItemsCount</MudText>
                     </div>
                 </MudPaper>
             </MudItem>
@@ -70,7 +81,7 @@
         </MudGrid>
     }
 }
-@if (canCreateCheckout)
+@if (_canCreateCheckout)
 {
     <EditForm Model="Checkout" OnValidSubmit="AddCheckoutAsync">
         <MudCard Outlined Elevation="0">
@@ -82,9 +93,6 @@
                     <MudText Typo="Typo.body1">Instant Checkout</MudText>
                     <MudText Typo="Typo.body2">Enter Patron RegisterID and Book Barcode</MudText>
                 </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudFab Color="Color.Default" Icon="@Icons.Material.Filled.Delete" DisableElevation OnClick="ResetModel" Label="Clear" />
-                </CardHeaderActions>
             </MudCardHeader>
             <MudCardContent>
                 <MudGrid>
@@ -95,27 +103,60 @@
                         <MudTextField @bind-Value="Checkout.PatronRegisterId" Label="Patron ID" HelperText="Enter patron register ID here" />
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker1" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="_picker1" @bind-Date="Checkout.CheckedOutSince" Label="Checkout Date">
                             <PickerActions>
-                                <MudButton OnClick="@(() => picker1.Close(false))">Cancel</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => picker1.Close())">Ok</MudButton>
+                                <MudButton OnClick="@(() => _picker1.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => _picker1.Close())">Ok</MudButton>
                             </PickerActions>
                         </MudDatePicker>
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="picker2" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
+                        <MudDatePicker PickerVariant="PickerVariant.Dialog" @ref="_picker2" @bind-Date="Checkout.ExpectedCheckInDate" Label="Checkout Date">
                             <PickerActions>
-                                <MudButton OnClick="@(() => picker2.Close(false))">Cancel</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => picker2.Close())">Ok</MudButton>
+                                <MudButton OnClick="@(() => _picker2.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => _picker2.Close())">Ok</MudButton>
                             </PickerActions>
                         </MudDatePicker>
                     </MudItem>
                 </MudGrid>
             </MudCardContent>
             <MudCardActions>
+                <MudButton DisableElevation Variant="Variant.Filled" Class="ml-auto my-2" Color="Color.Default" Size="Size.Large" OnClick="ResetModel">Clear</MudButton>
                 <MudButton DisableElevation ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ma-2" Color="Color.Success" Size="Size.Large">Add Checkout</MudButton>
             </MudCardActions>
         </MudCard>
         <MudDivider Class="my-4" />
     </EditForm>
+}
+@if(_canViewCheckout)
+{
+    <MudText Color=Color.Primary Typo=Typo.h6>Check In(s) Today</MudText>
+    <MudTable Class="mt-4 mb-6" Elevation="0" Outlined Hover HorizontalScrollbar Items="_checkInsToday" Dense LoadingProgressColor="Color.Secondary">
+        <NoRecordsContent>
+            <MudAlert Severity="Severity.Normal">No books checked in today yet!</MudAlert>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText Typo="Typo.body1" Align="Align.Center" GutterBottom>Loading...</MudText>
+        </LoadingContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="Id">ID</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookBarcode">Book Barcode</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="BookName">Book Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="PatronRegisterId">Patron ID</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="PatronName">Patron Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="CheckedOutSince">Checkout Date</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CheckoutResponse" SortLabel="ExpectedCheckInDate">Expected Return Date</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Book Barcode">@context.BookBarcode</MudTd>
+            <MudTd DataLabel="Book Name">@context.BookName</MudTd>
+            <MudTd DataLabel="Patron ID">@context.PatronRegisterId</MudTd>
+            <MudTd DataLabel="Patron Name">"@context.PatronName</MudTd>
+            <MudTd DataLabel="Checkout Date">@context.CheckedOutSince.ToString("dd/MM/yyyy")</MudTd>
+            <MudTd DataLabel="Expected Return Date">@context.ExpectedCheckInDate.ToString("dd/MM/yyyy")</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
 }
