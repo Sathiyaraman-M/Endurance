@@ -28,6 +28,11 @@ internal class AddEditBookCommandHandler : IRequestHandler<AddEditBookCommand, R
         _mapper = mapper;
     }
 
+    private bool IsCheckedOut(BookHeaderResponse bookHeader)
+    {
+        return _unitOfWork.Repository<Checkout>().Entities.Any(x => !x.CheckedOutUntil.HasValue && x.BookHeaderId == bookHeader.Id);
+    }
+
     public async Task<Result<Guid>> Handle(AddEditBookCommand request, CancellationToken cancellationToken)
     {
         var book = new Book
@@ -44,7 +49,7 @@ internal class AddEditBookCommandHandler : IRequestHandler<AddEditBookCommand, R
             Cost = request.Cost,
             ImageUrl = request.ImageUrl,
             Copies = request.Headers.Count,
-            AvailableCopies = request.Headers.Count(x => x.Condition == AssetStatusConstants.GoodCondition),
+            AvailableCopies = request.Headers.Count(x => x.Condition == AssetStatusConstants.GoodCondition && !IsCheckedOut(x)),
             LostCopies = request.Headers.Count(x => x.Condition == AssetStatusConstants.Lost),
             DamagedCopies = request.Headers.Count(x => x.Condition == AssetStatusConstants.Damaged),
             UnknownStatusCopies = request.Headers.Count(x => x.Condition == AssetStatusConstants.Unknown),
