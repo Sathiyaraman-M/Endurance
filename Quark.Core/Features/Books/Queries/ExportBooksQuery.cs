@@ -2,12 +2,18 @@
 
 public class ExportBooksQuery : IRequest<Result<string>>
 {
-    public ExportBooksQuery(string searchString)
+    public ExportBooksQuery(string searchString) => SearchString = searchString;
+
+    public ExportBooksQuery(Dictionary<string, Func<Book, object>> mappings) => Mappings = mappings;
+
+    public ExportBooksQuery(string searchString, Dictionary<string, Func<Book, object>> mappings)
     {
         SearchString = searchString;
+        Mappings = mappings;
     }
 
     public string SearchString { get; set; }
+    public Dictionary<string, Func<Book, object>> Mappings { get; }
 }
 
 internal class ExportBooksQueryHandler : IRequestHandler<ExportBooksQuery, Result<string>>
@@ -24,7 +30,7 @@ internal class ExportBooksQueryHandler : IRequestHandler<ExportBooksQuery, Resul
     {
         var bookSpec = new BookFilterSpecification(request.SearchString);
         var books = await _unitOfWork.Repository<Book>().Entities.Specify(bookSpec).ToListAsync(cancellationToken);
-        var data = await _excelService.ExportAsync(books, mappings: new Dictionary<string, Func<Book, object>>
+        var mappings = request.Mappings ?? new Dictionary<string, Func<Book, object>>
         {
             { "Id", x => x.Id },
             { "Book Title", x => x.Name },
@@ -41,7 +47,8 @@ internal class ExportBooksQueryHandler : IRequestHandler<ExportBooksQuery, Resul
             { "Damaged", x => x.DamagedCopies },
             { "Lost", x => x.LostCopies },
             { "Unknown status", x => x.UnknownStatusCopies }
-        }, sheetName: "Books", cancellationToken);
+        };
+        var data = await _excelService.ExportAsync(books, mappings , sheetName: "Books", cancellationToken);
         return await Result<string>.SuccessAsync(data: data);
     }
 }
