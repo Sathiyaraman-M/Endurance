@@ -8,6 +8,7 @@ public class DashboardController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> GetDataAsync()
     {
-        return Ok(await _mediator.Send(new DashboardQuery()));
+        var response = await _mediator.Send(new DashboardQuery());
+        return Ok(response);
     }
 }
