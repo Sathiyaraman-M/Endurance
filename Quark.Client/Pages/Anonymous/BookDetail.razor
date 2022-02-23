@@ -1,6 +1,8 @@
 ﻿@page "/books/{Id:guid}"
+@attribute [AllowAnonymous]
+@layout AnonymousPatronLayout
 @inject BookHttpClient _bookHttpClient
-@*@if (!_loaded)
+@if (!_loaded)
 {
     <MudProgressLinear Class="d-flex justify-center" Indeterminate Color="Color.Secondary" />
 }
@@ -8,11 +10,13 @@ else
 {
     if (Book is not null)
     {
-        <MudCard>
+        <MudText Color=Color.Primary Class="mt-4" Typo=Typo.h5>Book Details</MudText>
+        <MudDivider Class="my-4" />
+        <MudCard Elevation=0 Outlined>
             <MudCardHeader>
                 <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@Book.Name</MudText>
-                    <MudText Typo="Typo.body1">@Book.Author, @Book.Publisher, @Book.PublicationYear</MudText>
+                    <MudText Typo="Typo.h5" Inline>@Book.Name,</MudText>
+                    <MudText Typo="Typo.body1" Inline>@Book.Author</MudText>
                 </CardHeaderContent>
             </MudCardHeader>
             <MudCardContent>                
@@ -58,7 +62,21 @@ else
                     <MudText Typo="Typo.button">Description</MudText>
                     <MudText Typo="Typo.body2">@Book.Description</MudText>
                 </MudPaper>
+                <MudGrid Class="mt-6">
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Copies</MudText>
+                            <MudText Typo="Typo.body2">@Book.Copies</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudPaper Class="pa-4" Outlined>
+                            <MudText Typo="Typo.button">Available for checkout</MudText>
+                            <MudText Typo="Typo.body2">@(Book.AvailableCopies > 0 ? "Yes" : "No")</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
             </MudCardContent>
         </MudCard>
     }
-}*@
+}
