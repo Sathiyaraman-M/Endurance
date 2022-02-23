@@ -20,6 +20,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 
     public void Initialize()
     {
+        _dbContext.Database.Migrate();   
         SeedAdministratorUser();
         SeedBasicUser();
         _dbContext.SaveChanges();

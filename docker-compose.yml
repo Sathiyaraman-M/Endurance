@@ -1,28 +1,65 @@
-version: '3.4'
+version: '3.7'
 
 services:
-  quark.server:
-    image: ${DOCKER_REGISTRY-}quarkserver
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55word2022"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  web-api:
     build:
-      context: .
+      context: ./
       dockerfile: Quark.Server/Dockerfile
     environment:
-      - "ConnectionStrings__DefaultConnection=Server=db;Database=Endurance;User=Bruce;Password=ABCD@123;MultipleActiveResultSets=true"
-      - "ASPNETCORE_Kestrel__Certificates__Default__Password=securePassword123"
-      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx"
-    volumes:
-      - ~/.aspnet/https:/https:ro
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DbServer: "sql-server"
+      DbUser: "SA"
+      DbPassword: "Pa55word2022"
     ports:
-      - "5005:5005"  
-      - "5006:5006"    
-    depends_on:
-      - db
-    restart: on-failure  
-    container_name: endurance
+      - "8080:80"
 
-  db:
-    image: "mcr.microsoft.com/mssql/server"
-    environment:
-      - "SA_PASSWORD=ABCD@123"
-      - "ACCEPT_EULA=Y"
-    container_name: mssql
+  # main-api:
+  #   build:
+  #     context: ./
+  #     dockerfile: Quark.Server/Dockerfile
+  #   restart: always
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_URLS=https://+:443;http://+:80
+  #   ports:
+  #     - "80"
+  #     - "443"
+  #   volumes:
+  #     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  #     - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+#version: '3.4'
+
+#services:
+#  quark.server:
+#    image: ${DOCKER_REGISTRY-}quarkserver
+#    build:
+#      context: .
+#      dockerfile: Quark.Server/Dockerfile
+#    environment:
+#      - "ConnectionStrings__DefaultConnection=Server=db;Database=Endurance;User=Bruce;Password=ABCD@123;MultipleActiveResultSets=true"
+#      - "ASPNETCORE_Kestrel__Certificates__Default__Password=securePassword123"
+#      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx"
+#    volumes:
+#      - ~/.aspnet/https:/https:ro
+#    ports:
+#      - "5005:5005"  
+#      - "5006:5006"    
+#    depends_on:
+#      - db
+#    restart: on-failure  
+#    container_name: endurance
+
+#  db:
+#    image: "mcr.microsoft.com/mssql/server"
+#    environment:
+#      - "SA_PASSWORD=ABCD@123"
+#      - "ACCEPT_EULA=Y"
+#    container_name: mssql

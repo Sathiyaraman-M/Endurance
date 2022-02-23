@@ -48,9 +48,9 @@
             </MudGrid>
             <MudDivider Class="my-4" />
             <MudGrid>
-                @*<MudItem xs=12 md=7>
+                <MudItem xs=12 md=7>
                     <MudText Typo=Typo.button>Upload Book Cover</MudText>
-                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                    @if(!string.IsNullOrWhiteSpace(Model.ImageUrl))
                     {
                         <MudAvatar Image=@Model.ImageUrl Style="height:250px;width:250px;"></MudAvatar>
                     }
@@ -58,8 +58,8 @@
                     {
                         <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@(!string.IsNullOrWhiteSpace(Model.Name) ? Model.Name[0] : 'A')</MudAvatar>
                     }
-                </MudItem>*@
-                <MudItem xs=12 md=7>
+                </MudItem>
+                <MudItem xs=12 md=5>
                     <MudText Typo=Typo.button>Book Items</MudText>
                     <MudTable Items="Model.Headers" Dense Outlined Elevation=0 Class="mt-4">
                         <ToolBarContent>

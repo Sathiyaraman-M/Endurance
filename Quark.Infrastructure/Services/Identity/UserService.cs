@@ -59,7 +59,7 @@ public class UserService : IUserService
             Subject = "Reset Password",
             To = request.Email
         };
-        BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest, origin));
+        await _mailService.SendAsync(mailRequest, origin);
         return await Result.SuccessAsync("Password Reset Mail has been sent to your authorized Email.");
     }
 
@@ -148,7 +148,7 @@ public class UserService : IUserService
                         Body = string.Format("Please confirm your account by <a href=\"{0}\">clicking here</a>.", verificationUri),
                         Subject = "Confirm Registration"
                     };
-                    BackgroundJob.Enqueue(() => _mailService.SendAsync(mailRequest, origin));
+                    await _mailService.SendAsync(mailRequest, origin);
                     return await Result<string>.SuccessAsync(user.Id, string.Format("User {0} Registered. Please check your Mailbox to verify!", user.UserName));
                 }
                 return await Result<string>.SuccessAsync(user.Id, string.Format("User {0} Registered.", user.UserName));
