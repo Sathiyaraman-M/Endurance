@@ -18,6 +18,7 @@ public partial class Dashboard
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(1000);
         User = await authStateProvider.GetAuthenticationStateProviderUserAsync();
         _canViewCheckout = (await authorizationService.AuthorizeAsync(User, Permissions.Checkouts.View)).Succeeded;
         _canViewDashboard = (await authorizationService.AuthorizeAsync(User, Permissions.Dashboard.View)).Succeeded;

@@ -47,45 +47,60 @@
                 </MudItem>
             </MudGrid>
             <MudDivider Class="my-4" />
-            <MudText Typo=Typo.button>Book Items</MudText>
-            <MudTable Items="Model.Headers" Dense Outlined Elevation=0 Class="mt-4">
-                <ToolBarContent>
-                    <MudButton Variant=Variant.Filled Color=Color.Success DisableElevation StartIcon=@Icons.Material.Filled.Add OnClick=AddBookItem>Add Book Item</MudButton>
-                </ToolBarContent>
-                <HeaderContent>
-                    <MudTh>Barcode</MudTh>
-                    <MudTh>Condition</MudTh>
-                    <MudTh>Options</MudTh>
-                </HeaderContent>
-                <RowTemplate Context=bookItem>
-                    <MudTd DataLabel="Barcode">
-                        <MudText Typo=Typo.body1>@bookItem.Barcode</MudText>
-                    </MudTd>
-                    <MudTd DataLabel="Condition">
-                        <MudText Typo=Typo.body1>@bookItem.Condition</MudText>
-                    </MudTd>
-                    <MudTd DataLabel="Options">
-                        <MudButton Variant=Variant.Filled Color=Color.Error DisableElevation StartIcon=@Icons.Material.Filled.Delete OnClick=@(() => DeleteBookItem(bookItem))>Delete</MudButton>
-                    </MudTd>
-                </RowTemplate>
-                <RowEditingTemplate Context=bookItem>
-                    <MudTd DataLabel="Barcode">
-                        <MudTextField @bind-Value=bookItem.Barcode Variant=Variant.Outlined Margin=Margin.Dense For=@(() => bookItem.Barcode) Label="Barcode" />
-                    </MudTd>
-                    <MudTd DataLabel="Condition">
-                        <MudMenu Label="Change Book Condition" Color="Color.Default" Variant="Variant.Filled" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Dense OffsetY>
-                            <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.GoodCondition)">Good Condition</MudMenuItem>
-                            <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Unknown)">Unknown</MudMenuItem>
-                            <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Lost)">Lost</MudMenuItem>
-                            <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Damaged)">Damaged</MudMenuItem>
-                            <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Disposed)">Disposed</MudMenuItem>
-                        </MudMenu>
-                    </MudTd>
-                    <MudTd DataLabel="Options">
-                        <MudButton Variant=Variant.Filled Color=Color.Error DisableElevation StartIcon=@Icons.Material.Filled.Delete OnClick=@(() => DeleteBookItem(bookItem))>Delete</MudButton>
-                    </MudTd>
-                </RowEditingTemplate>
-            </MudTable>
+            <MudGrid>
+                @*<MudItem xs=12 md=7>
+                    <MudText Typo=Typo.button>Upload Book Cover</MudText>
+                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                    {
+                        <MudAvatar Image=@Model.ImageUrl Style="height:250px;width:250px;"></MudAvatar>
+                    }
+                    else
+                    {
+                        <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@(!string.IsNullOrWhiteSpace(Model.Name) ? Model.Name[0] : 'A')</MudAvatar>
+                    }
+                </MudItem>*@
+                <MudItem xs=12 md=7>
+                    <MudText Typo=Typo.button>Book Items</MudText>
+                    <MudTable Items="Model.Headers" Dense Outlined Elevation=0 Class="mt-4">
+                        <ToolBarContent>
+                            <MudButton Variant=Variant.Filled Color=Color.Success DisableElevation StartIcon=@Icons.Material.Filled.Add OnClick=AddBookItem>Add Book Item</MudButton>
+                        </ToolBarContent>
+                        <HeaderContent>
+                            <MudTh>Barcode</MudTh>
+                            <MudTh>Condition</MudTh>
+                            <MudTh>Options</MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context=bookItem>
+                            <MudTd DataLabel="Barcode">
+                                <MudText Typo=Typo.body1>@bookItem.Barcode</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Condition">
+                                <MudText Typo=Typo.body1>@bookItem.Condition</MudText>
+                            </MudTd>
+                            <MudTd DataLabel="Options">
+                                <MudButton Variant=Variant.Filled Color=Color.Error DisableElevation StartIcon=@Icons.Material.Filled.Delete OnClick=@(() => DeleteBookItem(bookItem))>Delete</MudButton>
+                            </MudTd>
+                        </RowTemplate>
+                        <RowEditingTemplate Context=bookItem>
+                            <MudTd DataLabel="Barcode">
+                                <MudTextField @bind-Value=bookItem.Barcode Variant=Variant.Outlined Margin=Margin.Dense For=@(() => bookItem.Barcode) Label="Barcode" />
+                            </MudTd>
+                            <MudTd DataLabel="Condition">
+                                <MudMenu Label="Change Book Condition" Color="Color.Default" Variant="Variant.Filled" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Dense OffsetY>
+                                    <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.GoodCondition)">Good Condition</MudMenuItem>
+                                    <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Unknown)">Unknown</MudMenuItem>
+                                    <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Lost)">Lost</MudMenuItem>
+                                    <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Damaged)">Damaged</MudMenuItem>
+                                    <MudMenuItem OnClick="(() => bookItem.Condition = AssetStatusConstants.Disposed)">Disposed</MudMenuItem>
+                                </MudMenu>
+                            </MudTd>
+                            <MudTd DataLabel="Options">
+                                <MudButton Variant=Variant.Filled Color=Color.Error DisableElevation StartIcon=@Icons.Material.Filled.Delete OnClick=@(() => DeleteBookItem(bookItem))>Delete</MudButton>
+                            </MudTd>
+                        </RowEditingTemplate>
+                    </MudTable>
+                </MudItem>
+            </MudGrid>
         </MudCardContent>
         <MudCardActions>
             <MudButton OnClick=@(() => _navigation.NavigateBack()) Size=Size.Large Color=Color.Default DisableElevation Variant=Variant.Filled Class="ms-auto">Cancel</MudButton>
