@@ -8,10 +8,12 @@ The project uses complete .NET Stack from Blazor to ASP.NET Core 6.0 to Microsof
 ## Steps to run this project
 
 - Normal build _(This uses a normal SQL Server instance)_
-  - Open `/Quark.Server/Properties/launchSettings.json` file.
+  - Make sure you have .NET 6.0 Sdk installed in your machine.
+  - Open `/Quark.Server/Properties/launchSettings.json` file using any code editor.
   - Go the `Quark.Server` profile under `profiles` key.
   - Under `environmentVariables`, modify the value of `DbServer` from `localhost` to your own SQL Server address. If you are using LocalDB, change it to `(localdb)/SQLLocalDB`. Also it is recommended to update the `DbUser` and `DbPassword` variables.
-  - If you are using Visual Studio, simply start the application in `Quark.Server` launch profile. If you are using Visual Studio code, use `dotnet run` in the terminal.
+  - If you are using Visual Studio, simply start the application in `Quark.Server` launch profile. 
+  - If you are using Visual Studio code, use `dotnet run` in the terminal.
   - Make sure the SQL Server is properly accessible.
 
 - Using docker _(This uses SQL Server inside docker container)_
