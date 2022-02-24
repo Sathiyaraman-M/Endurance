@@ -5,24 +5,19 @@ This is my first application that I am hell bent to complete it to the last drop
 The project uses complete .NET Stack from Blazor to ASP.NET Core 6.0 to Microsoft SQL Server. It also uses other open source components such as MudBlazor, LazyCache, AutoMapper, HangFire, MediatR
 
 
-## Steps to build and test this project
+## Steps to run this project
 
-- Download and install .NET 6.0 from [here](https://dotnet.microsoft.com/download/dotnet/6.0). 
-- Make sure atleast you have Microsoft SQL Server LocalDB feature, in order to run this project.
-- Next configure the database connection string in the `Quark.Server/appsettings.development.json`.
-- If you are using Visual Studio 2022, you can directly open the solution file `Endurance.sln` and build and run the solution.
-  -  Open Package Manager Console and run the following command to generate a database in SQL Server.
-     __Also make sure you set the default project as `Quark.Infrastructure`__
-     ```
-     Update-Database
-     ```
-- If you are using Visual Studio Code, install the C# VS Code extension (OmniSharp)
-  - Open the project folder in your VSCode terminal.
-  - Run the following command to generate a database in SQL Server
-    ```
-    dotnet ef database update
-    ```
-  - Run the following to build and run the project 
-    ```
-    dotnet run
-    ``` 
+- Normal build _(This uses a normal SQL Server instance)_
+  - Open `/Quark.Server/Properties/launchSettings.json` file.
+  - Go the `Quark.Server` profile under `profiles` key.
+  - Under `environmentVariables`, modify the value of `DbServer` from `localhost` to your own SQL Server address. If you are using LocalDB, change it to `(localdb)/SQLLocalDB`. Also it is recommended to update the `DbUser` and `DbPassword` variables.
+  - If you are using Visual Studio, simply start the application in `Quark.Server` launch profile. If you are using Visual Studio code, use `dotnet run` in the terminal.
+  - Make sure the SQL Server is properly accessible.
+
+- Using docker _(This uses SQL Server inside docker container)_
+  - Install Docker Desktop(For windows and macOS users) or Docker CE(For Linux users). _Note that using docker in windows requires a proper installation of WSL 2._
+  - Download this repository zip file and extract the solution files into folder of your wish.
+  - Open a terminal at the that folder . Type `docker-compose up` and press enter. This command creates 2 container images, each for the ASP.NET Core app and SQL Server, after which both the containers start running.
+  - Open your browser and browse to `https://localhost:8080` to run the web app.
+  - Alternatively, the application can be run through Visual Studio, by choosing the _Quark.Server_(Kestrel) as launch profile, which runs at `https://localhost:5001` _without   docker_. But this step requires the SQL server container to be running, which can be started from Docker desktop if not running previously.
+  - Similarly, if using Visual Studio Code, simply use `dotnet run` in the terminal and browse `https://localhost:5001`, while ensuring the SQL Server container is running
