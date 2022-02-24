@@ -16,7 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders().AddConsole();
 builder.Services.AddCors();
 builder.Services.AddCurrentUserService();
-builder.Services.AddSerialization();
 
 var server = builder.Configuration["DbServer"] ?? "sql-server";
 var port = builder.Configuration["DbPort"] ?? "1433";

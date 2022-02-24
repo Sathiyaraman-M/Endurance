@@ -7,15 +7,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Quark.Core.Configurations;
 using Quark.Core.Interfaces;
-using Quark.Core.Interfaces.Serialization.Options;
-using Quark.Core.Interfaces.Serialization.Serializers;
-using Quark.Core.Interfaces.Serialization.Settings;
 using Quark.Core.Interfaces.Services;
 using Quark.Core.Interfaces.Services.Identity;
-using Quark.Core.Serialization.JsonConverters;
-using Quark.Core.Serialization.Options;
-using Quark.Core.Serialization.Serializers;
-using Quark.Core.Serialization.Settings;
 using Quark.Infrastructure;
 using Quark.Infrastructure.DbContexts;
 using Quark.Infrastructure.Models.Identity;
@@ -51,26 +44,6 @@ internal static class ServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;
-    }
-
-    internal static IServiceCollection AddSerialization(this IServiceCollection services)
-    {
-        services
-            .AddScoped<IJsonSerializerOptions, SystemTextJsonOptions>()
-            .Configure<SystemTextJsonOptions>(configureOptions =>
-            {
-                if (!configureOptions.JsonSerializerOptions.Converters.Any(c => c.GetType() == typeof(TimespanJsonConverter)))
-                    configureOptions.JsonSerializerOptions.Converters.Add(new TimespanJsonConverter());
-            });
-        services.AddScoped<IJsonSerializerSettings, NewtonsoftJsonSettings>();
-
-        services.AddScoped<IJsonSerializer, SystemTextJsonSerializer>(); // you can change it
-        return services;
-    }
-
-    internal static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-    {
-        return services.AddDatabase(configuration.GetConnectionString("DefaultConnection"));
     }
 
     internal static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
