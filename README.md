@@ -1,8 +1,8 @@
-# Endurance
-A Library Management System using ASP.NET Core and Blazor.
+![Endurance](https://socialify.git.ci/Sathiyaraman-M/Endurance/image?description=1&language=1&name=1&owner=1&pattern=Plus&theme=Auto)
 
-This is my first application that I am hell bent to complete it to the last droplet rather than leave it halfway after major work is done.
-The project uses complete .NET Stack from Blazor to ASP.NET Core 6.0 to Microsoft SQL Server. It also uses other open source components such as MudBlazor, LazyCache, AutoMapper, HangFire, MediatR
+This is my first major full-fledged project through which I learnt the _Clean Architecture_ principles.
+
+The project uses the complete .NET Stack from Blazor to ASP.NET Core 6.0, backed with Microsoft SQL Server. It also uses other open source components such as MudBlazor, LazyCache, AutoMapper, HangFire, MediatR
 
 
 ## Steps to run this project
